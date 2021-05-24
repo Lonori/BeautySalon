@@ -20,10 +20,10 @@ namespace BeautySalon
         private Color _ColorRowOdd = Color.Lavender;
         private int _HeaderHeight = 40;
 
-        private Panel TableHeader = new Panel();
-        private Panel TableBody = new Panel();
-        private TableLayoutPanel ColumnHeader = new TableLayoutPanel();
-        private TableLayoutPanel ColumnRows = new TableLayoutPanel();
+        private Panel TableHeader;
+        private Panel TableBody;
+        private TableLayoutPanel ColumnHeader;
+        private TableLayoutPanel ColumnRows;
 
         private int column_amount = 0;
         private int row_amount = 0;
@@ -126,8 +126,13 @@ namespace BeautySalon
         [ReadOnly(true)]
         public override string Text { get; set; }
 
-        public Table()
+        private void InitializeComponent()
         {
+            TableHeader = new Panel();
+            TableBody = new Panel();
+            ColumnHeader = new TableLayoutPanel();
+            ColumnRows = new TableLayoutPanel();
+
             TableHeader.Controls.Add(ColumnHeader);
             TableHeader.Dock = DockStyle.Top;
             TableHeader.Margin = new Padding(0);
@@ -165,6 +170,11 @@ namespace BeautySalon
             BackColor = Color.White;
             Margin = new Padding(0);
             Size = new Size(400, 200);
+        }
+
+        public Table()
+        {
+            InitializeComponent();
         }
 
         protected override void OnPaint(PaintEventArgs e)
