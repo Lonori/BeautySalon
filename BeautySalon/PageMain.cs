@@ -24,6 +24,7 @@ namespace BeautySalon
             this.DbConnection = DbConnection;
             InitializeComponent();
             table1.PreAddRow += FormatTableNotes;
+            table1.RowDoubleClick += DoubleClickOnTable;
             curentTime.Text = FormatTodayDate();
 
             using (OleDbCommand command = new OleDbCommand("SELECT `id`,`full_name` FROM `staff` WHERE 1", DbConnection))
@@ -106,37 +107,33 @@ namespace BeautySalon
 
         private void UpdateStatistic()
         {
-            float services_sum = 0;
-            float material_sum = 0;
-            using (OleDbCommand command = new OleDbCommand("SELECT COUNT(`time`) FROM `notes` WHERE `time`>=CDate('" + DateTime.Today.ToString() + "') AND `time`<CDate('" + DateTime.Today.AddDays(1).ToString() + "') AND `completed`=0", DbConnection))
+            double services_sum = 0;
+            double material_sum = 0;
+            using (OleDbCommand command = new OleDbCommand("SELECT COUNT(`time`) FROM `notes` WHERE `time`>=CDate('" + DateTime.Today.ToString() + "') AND `time`<CDate('" + DateTime.Today.AddDays(1).ToString() + "') AND `completed`=false", DbConnection))
             {
                 OleDbDataReader reader = command.ExecuteReader();
                 reader.Read();
                 label2.Text = reader[0].ToString();
-                reader.Close();
             }
-            using (OleDbCommand command = new OleDbCommand("SELECT COUNT(`time`) FROM `notes` WHERE `time`>=CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).ToString() + "') AND `time`<CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).AddMonths(1).ToString() + "') AND `completed`=1", DbConnection))
+            using (OleDbCommand command = new OleDbCommand("SELECT COUNT(`time`) FROM `notes` WHERE `time`>=CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).ToString() + "') AND `time`<CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).AddMonths(1).ToString() + "') AND `completed`=true", DbConnection))
             {
                 OleDbDataReader reader = command.ExecuteReader();
                 reader.Read();
                 label4.Text = reader[0].ToString();
-                reader.Close();
-            }
-            using (OleDbCommand command = new OleDbCommand("SELECT SUM(`prise`) FROM `services_rendered` LEFT JOIN `services` ON `services`.`id`=`services_rendered`.`services_id` WHERE `time`>=CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).ToString() + "') AND `time`<CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).AddMonths(1).ToString() + "')", DbConnection))
-            {
-                OleDbDataReader reader = command.ExecuteReader();
-                reader.Read();
-                services_sum = (reader[0].GetType() == typeof(DBNull) ? 0 : float.Parse(reader[0].ToString()));
-                label6.Text = services_sum + " руб.";
-                reader.Close();
             }
             using (OleDbCommand command = new OleDbCommand("SELECT SUM(`prise`*`materials_consumption`.`amount`) FROM `materials_consumption` LEFT JOIN `materials` ON `materials`.`id`=`materials_consumption`.`material_id` WHERE `time`>=CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).ToString() + "') AND `time`<CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).AddMonths(1).ToString() + "')", DbConnection))
             {
                 OleDbDataReader reader = command.ExecuteReader();
                 reader.Read();
-                material_sum = (reader[0].GetType() == typeof(DBNull) ? 0 : float.Parse(reader[0].ToString()));
+                material_sum = (reader[0].GetType() == typeof(DBNull) ? 0 : double.Parse(reader[0].ToString()));
                 label8.Text = material_sum + " руб.";
-                reader.Close();
+            }
+            using (OleDbCommand command = new OleDbCommand("SELECT SUM(`prise`) FROM `services_rendered` LEFT JOIN `services` ON `services`.`id`=`services_rendered`.`services_id` WHERE `time`>=CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).ToString() + "') AND `time`<CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).AddMonths(1).ToString() + "')", DbConnection))
+            {
+                OleDbDataReader reader = command.ExecuteReader();
+                reader.Read();
+                services_sum = (reader[0].GetType() == typeof(DBNull) ? 0 : double.Parse(reader[0].ToString())) + material_sum;
+                label6.Text = services_sum + " руб.";
             }
             label10.Text = (services_sum - material_sum) + " руб.";
         }
@@ -147,7 +144,7 @@ namespace BeautySalon
             table1.Clear();
             Table.Data.Clear();
 
-            using (OleDbCommand command = new OleDbCommand("SELECT `time`,`full_name`,`phone_number`,`staff`,`remark` FROM `notes` WHERE `time`>=CDate('"+DateTime.Today.ToString()+ "') AND `time`<CDate('" + DateTime.Today.AddDays(1).ToString() + "') AND `completed`=0", DbConnection))
+            using (OleDbCommand command = new OleDbCommand("SELECT `time`,`full_name`,`phone_number`,`staff`,`remark` FROM `notes` WHERE `time`>=CDate('"+DateTime.Today.ToString()+ "') AND `time`<CDate('" + DateTime.Today.AddDays(1).ToString() + "') AND `completed`=false", DbConnection))
             {
                 OleDbDataReader reader = command.ExecuteReader();
                 while (reader.Read())
@@ -201,11 +198,12 @@ namespace BeautySalon
 
             if (tableEditor.Confirmed == true)
             {
-                new OleDbCommand("INSERT INTO `notes`(`time`,`full_name`,`phone_number`,`staff`,`remark`,`completed`) VALUES ('" + tableEditor.DataRow[0].ToString() + "','" + tableEditor.DataRow[1].ToString() + "','" + tableEditor.DataRow[2].ToString() + "'," + ((ListComboBoxItem)tableEditor.DataRow[4]).Value + ",'" + tableEditor.DataRow[5].ToString() + "',0)", DbConnection).ExecuteNonQuery();
+                new OleDbCommand("INSERT INTO `notes`(`time`,`full_name`,`phone_number`,`staff`,`remark`,`completed`) VALUES ('" + tableEditor.GetString(0) + "','" + tableEditor.GetString(1) + "','" + tableEditor.GetString(2) + "'," + tableEditor.GetString(4) + ",'" + tableEditor.GetString(5) + "',false)", DbConnection).ExecuteNonQuery();
+
                 TableObject services = (TableObject)tableEditor.DataRow[3];
                 for (int i = 0; i < services.Data.Length; i++)
                 {
-                    new OleDbCommand("INSERT INTO `services_rendered`(`time`, `services_id`) VALUES ('"+ tableEditor.DataRow[0].ToString() + "',"+ ((ListComboBoxItem)services.Data[i][0]).Value + ")", DbConnection).ExecuteNonQuery();
+                    new OleDbCommand("INSERT INTO `services_rendered`(`time`, `services_id`) VALUES ('"+ tableEditor.GetString(0) + "',"+ ((ListComboBoxItem)services.Data[i][0]).Value + ")", DbConnection).ExecuteNonQuery();
                 }
                 UpdateTable();
             }
@@ -227,7 +225,30 @@ namespace BeautySalon
             UpdateTable();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void DoubleClickOnTable(int row, string[] data)
+        {
+            string time = Table.Data[row][0].ToString();
+            FormTableEditor tableEditor = new FormTableEditor("Изменить", Table.Columns, Table.Data[row]);
+            tableEditor.ShowDialog();
+
+            if (tableEditor.Confirmed == true)
+            {
+                new OleDbCommand("DELETE FROM `services_rendered` WHERE `time`=CDate('" + time + "')", DbConnection).ExecuteNonQuery();
+                new OleDbCommand("DELETE FROM `materials_consumption` WHERE `time`=CDate('" + time + "')", DbConnection).ExecuteNonQuery();
+                new OleDbCommand("UPDATE `notes` SET `time`='" + tableEditor.GetString(0) + "',`full_name`='" + tableEditor.GetString(1) + "',`phone_number`='" + tableEditor.GetString(2) + "',`staff`=" + tableEditor.GetString(4) + ",`remark`='" + tableEditor.GetString(5) + "',`completed`=false WHERE `time`=CDate('" + time + "')", DbConnection).ExecuteNonQuery();
+
+                TableObject services = (TableObject)tableEditor.DataRow[3];
+                for (int i = 0; i < services.Data.Length; i++)
+                {
+                    new OleDbCommand("INSERT INTO `services_rendered`(`time`, `services_id`) VALUES (CDate('" + tableEditor.GetString(0) + "')," + ((ListComboBoxItem)services.Data[i][0]).Value + ")", DbConnection).ExecuteNonQuery();
+                }
+                UpdateTable();
+            }
+
+            tableEditor.Dispose();
+        }
+
+        private void ButtonComplete_Click(object sender, EventArgs e)
         {
             if (table1.row_selected < 0)
             {
@@ -269,16 +290,16 @@ namespace BeautySalon
             {
                 new OleDbCommand("DELETE FROM `services_rendered` WHERE `time`=CDate('" + time + "')", DbConnection).ExecuteNonQuery();
                 new OleDbCommand("DELETE FROM `materials_consumption` WHERE `time`=CDate('" + time + "')", DbConnection).ExecuteNonQuery();
-                new OleDbCommand("UPDATE `notes` SET `time`='" + tableEditor.DataRow[0].ToString() + "',`full_name`='" + tableEditor.DataRow[1].ToString() + "',`phone_number`='" + tableEditor.DataRow[2].ToString() + "',`staff`=" + ((ListComboBoxItem)tableEditor.DataRow[5]).Value + ",`remark`='" + tableEditor.DataRow[6].ToString() + "',`completed`=1 WHERE `time`=CDate('" + time + "')", DbConnection).ExecuteNonQuery();
+                new OleDbCommand("UPDATE `notes` SET `time`='" + tableEditor.GetString(0) + "',`full_name`='" + tableEditor.GetString(1) + "',`phone_number`='" + tableEditor.GetString(2) + "',`staff`=" + tableEditor.GetString(5) + ",`remark`='" + tableEditor.GetString(6) + "',`completed`=true WHERE `time`=CDate('" + time + "')", DbConnection).ExecuteNonQuery();
                 TableObject services = (TableObject)tableEditor.DataRow[3];
                 for (int i = 0; i < services.Data.Length; i++)
                 {
-                    new OleDbCommand("INSERT INTO `services_rendered`(`time`, `services_id`) VALUES (CDate('" + tableEditor.DataRow[0].ToString() + "')," + ((ListComboBoxItem)services.Data[i][0]).Value + ")", DbConnection).ExecuteNonQuery();
+                    new OleDbCommand("INSERT INTO `services_rendered`(`time`, `services_id`) VALUES (CDate('" + tableEditor.GetString(0) + "')," + ((ListComboBoxItem)services.Data[i][0]).Value + ")", DbConnection).ExecuteNonQuery();
                 }
                 TableObject tmp_materials = (TableObject)tableEditor.DataRow[4];
                 for (int i = 0; i < tmp_materials.Data.Length; i++)
                 {
-                    new OleDbCommand("INSERT INTO `materials_consumption`(`time`,`material_id`,`amount`) VALUES ('" + tableEditor.DataRow[0].ToString() + "'," + ((ListComboBoxItem)tmp_materials.Data[i][0]).Value + "," + tmp_materials.Data[i][1] + ")", DbConnection).ExecuteNonQuery();
+                    new OleDbCommand("INSERT INTO `materials_consumption`(`time`,`material_id`,`amount`) VALUES ('" + tableEditor.GetString(0) + "'," + ((ListComboBoxItem)tmp_materials.Data[i][0]).Value + "," + tmp_materials.Data[i][1] + ")", DbConnection).ExecuteNonQuery();
                 }
                 UpdateTable();
             }

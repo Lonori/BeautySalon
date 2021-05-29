@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.OleDb;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BeautySalon
@@ -31,7 +24,21 @@ namespace BeautySalon
             Table = new TableObject(columns, new TableData());
 
             table1.TableInit(Table);
+            table1.PreAddRow += FormatTableNotes;
             UpdateTable();
+        }
+
+        private string[] FormatTableNotes(object[] data)
+        {
+            string[] str_data = new string[]
+            {
+                 data[0].ToString(),
+                 data[1].ToString(),
+                 ((DateTime)data[2]).ToShortDateString(),
+                 ((DateTime)data[3]).ToShortDateString(),
+                 data[4].ToString()
+            };
+            return str_data;
         }
 
         private void UpdateTable()
@@ -124,6 +131,13 @@ namespace BeautySalon
             }
 
             tableEditor.Dispose();
+        }
+
+        private void ButtonReport_Click(object sender, EventArgs e)
+        {
+            Control tmp = Parent;
+            tmp.Controls.Clear();
+            tmp.Controls.Add(new ReportStaff(DbConnection) { Dock = DockStyle.Fill, Margin = new Padding(0) });
         }
     }
 }

@@ -156,7 +156,7 @@ namespace BeautySalon
             this.button2.TabIndex = 1;
             this.button2.Text = "Заказ выполнен";
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.ButtonComplete_Click);
             // 
             // button1
             // 
@@ -309,7 +309,7 @@ namespace BeautySalon
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(243, 22);
             this.label5.TabIndex = 4;
-            this.label5.Text = "Оказано услуг за месяц:";
+            this.label5.Text = "Выручка за месяц:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label4

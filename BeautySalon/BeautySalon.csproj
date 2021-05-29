@@ -162,6 +162,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportStaff.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ReportStaff.Designer.cs">
+      <DependentUpon>ReportStaff.cs</DependentUpon>
+    </Compile>
     <Compile Include="Table.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -214,6 +220,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ReportStaff.resx">
+      <DependentUpon>ReportStaff.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="help.chm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

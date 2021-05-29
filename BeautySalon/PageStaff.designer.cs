@@ -34,8 +34,9 @@ namespace BeautySalon
             this.ButtonInsert = new System.Windows.Forms.Button();
             this.ButtonDelete = new System.Windows.Forms.Button();
             this.ButtonUpdate = new System.Windows.Forms.Button();
-            this.table1 = new Table();
+            this.table1 = new BeautySalon.Table();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.ButtonReport = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -58,6 +59,7 @@ namespace BeautySalon
             this.tableLayoutPanel1.Controls.Add(this.ButtonInsert, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.ButtonDelete, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.ButtonUpdate, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.ButtonReport, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
@@ -133,6 +135,21 @@ namespace BeautySalon
             this.panel2.Size = new System.Drawing.Size(619, 369);
             this.panel2.TabIndex = 2;
             // 
+            // ButtonReport
+            // 
+            this.ButtonReport.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.ButtonReport.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ButtonReport.FlatAppearance.BorderSize = 0;
+            this.ButtonReport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ButtonReport.Location = new System.Drawing.Point(329, 60);
+            this.ButtonReport.Margin = new System.Windows.Forms.Padding(20, 10, 20, 10);
+            this.ButtonReport.Name = "ButtonReport";
+            this.ButtonReport.Size = new System.Drawing.Size(270, 30);
+            this.ButtonReport.TabIndex = 4;
+            this.ButtonReport.Text = "Отчетность";
+            this.ButtonReport.UseVisualStyleBackColor = false;
+            this.ButtonReport.Click += new System.EventHandler(this.ButtonReport_Click);
+            // 
             // PageStaff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -157,5 +174,6 @@ namespace BeautySalon
         private System.Windows.Forms.Button ButtonDelete;
         private System.Windows.Forms.Button ButtonUpdate;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button ButtonReport;
     }
 }

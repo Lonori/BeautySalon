@@ -148,5 +148,22 @@ namespace BeautySalon
             this._Confirmed = true;
             this.Close();
         }
+
+        public string GetString(int index)
+        {
+            if (0 > index || index >= _DataRow.Length) throw new Exception("Индекс находится вне границ массива");
+            if(_DataRow[index].GetType() == typeof(string) || _DataRow[index].GetType() == typeof(DateTime))
+            {
+                return _DataRow[index].ToString();
+            }
+            else if (_DataRow[index].GetType() == typeof(ListComboBoxItem))
+            {
+                return ((ListComboBoxItem)_DataRow[index]).Value;
+            }
+            else
+            {
+                throw new Exception("Невозможно выполнить преобразование типов");
+            }
+        }
     }
 }
