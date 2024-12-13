@@ -29,14 +29,15 @@ namespace BeautySalon
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PageStaff));
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ButtonInsert = new System.Windows.Forms.Button();
             this.ButtonDelete = new System.Windows.Forms.Button();
             this.ButtonUpdate = new System.Windows.Forms.Button();
-            this.table1 = new BeautySalon.Table();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.ButtonReport = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.materialTable1 = new BeautySalon.Components.MaterialTable();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -115,26 +116,6 @@ namespace BeautySalon
             this.ButtonUpdate.UseVisualStyleBackColor = false;
             this.ButtonUpdate.Click += new System.EventHandler(this.ButtonUpdate_Click);
             // 
-            // table1
-            // 
-            this.table1.BackColor = System.Drawing.Color.White;
-            this.table1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.table1.Location = new System.Drawing.Point(0, 0);
-            this.table1.Margin = new System.Windows.Forms.Padding(0);
-            this.table1.Name = "table1";
-            this.table1.Size = new System.Drawing.Size(619, 369);
-            this.table1.TabIndex = 0;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.table1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(619, 369);
-            this.panel2.TabIndex = 2;
-            // 
             // ButtonReport
             // 
             this.ButtonReport.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -149,6 +130,42 @@ namespace BeautySalon
             this.ButtonReport.Text = "Отчетность";
             this.ButtonReport.UseVisualStyleBackColor = false;
             this.ButtonReport.Click += new System.EventHandler(this.ButtonReport_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.materialTable1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(619, 369);
+            this.panel2.TabIndex = 2;
+            // 
+            // materialTable1
+            // 
+            this.materialTable1.BackColor = System.Drawing.Color.White;
+            this.materialTable1.CellMaximumSize = new System.Drawing.Size(0, 0);
+            this.materialTable1.CellMinimumSize = new System.Drawing.Size(0, 0);
+            this.materialTable1.CellPadding = new System.Windows.Forms.Padding(8);
+            this.materialTable1.ColorBorder = System.Drawing.Color.Gray;
+            this.materialTable1.ColorHeader = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(69)))), ((int)(((byte)(136)))));
+            this.materialTable1.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(232)))), ((int)(((byte)(255)))));
+            this.materialTable1.ColorRowPrimary = System.Drawing.Color.White;
+            this.materialTable1.ColorRowSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(252)))));
+            this.materialTable1.ColorSelect = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(201)))), ((int)(((byte)(255)))));
+            this.materialTable1.ColorTextHeader = System.Drawing.Color.White;
+            this.materialTable1.ColumnWeights = new int[] {
+        0};
+            this.materialTable1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.materialTable1.ForeColor = System.Drawing.Color.Black;
+            this.materialTable1.Location = new System.Drawing.Point(0, 0);
+            this.materialTable1.Name = "materialTable1";
+            this.materialTable1.Size = new System.Drawing.Size(619, 87);
+            this.materialTable1.Style = BeautySalon.Components.MaterialTable.TableStyle.Flat;
+            this.materialTable1.TabIndex = 1;
+            this.materialTable1.TableData = ((System.Collections.Generic.List<System.Collections.Generic.List<string>>)(resources.GetObject("materialTable1.TableData")));
+            this.materialTable1.TableHeaders = ((System.Collections.Generic.List<string>)(resources.GetObject("materialTable1.TableHeaders")));
+            this.materialTable1.Text = "materialTable1";
             // 
             // PageStaff
             // 
@@ -166,8 +183,6 @@ namespace BeautySalon
         }
 
         #endregion
-
-        private Table table1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button ButtonInsert;
@@ -175,5 +190,6 @@ namespace BeautySalon
         private System.Windows.Forms.Button ButtonUpdate;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button ButtonReport;
+        private Components.MaterialTable materialTable1;
     }
 }

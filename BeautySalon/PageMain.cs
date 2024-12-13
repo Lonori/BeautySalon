@@ -1,18 +1,16 @@
-﻿using System;
+﻿using BeautySalon.DB;
+using BeautySalon.DB.Entities;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.OleDb;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BeautySalon
 {
     public partial class PageMain : UserControl
     {
+        private readonly AppDatabase DB;
         private OleDbConnection DbConnection;
         private TableObject Table;
         private ListComboBoxItem list_staff = new ListComboBoxItem();
@@ -21,10 +19,10 @@ namespace BeautySalon
 
         public PageMain(OleDbConnection DbConnection)
         {
+            DB = AppDatabase.GetInstance();
             this.DbConnection = DbConnection;
             InitializeComponent();
-            table1.PreAddRow += FormatTableNotes;
-            table1.RowDoubleClick += DoubleClickOnTable;
+            materialTable1.TableHeaders = new List<string> { "Время", "ФИО", "Номер телефона", "Услуги", "Сотрудник", "Примечание" };
             curentTime.Text = FormatTodayDate();
 
             using (OleDbCommand command = new OleDbCommand("SELECT `id`,`full_name` FROM `staff` WHERE 1", DbConnection))
@@ -70,7 +68,6 @@ namespace BeautySalon
                 new TableData()
             );
 
-            table1.TableInit(Table);
             UpdateTable();
         }
 
@@ -88,7 +85,7 @@ namespace BeautySalon
                 case DayOfWeek.Saturday: dayweek = "Суббота"; break;
                 case DayOfWeek.Sunday: dayweek = "Воскресенье"; break;
             }
-            return "Сегодня: " + now.Day + " " + dayweek + " - " + now.ToShortTimeString();
+            return "Сегодня: " + now.Day + " " + dayweek + " - " + now.Hour.ToString().PadLeft(2, '0') + ':' + now.Minute.ToString().PadLeft(2, '0') + ':' + now.Second.ToString().PadLeft(2, '0');
         }
 
         private string[] FormatTableNotes(object[] data)
@@ -138,13 +135,27 @@ namespace BeautySalon
             label10.Text = (services_sum - material_sum) + " руб.";
         }
 
-        private void UpdateTable()
+        private async void UpdateTable()
         {
             UpdateStatistic();
-            table1.Clear();
-            Table.Data.Clear();
+            List<Appointment> appointments = await DB.AppointmentDAO.GetByPeriod(DateTime.Today, DateTime.Today.AddDays(1));
+            List<List<string>> tableData = new List<List<string>>();
 
-            using (OleDbCommand command = new OleDbCommand("SELECT `time`,`full_name`,`phone_number`,`staff`,`remark` FROM `notes` WHERE `time`>=CDate('"+DateTime.Today.ToString()+ "') AND `time`<CDate('" + DateTime.Today.AddDays(1).ToString() + "') AND `completed`=false", DbConnection))
+            foreach (Appointment appointment in appointments)
+            {
+                tableData.Add(new List<string>{
+                    appointment.Time.ToShortTimeString(),
+                    appointment.FullName,
+                    appointment.PhoneNumber,
+                    "",
+                    appointment.StaffId.ToString(),
+                    appointment.Remark
+                });
+            }
+
+            materialTable1.TableData = tableData;
+
+            using (OleDbCommand command = new OleDbCommand("SELECT `time`,`full_name`,`phone_number`,`staff`,`remark` FROM `notes` WHERE `time`>=CDate('" + DateTime.Today.ToString() + "') AND `time`<CDate('" + DateTime.Today.AddDays(1).ToString() + "') AND `completed`=false", DbConnection))
             {
                 OleDbDataReader reader = command.ExecuteReader();
                 while (reader.Read())
@@ -162,7 +173,7 @@ namespace BeautySalon
                 reader.Close();
             }
 
-            for(int i = 0; i < Table.Data.Length; i++)
+            for (int i = 0; i < Table.Data.Length; i++)
             {
                 TableObject services = new TableObject(
                     new TableColumn[] {
@@ -182,7 +193,6 @@ namespace BeautySalon
                 }
 
                 Table.Data[i][3] = services;
-                table1.AddRow(Table.Data[i]);
             }
         }
 
@@ -194,7 +204,7 @@ namespace BeautySalon
         private void ButtonInsert_Click(object sender, EventArgs e)
         {
             FormTableEditor tableEditor = new FormTableEditor("Добавить", Table.Columns, Table.GetDefault());
-            tableEditor.ShowDialog();
+            tableEditor.ShowDialog(this);
 
             if (tableEditor.Confirmed == true)
             {
@@ -203,7 +213,7 @@ namespace BeautySalon
                 TableObject services = (TableObject)tableEditor.DataRow[3];
                 for (int i = 0; i < services.Data.Length; i++)
                 {
-                    new OleDbCommand("INSERT INTO `services_rendered`(`time`, `services_id`) VALUES ('"+ tableEditor.GetString(0) + "',"+ ((ListComboBoxItem)services.Data[i][0]).Value + ")", DbConnection).ExecuteNonQuery();
+                    new OleDbCommand("INSERT INTO `services_rendered`(`time`, `services_id`) VALUES ('" + tableEditor.GetString(0) + "'," + ((ListComboBoxItem)services.Data[i][0]).Value + ")", DbConnection).ExecuteNonQuery();
                 }
                 UpdateTable();
             }
@@ -213,7 +223,7 @@ namespace BeautySalon
 
         private void ButtonDelete_Click(object sender, EventArgs e)
         {
-            if (table1.row_selected < 0)
+            /*if (table1.row_selected < 0)
             {
                 AlertBox.Warning("Не выбрано ни одной записи");
                 return;
@@ -222,7 +232,7 @@ namespace BeautySalon
             new OleDbCommand("DELETE FROM `materials_consumption` WHERE `time`=CDate('" + Table.Data[table1.row_selected][0] + "')", DbConnection).ExecuteNonQuery();
             new OleDbCommand("DELETE FROM `notes` WHERE `time`=CDate('" + Table.Data[table1.row_selected][0] + "')", DbConnection).ExecuteNonQuery();
             table1.row_selected = -1;
-            UpdateTable();
+            UpdateTable();*/
         }
 
         private void DoubleClickOnTable(int row, string[] data)
@@ -250,7 +260,7 @@ namespace BeautySalon
 
         private void ButtonComplete_Click(object sender, EventArgs e)
         {
-            if (table1.row_selected < 0)
+            /*if (table1.row_selected < 0)
             {
                 AlertBox.Warning("Не выбрано ни одной записи");
                 return;
@@ -304,7 +314,7 @@ namespace BeautySalon
                 UpdateTable();
             }
 
-            tableEditor.Dispose();
+            tableEditor.Dispose();*/
         }
     }
 }

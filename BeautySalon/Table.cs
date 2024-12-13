@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BeautySalon
@@ -231,7 +228,7 @@ namespace BeautySalon
 
         public string[] ObjToStr(object[] row_data)
         {
-            
+
             string[] row_data_string = new string[row_data.Length];
             for (int i = 0; i < row_data.Length; i++)
                 row_data_string[i] = row_data[i].ToString();
@@ -304,7 +301,7 @@ namespace BeautySalon
             RowClick?.Invoke(row_num, table_data[row_num]);
             if (row_num != row_selected)
             {
-                if(row_selected != -1) ColumnRows.Controls[row_selected].BackColor = row_selected % 2 == 0 ? _ColorRowEven : _ColorRowOdd;
+                if (row_selected != -1) ColumnRows.Controls[row_selected].BackColor = row_selected % 2 == 0 ? _ColorRowEven : _ColorRowOdd;
                 ((TableLayoutPanel)sender).BackColor = _ColorRowSelected;
                 row_selected = row_num;
                 RowSelectChange?.Invoke(row_num, table_data[row_num]);
@@ -327,10 +324,11 @@ namespace BeautySalon
         {
             TableLayoutPanel row = (TableLayoutPanel)sender;
             int row_num = ColumnRows.GetRow(row);
-            if(row_num == row_selected)
+            if (row_num == row_selected)
             {
                 row.BackColor = _ColorRowSelected;
-            } else
+            }
+            else
             {
                 row.BackColor = row_num % 2 == 0 ? _ColorRowEven : _ColorRowOdd;
             }

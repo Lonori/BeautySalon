@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BeautySalon.DB;
+using BeautySalon.DB.Entities;
+using System;
+using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Windows.Forms;
 
@@ -14,6 +17,15 @@ namespace BeautySalon
             this.DbConnection = DbConnection;
             InitializeComponent();
 
+            materialTable1.TableHeaders = new List<string> {
+                "ID",
+                "ФИО",
+                "Дата рождения",
+                "Дата найма",
+                "Дата увольнения",
+                "Должность"
+            };
+
             TableColumn[] columns = new TableColumn[] {
                     new TableColumnText("ID", 10, ""),
                     new TableColumnText("ФИО", 30, "", true),
@@ -23,45 +35,27 @@ namespace BeautySalon
             };
             Table = new TableObject(columns, new TableData());
 
-            table1.TableInit(Table);
-            table1.PreAddRow += FormatTableNotes;
             UpdateTable();
         }
 
-        private string[] FormatTableNotes(object[] data)
+        private async void UpdateTable()
         {
-            string[] str_data = new string[]
-            {
-                 data[0].ToString(),
-                 data[1].ToString(),
-                 ((DateTime)data[2]).ToShortDateString(),
-                 ((DateTime)data[3]).ToShortDateString(),
-                 data[4].ToString()
-            };
-            return str_data;
-        }
+            List<Staff> staffs = await AppDatabase.GetInstance().StaffDAO.GetAll();
+            List<List<string>> tableData = new List<List<string>>();
 
-        private void UpdateTable()
-        {
-            table1.Clear();
-            Table.Data.Clear();
-
-            OleDbCommand command = new OleDbCommand("SELECT `id`, `full_name`, `hiring_date`, `birthday`, `position` FROM `staff` WHERE 1", DbConnection);
-            OleDbDataReader reader = command.ExecuteReader();
-            while (reader.Read())
+            foreach (Staff staff in staffs)
             {
-                object[] data_arr = new object[] {
-                    reader[0].ToString(),
-                    reader[1].ToString(),
-                    reader[2],
-                    reader[3],
-                    reader[4].ToString(),
-                };
-                table1.AddRow(data_arr);
-                Table.Data.Add(data_arr);
+                tableData.Add(new List<string>{
+                    staff.Id.ToString(),
+                    staff.FullName,
+                    staff.Birthday.ToShortDateString(),
+                    staff.DateJoin == DateTime.MinValue ? "---" : staff.DateJoin.ToShortDateString(),
+                    staff.DateLeave == DateTime.MinValue ? "---" : staff.DateLeave.ToShortDateString(),
+                    staff.Position
+                });
             }
 
-            reader.Close();
+            materialTable1.TableData = tableData;
         }
 
         private void ButtonInsert_Click(object sender, EventArgs e)
@@ -78,9 +72,9 @@ namespace BeautySalon
             FormTableEditor tableEditor = new FormTableEditor("Добавить", Table.Columns, data);
             tableEditor.ShowDialog();
 
-            if(tableEditor.Confirmed == true)
+            if (tableEditor.Confirmed == true)
             {
-                new OleDbCommand("INSERT INTO `staff`(`id`, `full_name`, `hiring_date`, `birthday`, `position`) VALUES (" + tableEditor.DataRow[0].ToString() + ",'"+ tableEditor.DataRow[1].ToString() + "','"+ tableEditor.DataRow[2].ToString() + "','"+ tableEditor.DataRow[3].ToString() + "','" + tableEditor.DataRow[4].ToString() + "')", DbConnection).ExecuteNonQuery();
+                new OleDbCommand("INSERT INTO `staff`(`id`, `full_name`, `hiring_date`, `birthday`, `position`) VALUES (" + tableEditor.DataRow[0].ToString() + ",'" + tableEditor.DataRow[1].ToString() + "','" + tableEditor.DataRow[2].ToString() + "','" + tableEditor.DataRow[3].ToString() + "','" + tableEditor.DataRow[4].ToString() + "')", DbConnection).ExecuteNonQuery();
                 UpdateTable();
             }
 
@@ -89,7 +83,7 @@ namespace BeautySalon
 
         private void ButtonDelete_Click(object sender, EventArgs e)
         {
-            if(table1.row_selected < 0)
+            /*if (table1.row_selected < 0)
             {
                 MessageBox.Show(
                    "Не выбрано ни одной записи",
@@ -103,12 +97,12 @@ namespace BeautySalon
             }
             new OleDbCommand("DELETE FROM `staff` WHERE `id`=" + Table.Data[table1.row_selected][0], DbConnection).ExecuteNonQuery();
             table1.row_selected = -1;
-            UpdateTable();
+            UpdateTable();*/
         }
 
         private void ButtonUpdate_Click(object sender, EventArgs e)
         {
-            if (table1.row_selected < 0)
+            /*if (table1.row_selected < 0)
             {
                 MessageBox.Show(
                    "Не выбрано ни одной записи",
@@ -130,7 +124,7 @@ namespace BeautySalon
                 UpdateTable();
             }
 
-            tableEditor.Dispose();
+            tableEditor.Dispose();*/
         }
 
         private void ButtonReport_Click(object sender, EventArgs e)

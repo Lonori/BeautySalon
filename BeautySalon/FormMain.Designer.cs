@@ -66,7 +66,7 @@ namespace BeautySalon
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1264, 42);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1184, 42);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // buttonStorage
@@ -76,10 +76,10 @@ namespace BeautySalon
             this.buttonStorage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonStorage.FlatAppearance.BorderSize = 0;
             this.buttonStorage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonStorage.Location = new System.Drawing.Point(948, 0);
+            this.buttonStorage.Location = new System.Drawing.Point(888, 0);
             this.buttonStorage.Margin = new System.Windows.Forms.Padding(0);
             this.buttonStorage.Name = "buttonStorage";
-            this.buttonStorage.Size = new System.Drawing.Size(316, 42);
+            this.buttonStorage.Size = new System.Drawing.Size(296, 42);
             this.buttonStorage.TabIndex = 3;
             this.buttonStorage.Text = "Склад";
             this.buttonStorage.UseVisualStyleBackColor = false;
@@ -92,10 +92,10 @@ namespace BeautySalon
             this.buttonMaterials.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonMaterials.FlatAppearance.BorderSize = 0;
             this.buttonMaterials.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonMaterials.Location = new System.Drawing.Point(632, 0);
+            this.buttonMaterials.Location = new System.Drawing.Point(592, 0);
             this.buttonMaterials.Margin = new System.Windows.Forms.Padding(0);
             this.buttonMaterials.Name = "buttonMaterials";
-            this.buttonMaterials.Size = new System.Drawing.Size(316, 42);
+            this.buttonMaterials.Size = new System.Drawing.Size(296, 42);
             this.buttonMaterials.TabIndex = 1;
             this.buttonMaterials.Text = "Приход материалов";
             this.buttonMaterials.UseVisualStyleBackColor = false;
@@ -108,10 +108,10 @@ namespace BeautySalon
             this.buttonNotes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonNotes.FlatAppearance.BorderSize = 0;
             this.buttonNotes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonNotes.Location = new System.Drawing.Point(316, 0);
+            this.buttonNotes.Location = new System.Drawing.Point(296, 0);
             this.buttonNotes.Margin = new System.Windows.Forms.Padding(0);
             this.buttonNotes.Name = "buttonNotes";
-            this.buttonNotes.Size = new System.Drawing.Size(316, 42);
+            this.buttonNotes.Size = new System.Drawing.Size(296, 42);
             this.buttonNotes.TabIndex = 4;
             this.buttonNotes.Text = "Записи";
             this.buttonNotes.UseVisualStyleBackColor = false;
@@ -127,7 +127,7 @@ namespace BeautySalon
             this.buttonMain.Location = new System.Drawing.Point(0, 0);
             this.buttonMain.Margin = new System.Windows.Forms.Padding(0);
             this.buttonMain.Name = "buttonMain";
-            this.buttonMain.Size = new System.Drawing.Size(316, 42);
+            this.buttonMain.Size = new System.Drawing.Size(296, 42);
             this.buttonMain.TabIndex = 0;
             this.buttonMain.Text = "Главная";
             this.buttonMain.UseVisualStyleBackColor = false;
@@ -138,7 +138,7 @@ namespace BeautySalon
             this.pageContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pageContainer.Location = new System.Drawing.Point(0, 66);
             this.pageContainer.Name = "pageContainer";
-            this.pageContainer.Size = new System.Drawing.Size(1264, 615);
+            this.pageContainer.Size = new System.Drawing.Size(1184, 595);
             this.pageContainer.TabIndex = 3;
             // 
             // menuStrip1
@@ -149,8 +149,8 @@ namespace BeautySalon
             this.toolStripMenuItem2});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1264, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1184, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -205,30 +205,30 @@ namespace BeautySalon
             // toolStripMenuItem21
             // 
             this.toolStripMenuItem21.Name = "toolStripMenuItem21";
-            this.toolStripMenuItem21.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem21.Size = new System.Drawing.Size(179, 22);
             this.toolStripMenuItem21.Text = "Просмотр справки";
             this.toolStripMenuItem21.Click += new System.EventHandler(this.toolStripMenuItem21_Click);
             // 
             // toolStripMenuItem22
             // 
             this.toolStripMenuItem22.Name = "toolStripMenuItem22";
-            this.toolStripMenuItem22.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem22.Size = new System.Drawing.Size(179, 22);
             this.toolStripMenuItem22.Text = "О программе";
             this.toolStripMenuItem22.Click += new System.EventHandler(this.toolStripMenuItem22_Click);
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.ClientSize = new System.Drawing.Size(1184, 661);
             this.Controls.Add(this.pageContainer);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
-            this.Font = new System.Drawing.Font("Microsoft YaHei", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(5);
-            this.MinimumSize = new System.Drawing.Size(1000, 700);
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MinimumSize = new System.Drawing.Size(900, 700);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "База: Салон Красоты";

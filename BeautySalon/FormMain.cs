@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using BeautySalon.Components;
+using BeautySalon.DB;
+using System;
 using System.Data.OleDb;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BeautySalon
@@ -17,12 +12,36 @@ namespace BeautySalon
 
         public FormMain()
         {
+            if (!Authorisation()) return;
+
             InitializeComponent();
 
             DbConnection = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=main.mdb;");
             DbConnection.Open();
 
             pageContainer.Controls.Add(new PageMain(DbConnection) { Dock = DockStyle.Fill, Margin = new Padding(0) });
+
+            menuStrip1.BackColor = MaterialColors.Primary;
+            buttonMain.BackColor = MaterialColors.Primary;
+            buttonNotes.BackColor = MaterialColors.Primary;
+            buttonMaterials.BackColor = MaterialColors.Primary;
+            buttonStorage.BackColor = MaterialColors.Primary;
+        }
+
+        private bool Authorisation()
+        {
+            FormConnect formConnect = new FormConnect();
+            formConnect.ShowDialog();
+            if (AppDatabase.IsConnected())
+            {
+                formConnect.Dispose();
+                return true;
+            }
+            else
+            {
+                Dispose();
+                return false;
+            }
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)

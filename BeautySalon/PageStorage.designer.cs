@@ -36,8 +36,8 @@ namespace BeautySalon
             this.ButtonUpdate = new System.Windows.Forms.Button();
             this.table1 = new BeautySalon.Table();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.checkAllMat = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.checkAllMat = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -138,6 +138,16 @@ namespace BeautySalon
             this.panel2.Size = new System.Drawing.Size(619, 369);
             this.panel2.TabIndex = 2;
             // 
+            // panel3
+            // 
+            this.panel3.AutoSize = true;
+            this.panel3.Controls.Add(this.checkAllMat);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel3.Location = new System.Drawing.Point(0, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(619, 33);
+            this.panel3.TabIndex = 2;
+            // 
             // checkAllMat
             // 
             this.checkAllMat.AutoSize = true;
@@ -151,16 +161,6 @@ namespace BeautySalon
             this.checkAllMat.Text = "Отображать все материалы";
             this.checkAllMat.UseVisualStyleBackColor = true;
             this.checkAllMat.CheckedChanged += new System.EventHandler(this.checkAllMat_CheckedChanged);
-            // 
-            // panel3
-            // 
-            this.panel3.AutoSize = true;
-            this.panel3.Controls.Add(this.checkAllMat);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(619, 33);
-            this.panel3.TabIndex = 2;
             // 
             // PageStorage
             // 
