@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BeautySalon
@@ -45,7 +42,7 @@ namespace BeautySalon
                MessageBoxDefaultButton.Button1,
                MessageBoxOptions.DefaultDesktopOnly
             );
-            if (((ComboBoxItem)obj).Text == _Text && ((ComboBoxItem)obj).Value == _Value)
+            if (obj.Text == _Text && obj.Value == _Value)
                 return true;
             return false;
         }
@@ -152,7 +149,8 @@ namespace BeautySalon
         }
         public TableData Data
         {
-            get {
+            get
+            {
                 if (_Data == null) throw new Exception("Данные не определены");
                 return _Data;
             }
@@ -167,7 +165,7 @@ namespace BeautySalon
         public object[] GetDefault()
         {
             object[] settings = new object[_Columns.Length];
-            for(int i = 0; i < _Columns.Length; i++)
+            for (int i = 0; i < _Columns.Length; i++)
             {
                 Type col_type = _Columns[i].GetType();
                 if (col_type == typeof(TableColumnText))
@@ -201,9 +199,9 @@ namespace BeautySalon
         {
             if (_Data == null) return "";
             string str = "";
-            for(int i = 0; i < _Data.Length; i++)
+            for (int i = 0; i < _Data.Length; i++)
             {
-                for(int j = 0; j < _Data[i].Length; j++)
+                for (int j = 0; j < _Data[i].Length; j++)
                 {
                     str += (j == 0 ? "" : "   ") + _Data[i][j].ToString();
                 }
@@ -235,7 +233,8 @@ namespace BeautySalon
             get { return _Data.Count; }
         }
 
-        public TableData() {
+        public TableData()
+        {
             _Data = new List<object[]>();
         }
 
@@ -257,35 +256,6 @@ namespace BeautySalon
         public void RemoveAt(int index)
         {
             _Data.RemoveAt(index);
-        }
-    }
-
-    public class TableAlias
-    {
-        private string _Name = "";
-        private string _Alias = "";
-
-        public string Name
-        {
-            get { return _Name; }
-            set { _Name = value; }
-        }
-        public string Alias
-        {
-            get { return _Alias; }
-            set { _Alias = value; }
-        }
-
-        public TableAlias(string name)
-        {
-            _Name = name;
-            _Alias = name;
-        }
-
-        public TableAlias(string name, string alias)
-        {
-            _Name = name;
-            _Alias = alias;
         }
     }
 

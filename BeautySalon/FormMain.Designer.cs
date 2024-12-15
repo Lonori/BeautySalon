@@ -45,7 +45,10 @@ namespace BeautySalon
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem22 = new System.Windows.Forms.ToolStripMenuItem();
+            this.themeProvider1 = new BeautySalon.Components.Themes.ThemeProvider();
+            this.materialTextBox1 = new BeautySalon.Components.MaterialTextBox();
             this.tableLayoutPanel1.SuspendLayout();
+            this.pageContainer.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,69 +75,66 @@ namespace BeautySalon
             // buttonStorage
             // 
             this.buttonStorage.AutoSize = true;
-            this.buttonStorage.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.buttonStorage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonStorage.FlatAppearance.BorderSize = 0;
             this.buttonStorage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonStorage.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonStorage.Location = new System.Drawing.Point(888, 0);
             this.buttonStorage.Margin = new System.Windows.Forms.Padding(0);
             this.buttonStorage.Name = "buttonStorage";
             this.buttonStorage.Size = new System.Drawing.Size(296, 42);
             this.buttonStorage.TabIndex = 3;
             this.buttonStorage.Text = "Склад";
-            this.buttonStorage.UseVisualStyleBackColor = false;
             this.buttonStorage.Click += new System.EventHandler(this.OpenStorage_Click);
             // 
             // buttonMaterials
             // 
             this.buttonMaterials.AutoSize = true;
-            this.buttonMaterials.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.buttonMaterials.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonMaterials.FlatAppearance.BorderSize = 0;
             this.buttonMaterials.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonMaterials.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonMaterials.Location = new System.Drawing.Point(592, 0);
             this.buttonMaterials.Margin = new System.Windows.Forms.Padding(0);
             this.buttonMaterials.Name = "buttonMaterials";
             this.buttonMaterials.Size = new System.Drawing.Size(296, 42);
             this.buttonMaterials.TabIndex = 1;
             this.buttonMaterials.Text = "Приход материалов";
-            this.buttonMaterials.UseVisualStyleBackColor = false;
             this.buttonMaterials.Click += new System.EventHandler(this.OpenMaterials_Click);
             // 
             // buttonNotes
             // 
             this.buttonNotes.AutoSize = true;
-            this.buttonNotes.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.buttonNotes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonNotes.FlatAppearance.BorderSize = 0;
             this.buttonNotes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonNotes.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonNotes.Location = new System.Drawing.Point(296, 0);
             this.buttonNotes.Margin = new System.Windows.Forms.Padding(0);
             this.buttonNotes.Name = "buttonNotes";
             this.buttonNotes.Size = new System.Drawing.Size(296, 42);
             this.buttonNotes.TabIndex = 4;
             this.buttonNotes.Text = "Записи";
-            this.buttonNotes.UseVisualStyleBackColor = false;
             this.buttonNotes.Click += new System.EventHandler(this.OpenNotes_Click);
             // 
             // buttonMain
             // 
             this.buttonMain.AutoSize = true;
-            this.buttonMain.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.buttonMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.buttonMain.FlatAppearance.BorderSize = 0;
             this.buttonMain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonMain.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.buttonMain.Location = new System.Drawing.Point(0, 0);
             this.buttonMain.Margin = new System.Windows.Forms.Padding(0);
             this.buttonMain.Name = "buttonMain";
             this.buttonMain.Size = new System.Drawing.Size(296, 42);
             this.buttonMain.TabIndex = 0;
             this.buttonMain.Text = "Главная";
-            this.buttonMain.UseVisualStyleBackColor = false;
             this.buttonMain.Click += new System.EventHandler(this.OpenMain_Click);
             // 
             // pageContainer
             // 
+            this.pageContainer.Controls.Add(this.materialTextBox1);
             this.pageContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pageContainer.Location = new System.Drawing.Point(0, 66);
             this.pageContainer.Name = "pageContainer";
@@ -143,16 +143,20 @@ namespace BeautySalon
             // 
             // menuStrip1
             // 
-            this.menuStrip1.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.menuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(180)))), ((int)(((byte)(207)))));
+            this.menuStrip1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.menuStrip1.ForeColor = System.Drawing.Color.Black;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
             this.toolStripMenuItem2});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.menuStrip1.Size = new System.Drawing.Size(1184, 24);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
+            this.themeProvider1.SetUseTheme(this.menuStrip1, true);
             // 
             // toolStripMenuItem1
             // 
@@ -168,28 +172,28 @@ namespace BeautySalon
             // toolStripMenuItem11
             // 
             this.toolStripMenuItem11.Name = "toolStripMenuItem11";
-            this.toolStripMenuItem11.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem11.Size = new System.Drawing.Size(144, 22);
             this.toolStripMenuItem11.Text = "Материалы";
             this.toolStripMenuItem11.Click += new System.EventHandler(this.toolStripMenuItem11_Click);
             // 
             // toolStripMenuItem12
             // 
             this.toolStripMenuItem12.Name = "toolStripMenuItem12";
-            this.toolStripMenuItem12.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem12.Size = new System.Drawing.Size(144, 22);
             this.toolStripMenuItem12.Text = "Сотрудники";
             this.toolStripMenuItem12.Click += new System.EventHandler(this.toolStripMenuItem12_Click);
             // 
             // toolStripMenuItem13
             // 
             this.toolStripMenuItem13.Name = "toolStripMenuItem13";
-            this.toolStripMenuItem13.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem13.Size = new System.Drawing.Size(144, 22);
             this.toolStripMenuItem13.Text = "Услуги";
             this.toolStripMenuItem13.Click += new System.EventHandler(this.toolStripMenuItem13_Click);
             // 
             // toolStripMenuItem14
             // 
             this.toolStripMenuItem14.Name = "toolStripMenuItem14";
-            this.toolStripMenuItem14.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem14.Size = new System.Drawing.Size(144, 22);
             this.toolStripMenuItem14.Text = "Поставщики";
             this.toolStripMenuItem14.Click += new System.EventHandler(this.toolStripMenuItem14_Click);
             // 
@@ -216,6 +220,24 @@ namespace BeautySalon
             this.toolStripMenuItem22.Text = "О программе";
             this.toolStripMenuItem22.Click += new System.EventHandler(this.toolStripMenuItem22_Click);
             // 
+            // materialTextBox1
+            // 
+            this.materialTextBox1.BorderColor = System.Drawing.Color.Gray;
+            this.materialTextBox1.BorderRadius = 6;
+            this.materialTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.materialTextBox1.FocusedBorderColor = System.Drawing.Color.Blue;
+            this.materialTextBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.materialTextBox1.HintText = "Hint text";
+            this.materialTextBox1.HintTextColor = System.Drawing.Color.Gray;
+            this.materialTextBox1.Location = new System.Drawing.Point(520, 304);
+            this.materialTextBox1.Name = "materialTextBox1";
+            this.materialTextBox1.Size = new System.Drawing.Size(340, 56);
+            this.materialTextBox1.TabIndex = 0;
+            this.materialTextBox1.Text = "materialTextBox1";
+            this.materialTextBox1.TextColor = System.Drawing.Color.Black;
+            this.materialTextBox1.TextPadding = new System.Windows.Forms.Padding(12, 6, 12, 6);
+            this.materialTextBox1.Type = BeautySalon.Components.MaterialTextBox.TextBoxType.Text;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -225,6 +247,7 @@ namespace BeautySalon
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ForeColor = System.Drawing.Color.Black;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -232,9 +255,11 @@ namespace BeautySalon
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "База: Салон Красоты";
+            this.themeProvider1.SetUseTheme(this, true);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.pageContainer.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -259,6 +284,8 @@ namespace BeautySalon
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem21;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem22;
+        private Components.Themes.ThemeProvider themeProvider1;
+        private Components.MaterialTextBox materialTextBox1;
     }
 }
 

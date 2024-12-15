@@ -46,6 +46,15 @@ namespace BeautySalon.DB
             }
         }
 
+        public void Close()
+        {
+            if (_connection != null)
+            {
+                _connection.Close();
+                _connection.Dispose();
+            }
+        }
+
         public static bool IsConnected()
         {
             if (_instance == null) return false;
@@ -53,15 +62,23 @@ namespace BeautySalon.DB
             return true;
         }
 
-        public static void Initialisation(string connectionString)
+        public static void Connect(string connectionString)
         {
             _connectionString = connectionString;
             _instance = new AppDatabase();
         }
 
-        public static void Initialisation(string host, string username, string passwd, int port = 3306)
+        public static void Connect(string host, string username, string passwd, int port = 3306)
         {
-            Initialisation("Server=" + host + "; Port=" + port + "; Uid=" + username + "; Pwd=" + passwd + "; CharSet=utf8mb4;");
+            Connect("Server=" + host + "; Port=" + port + "; Uid=" + username + "; Pwd=" + passwd + "; CharSet=utf8mb4;");
+        }
+
+        public static void Disconect()
+        {
+            if (_instance != null)
+            {
+                _instance.Close();
+            }
         }
 
         private void InitializeDatabase()

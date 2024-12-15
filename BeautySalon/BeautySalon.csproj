@@ -127,11 +127,21 @@
     <Compile Include="Components\MaterialButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\MaterialColors.cs" />
     <Compile Include="Components\MaterialTable.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Components\MaterialTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\MathExt.cs" />
+    <Compile Include="Components\Themes\ThemeProvider.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\Themes\ColorUtils.cs" />
+    <Compile Include="Components\Themes\ITheme.cs" />
+    <Compile Include="Components\Themes\ThemeDark.cs" />
+    <Compile Include="Components\Themes\ThemeLight.cs" />
+    <Compile Include="Components\Themes\ThemeManager.cs" />
     <Compile Include="Crutches.cs" />
     <Compile Include="Components\DrawHelper.cs" />
     <Compile Include="DB\DAO\AppointmentDAO.cs" />
@@ -191,12 +201,6 @@
     <Compile Include="FormTableEditor.designer.cs">
       <DependentUpon>FormTableEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="MaterialColorsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MaterialColorsForm.Designer.cs">
-      <DependentUpon>MaterialColorsForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="NoEventLabel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -206,10 +210,10 @@
     <Compile Include="PageContractMat.designer.cs">
       <DependentUpon>PageContractMat.cs</DependentUpon>
     </Compile>
-    <Compile Include="PageMain.cs">
+    <Compile Include="Pages\PageMain.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PageMain.designer.cs">
+    <Compile Include="Pages\PageMain.designer.cs">
       <DependentUpon>PageMain.cs</DependentUpon>
     </Compile>
     <Compile Include="PageMaterials.cs">
@@ -230,10 +234,10 @@
     <Compile Include="PageServices.designer.cs">
       <DependentUpon>PageServices.cs</DependentUpon>
     </Compile>
-    <Compile Include="PageStaff.cs">
+    <Compile Include="Pages\PageStaff.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PageStaff.designer.cs">
+    <Compile Include="Pages\PageStaff.designer.cs">
       <DependentUpon>PageStaff.cs</DependentUpon>
     </Compile>
     <Compile Include="PageStorage.cs">
@@ -283,7 +287,7 @@
     <EmbeddedResource Include="PageContractMat.resx">
       <DependentUpon>PageContractMat.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PageMain.resx">
+    <EmbeddedResource Include="Pages\PageMain.resx">
       <DependentUpon>PageMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PageMaterials.resx">
@@ -295,7 +299,7 @@
     <EmbeddedResource Include="PageServices.resx">
       <DependentUpon>PageServices.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PageStaff.resx">
+    <EmbeddedResource Include="Pages\PageStaff.resx">
       <DependentUpon>PageStaff.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PageStorage.resx">

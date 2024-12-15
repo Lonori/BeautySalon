@@ -1,14 +1,14 @@
-﻿using BeautySalon.DB;
+﻿using BeautySalon.Components.Themes;
+using BeautySalon.DB;
 using BeautySalon.DB.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BeautySalon
 {
-    public partial class PageMain : UserControl
+    public partial class PageMain : UserControl, IThemable
     {
         private readonly AppDatabase DB;
         private OleDbConnection DbConnection;
@@ -22,6 +22,7 @@ namespace BeautySalon
             DB = AppDatabase.GetInstance();
             this.DbConnection = DbConnection;
             InitializeComponent();
+
             materialTable1.TableHeaders = new List<string> { "Время", "ФИО", "Номер телефона", "Услуги", "Сотрудник", "Примечание" };
             curentTime.Text = FormatTodayDate();
 
@@ -71,35 +72,29 @@ namespace BeautySalon
             UpdateTable();
         }
 
+        public void ApplyTheme(ITheme theme)
+        {
+            BackColor = theme.ColorBackground;
+            ForeColor = theme.ColorForeground;
+            Font = theme.Font;
+            panelButtons.BackColor = theme.ColorBackgroungDark;
+        }
+
         private string FormatTodayDate()
         {
             DateTime now = DateTime.Now;
             string dayweek = "";
             switch (now.DayOfWeek)
             {
-                case DayOfWeek.Monday: dayweek = "Понедельник"; break;
-                case DayOfWeek.Tuesday: dayweek = "Вторник"; break;
-                case DayOfWeek.Wednesday: dayweek = "Среда"; break;
-                case DayOfWeek.Thursday: dayweek = "Четверг"; break;
-                case DayOfWeek.Friday: dayweek = "Пятница"; break;
-                case DayOfWeek.Saturday: dayweek = "Суббота"; break;
-                case DayOfWeek.Sunday: dayweek = "Воскресенье"; break;
+                case DayOfWeek.Monday: dayweek = "Пн"; break;
+                case DayOfWeek.Tuesday: dayweek = "Вт"; break;
+                case DayOfWeek.Wednesday: dayweek = "Ср"; break;
+                case DayOfWeek.Thursday: dayweek = "Чт"; break;
+                case DayOfWeek.Friday: dayweek = "Пт"; break;
+                case DayOfWeek.Saturday: dayweek = "Сб"; break;
+                case DayOfWeek.Sunday: dayweek = "Вс"; break;
             }
-            return "Сегодня: " + now.Day + " " + dayweek + " - " + now.Hour.ToString().PadLeft(2, '0') + ':' + now.Minute.ToString().PadLeft(2, '0') + ':' + now.Second.ToString().PadLeft(2, '0');
-        }
-
-        private string[] FormatTableNotes(object[] data)
-        {
-            string[] str_data = new string[]
-            {
-                 ((DateTime)data[0]).ToShortTimeString(),
-                 data[1].ToString(),
-                 data[2].ToString(),
-                 data[3].ToString(),
-                 data[4].ToString(),
-                 data[5].ToString(),
-            };
-            return str_data;
+            return dayweek + " " + now.Day + "/" + now.Month + "/" + now.Year + " " + now.Hour.ToString().PadLeft(2, '0') + ':' + now.Minute.ToString().PadLeft(2, '0') + ':' + now.Second.ToString().PadLeft(2, '0');
         }
 
         private void UpdateStatistic()

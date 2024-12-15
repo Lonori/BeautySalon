@@ -18,11 +18,10 @@
         protected Color _colorBorder = Color.Gray;
         protected Color _colorHeader = Color.CornflowerBlue;
         protected Color _colorTextHeader = Color.White;
-        protected Color _colorRowPrimary = Color.White;
-        protected Color _colorRowSecondary = Color.WhiteSmoke;
         protected Color _colorHover = Color.LightBlue;
         protected Color _colorSelect = Color.Blue;
         protected TableStyle _style = TableStyle.Basic;
+        protected bool _stripedRows = true;
 
         private Rectangle _tableHeader = new Rectangle();
         private Rectangle[] _tableRows = null;
@@ -33,14 +32,6 @@
         public MaterialTable()
         {
             DoubleBuffered = true;
-            BackColor = MaterialColors.ContrastLight;
-            ForeColor = MaterialColors.ContrastDark;
-            _colorHeader = MaterialColors.PrimaryDark;
-            _colorTextHeader = MaterialColors.ContrastLight;
-            _colorRowPrimary = MaterialColors.ContrastLight;
-            _colorRowSecondary = MaterialColors.SecondaryLight;
-            _colorHover = MaterialColors.HoverLight;
-            _colorSelect = MaterialColors.SelectLight;
 
             if (LicenseManager.UsageMode == LicenseUsageMode.Designtime || DesignMode)
             {
@@ -160,28 +151,6 @@
         }
 
         [Browsable(true)]
-        public Color ColorRowPrimary
-        {
-            get { return _colorRowPrimary; }
-            set
-            {
-                _colorRowPrimary = value;
-                Invalidate();
-            }
-        }
-
-        [Browsable(true)]
-        public Color ColorRowSecondary
-        {
-            get { return _colorRowSecondary; }
-            set
-            {
-                _colorRowSecondary = value;
-                Invalidate();
-            }
-        }
-
-        [Browsable(true)]
         public Color ColorHover
         {
             get { return _colorHover; }
@@ -213,6 +182,19 @@
                 Invalidate();
             }
         }
+
+        [Browsable(true)]
+        [DefaultValue(true)]
+        public bool StripedRows
+        {
+            get { return _stripedRows; }
+            set
+            {
+                _stripedRows = value;
+                Invalidate();
+            }
+        }
+
 
         [Browsable(false)]
         public int SelectedRow
@@ -422,8 +404,8 @@
 
             using (SolidBrush brushHover = new SolidBrush(_colorHover))
             using (SolidBrush brushSelect = new SolidBrush(_colorSelect))
-            using (SolidBrush brushBgPrimary = new SolidBrush(_colorRowPrimary))
-            using (SolidBrush brushBgSecondary = new SolidBrush(_colorRowSecondary))
+            using (SolidBrush brushBgPrimary = new SolidBrush(Color.FromArgb(0, 122, 122, 122)))
+            using (SolidBrush brushBgSecondary = new SolidBrush(Color.FromArgb(20, 122, 122, 122)))
             using (Pen pen = new Pen(_colorBorder))
             {
                 for (int row = 0; row < TableData.Count; row++)
@@ -438,13 +420,13 @@
                     {
                         g.FillRectangle(brushSelect, rowRect);
                     }
-                    else if (row % 2 == 0)
+                    else if (row % 2 == 1 && _stripedRows)
                     {
-                        g.FillRectangle(brushBgPrimary, rowRect);
+                        g.FillRectangle(brushBgSecondary, rowRect);
                     }
                     else
                     {
-                        g.FillRectangle(brushBgSecondary, rowRect);
+                        g.FillRectangle(brushBgPrimary, rowRect);
                     }
 
                     int xOffset = 0;

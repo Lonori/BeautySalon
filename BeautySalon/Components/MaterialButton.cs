@@ -76,16 +76,16 @@
             switch (_style)
             {
                 case ButtonStyle.Basic:
-                    DrawButton(g, buttonRect, BackColor, ForeColor, false, false);
+                    DrawButton(g, buttonRect, false, false);
                     break;
                 case ButtonStyle.Raised:
-                    DrawButton(g, buttonRect, BackColor, ForeColor, false, true);
+                    DrawButton(g, buttonRect, false, true);
                     break;
                 case ButtonStyle.Stroked:
-                    DrawButton(g, buttonRect, BackColor, ForeColor, true, false);
+                    DrawButton(g, buttonRect, true, false);
                     break;
                 case ButtonStyle.Flat:
-                    DrawButton(g, buttonRect, BackColor, ForeColor, false, false);
+                    DrawButton(g, buttonRect, false, false);
                     break;
             }
         }
@@ -125,32 +125,34 @@
 
         private void ColourDistribution()
         {
+            Color back = BackColor;
+            Color fore = ForeColor;
             switch (_style)
             {
                 case ButtonStyle.Basic:
-                    BackColor = MaterialColors.SecondaryLight;
-                    ForeColor = MaterialColors.PrimaryDark;
+                    BackColor = fore;
+                    ForeColor = back;
                     break;
                 case ButtonStyle.Raised:
-                    BackColor = MaterialColors.PrimaryDark;
-                    ForeColor = MaterialColors.SecondaryLight;
+                    BackColor = back;
+                    ForeColor = fore;
                     break;
                 case ButtonStyle.Stroked:
-                    BackColor = MaterialColors.SecondaryLight;
-                    ForeColor = MaterialColors.PrimaryDark;
+                    BackColor = fore;
+                    ForeColor = back;
                     break;
                 case ButtonStyle.Flat:
-                    BackColor = MaterialColors.PrimaryDark;
-                    ForeColor = MaterialColors.SecondaryLight;
+                    BackColor = back;
+                    ForeColor = fore;
                     break;
                 default:
-                    BackColor = MaterialColors.PrimaryDark;
-                    ForeColor = MaterialColors.SecondaryLight;
+                    BackColor = back;
+                    ForeColor = fore;
                     break;
             }
         }
 
-        private void DrawButton(Graphics g, Rectangle clientRect, Color primary, Color secondary, bool stroked, bool shadow)
+        private void DrawButton(Graphics g, Rectangle clientRect, bool stroked, bool shadow)
         {
             if (shadow)
             {
@@ -166,7 +168,7 @@
             GraphicsPath rectPath = DrawHelper.CreateRoundRect(rect, _cornerRadius);
 
             if (shadow) DrawHelper.DrawSquareShadow(g, rect, _cornerRadius);
-            using (SolidBrush brush = new SolidBrush(primary))
+            using (SolidBrush brush = new SolidBrush(BackColor))
             {
                 g.FillPath(brush, rectPath);
             }
@@ -177,14 +179,14 @@
                     g.DrawPath(pen, rectPath);
                 }
             }
-            using (SolidBrush brush = new SolidBrush(Color.FromArgb(60, secondary)))
+            using (SolidBrush brush = new SolidBrush(Color.FromArgb(60, ForeColor)))
             {
                 if (Hovered) g.FillPath(brush, rectPath);
                 if (Activated) g.FillPath(brush, rectPath);
             }
 
             TextFormatFlags alignment = TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter;
-            TextRenderer.DrawText(g, Text, Font, clientRect, secondary, alignment);
+            TextRenderer.DrawText(g, Text, Font, clientRect, ForeColor, alignment);
         }
 
         public enum ButtonStyle

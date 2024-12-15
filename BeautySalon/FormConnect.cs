@@ -36,13 +36,14 @@ namespace BeautySalon
                         coun++;
                     }
                     save_login_check.Checked = true;
+                    sr.Close();
                 }
             }
             catch
             { }
         }
 
-        private void connect_Click(object sender, EventArgs e)
+        private void Connect_Click(object sender, EventArgs e)
         {
             string host;
             string username;
@@ -90,6 +91,7 @@ namespace BeautySalon
                     using (StreamWriter sw = new StreamWriter("auth", false, System.Text.Encoding.UTF8))
                     {
                         sw.WriteLine(auth_file_data);
+                        sw.Close();
                     }
                 }
                 catch (Exception err)
@@ -103,7 +105,7 @@ namespace BeautySalon
 
             try
             {
-                AppDatabase.Initialisation(host, username, password, port);
+                AppDatabase.Connect(host, username, password, port);
                 Cursor = Cursors.Default;
                 Close();
             }
@@ -116,12 +118,12 @@ namespace BeautySalon
             }
         }
 
-        private void button1_MouseDown(object sender, MouseEventArgs e)
+        private void ButtonShow_MouseDown(object sender, MouseEventArgs e)
         {
             input_pass.UseSystemPasswordChar = false;
         }
 
-        private void button1_MouseUp(object sender, MouseEventArgs e)
+        private void ButtonShow_MouseUp(object sender, MouseEventArgs e)
         {
             input_pass.UseSystemPasswordChar = true;
         }

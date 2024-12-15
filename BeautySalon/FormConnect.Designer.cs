@@ -39,8 +39,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.save_login_check = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonShow = new System.Windows.Forms.Button();
             this.buttonConnect = new BeautySalon.Components.MaterialButton();
+            this.themeProvider1 = new BeautySalon.Components.Themes.ThemeProvider();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +53,7 @@
             this.label_host.Location = new System.Drawing.Point(0, 0);
             this.label_host.Margin = new System.Windows.Forms.Padding(0);
             this.label_host.Name = "label_host";
-            this.label_host.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.label_host.Padding = new System.Windows.Forms.Padding(3);
             this.label_host.Size = new System.Drawing.Size(134, 36);
             this.label_host.TabIndex = 0;
             this.label_host.Text = "Хост:";
@@ -65,7 +66,7 @@
             this.label_user.Location = new System.Drawing.Point(0, 36);
             this.label_user.Margin = new System.Windows.Forms.Padding(0);
             this.label_user.Name = "label_user";
-            this.label_user.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.label_user.Padding = new System.Windows.Forms.Padding(3);
             this.label_user.Size = new System.Drawing.Size(134, 36);
             this.label_user.TabIndex = 0;
             this.label_user.Text = "Пользователь:";
@@ -78,7 +79,7 @@
             this.label_pass.Location = new System.Drawing.Point(0, 72);
             this.label_pass.Margin = new System.Windows.Forms.Padding(0);
             this.label_pass.Name = "label_pass";
-            this.label_pass.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.label_pass.Padding = new System.Windows.Forms.Padding(3);
             this.label_pass.Size = new System.Drawing.Size(134, 36);
             this.label_pass.TabIndex = 1;
             this.label_pass.Text = "Пароль:";
@@ -128,8 +129,8 @@
             this.label_status.Margin = new System.Windows.Forms.Padding(0);
             this.label_status.MaximumSize = new System.Drawing.Size(383, 0);
             this.label_status.Name = "label_status";
-            this.label_status.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.label_status.Size = new System.Drawing.Size(383, 0);
+            this.label_status.Padding = new System.Windows.Forms.Padding(3);
+            this.label_status.Size = new System.Drawing.Size(383, 75);
             this.label_status.TabIndex = 4;
             // 
             // tableLayoutPanel1
@@ -169,7 +170,7 @@
             this.save_login_check.Location = new System.Drawing.Point(212, 108);
             this.save_login_check.Margin = new System.Windows.Forms.Padding(0);
             this.save_login_check.Name = "save_login_check";
-            this.save_login_check.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.save_login_check.Padding = new System.Windows.Forms.Padding(3);
             this.save_login_check.Size = new System.Drawing.Size(172, 28);
             this.save_login_check.TabIndex = 5;
             this.save_login_check.Text = "Запомнить данные";
@@ -179,31 +180,31 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.buttonShow);
             this.panel1.Controls.Add(this.input_pass);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(139, 75);
-            this.panel1.Margin = new System.Windows.Forms.Padding(5, 3, 3, 4);
+            this.panel1.Location = new System.Drawing.Point(137, 76);
+            this.panel1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(242, 29);
+            this.panel1.Size = new System.Drawing.Size(244, 29);
             this.panel1.TabIndex = 6;
             // 
-            // button1
+            // buttonShow
             // 
-            this.button1.BackColor = System.Drawing.Color.Transparent;
-            this.button1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.Location = new System.Drawing.Point(214, 0);
-            this.button1.Margin = new System.Windows.Forms.Padding(0);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(26, 27);
-            this.button1.TabIndex = 3;
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.button1_MouseDown);
-            this.button1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.button1_MouseUp);
+            this.buttonShow.BackColor = System.Drawing.Color.Transparent;
+            this.buttonShow.Dock = System.Windows.Forms.DockStyle.Right;
+            this.buttonShow.FlatAppearance.BorderColor = System.Drawing.SystemColors.Window;
+            this.buttonShow.FlatAppearance.BorderSize = 0;
+            this.buttonShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonShow.Image = ((System.Drawing.Image)(resources.GetObject("buttonShow.Image")));
+            this.buttonShow.Location = new System.Drawing.Point(216, 0);
+            this.buttonShow.Margin = new System.Windows.Forms.Padding(0);
+            this.buttonShow.Name = "buttonShow";
+            this.buttonShow.Size = new System.Drawing.Size(26, 27);
+            this.buttonShow.TabIndex = 3;
+            this.buttonShow.UseVisualStyleBackColor = false;
+            this.buttonShow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ButtonShow_MouseDown);
+            this.buttonShow.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ButtonShow_MouseUp);
             // 
             // buttonConnect
             // 
@@ -211,29 +212,34 @@
             this.tableLayoutPanel1.SetColumnSpan(this.buttonConnect, 2);
             this.buttonConnect.CornerRadius = 8;
             this.buttonConnect.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.buttonConnect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(252)))));
-            this.buttonConnect.Location = new System.Drawing.Point(140, 217);
+            this.buttonConnect.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.buttonConnect.ForeColor = System.Drawing.Color.White;
+            this.buttonConnect.Location = new System.Drawing.Point(6, 217);
             this.buttonConnect.Margin = new System.Windows.Forms.Padding(6);
             this.buttonConnect.Name = "buttonConnect";
-            this.buttonConnect.Size = new System.Drawing.Size(238, 38);
+            this.buttonConnect.Size = new System.Drawing.Size(372, 38);
             this.buttonConnect.Style = BeautySalon.Components.MaterialButton.ButtonStyle.Flat;
             this.buttonConnect.TabIndex = 7;
             this.buttonConnect.Text = "Подключиться";
-            this.buttonConnect.Click += new System.EventHandler(this.connect_Click);
+            this.themeProvider1.SetUseTheme(this.buttonConnect, true);
+            this.buttonConnect.Click += new System.EventHandler(this.Connect_Click);
             // 
             // FormConnect
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(27)))), ((int)(((byte)(28)))));
             this.ClientSize = new System.Drawing.Size(384, 261);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.Name = "FormConnect";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "DB Viewer";
+            this.Text = "Подключение";
+            this.themeProvider1.SetUseTheme(this, true);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -254,7 +260,8 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.CheckBox save_login_check;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonShow;
         private Components.MaterialButton buttonConnect;
+        private Components.Themes.ThemeProvider themeProvider1;
     }
 }

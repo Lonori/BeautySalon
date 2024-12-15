@@ -150,8 +150,6 @@ namespace BeautySalon
             this.materialTable1.ColorBorder = System.Drawing.Color.Gray;
             this.materialTable1.ColorHeader = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(69)))), ((int)(((byte)(136)))));
             this.materialTable1.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(232)))), ((int)(((byte)(255)))));
-            this.materialTable1.ColorRowPrimary = System.Drawing.Color.White;
-            this.materialTable1.ColorRowSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(252)))));
             this.materialTable1.ColorSelect = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(201)))), ((int)(((byte)(255)))));
             this.materialTable1.ColorTextHeader = System.Drawing.Color.White;
             this.materialTable1.ColumnWeights = new int[] {

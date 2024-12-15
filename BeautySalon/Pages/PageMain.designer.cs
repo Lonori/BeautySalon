@@ -54,6 +54,7 @@ namespace BeautySalon
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.themeProvider1 = new BeautySalon.Components.Themes.ThemeProvider();
             this.panelNotes.SuspendLayout();
             this.panelButtons.SuspendLayout();
             this.buttonBody.SuspendLayout();
@@ -65,7 +66,6 @@ namespace BeautySalon
             // panelNotes
             // 
             this.panelNotes.Controls.Add(this.materialTable1);
-            this.panelNotes.Controls.Add(this.curentTime);
             this.panelNotes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelNotes.Location = new System.Drawing.Point(300, 0);
             this.panelNotes.Margin = new System.Windows.Forms.Padding(9, 10, 9, 10);
@@ -75,22 +75,21 @@ namespace BeautySalon
             // 
             // materialTable1
             // 
-            this.materialTable1.BackColor = System.Drawing.Color.White;
+            this.materialTable1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.materialTable1.CellMaximumSize = new System.Drawing.Size(0, 0);
             this.materialTable1.CellMinimumSize = new System.Drawing.Size(0, 0);
             this.materialTable1.CellPadding = new System.Windows.Forms.Padding(8);
             this.materialTable1.ColorBorder = System.Drawing.Color.Gray;
             this.materialTable1.ColorHeader = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(69)))), ((int)(((byte)(136)))));
-            this.materialTable1.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(232)))), ((int)(((byte)(255)))));
-            this.materialTable1.ColorRowPrimary = System.Drawing.Color.White;
-            this.materialTable1.ColorRowSecondary = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(252)))));
-            this.materialTable1.ColorSelect = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(201)))), ((int)(((byte)(255)))));
+            this.materialTable1.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(217)))), ((int)(((byte)(231)))));
+            this.materialTable1.ColorSelect = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(162)))), ((int)(((byte)(195)))));
             this.materialTable1.ColorTextHeader = System.Drawing.Color.White;
             this.materialTable1.ColumnWeights = new int[] {
         0};
             this.materialTable1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.materialTable1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.materialTable1.ForeColor = System.Drawing.Color.Black;
-            this.materialTable1.Location = new System.Drawing.Point(0, 44);
+            this.materialTable1.Location = new System.Drawing.Point(0, 0);
             this.materialTable1.Margin = new System.Windows.Forms.Padding(0);
             this.materialTable1.Name = "materialTable1";
             this.materialTable1.Size = new System.Drawing.Size(600, 111);
@@ -99,37 +98,42 @@ namespace BeautySalon
             this.materialTable1.TableData = ((System.Collections.Generic.List<System.Collections.Generic.List<string>>)(resources.GetObject("materialTable1.TableData")));
             this.materialTable1.TableHeaders = ((System.Collections.Generic.List<string>)(resources.GetObject("materialTable1.TableHeaders")));
             this.materialTable1.Text = "materialTable1";
+            this.themeProvider1.SetUseTheme(this.materialTable1, true);
             // 
             // curentTime
             // 
             this.curentTime.AutoSize = true;
-            this.curentTime.Dock = System.Windows.Forms.DockStyle.Top;
+            this.curentTime.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.curentTime.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.curentTime.Location = new System.Drawing.Point(0, 0);
+            this.curentTime.Location = new System.Drawing.Point(0, 286);
             this.curentTime.Margin = new System.Windows.Forms.Padding(0);
             this.curentTime.Name = "curentTime";
             this.curentTime.Padding = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.curentTime.Size = new System.Drawing.Size(87, 44);
+            this.curentTime.Size = new System.Drawing.Size(300, 44);
             this.curentTime.TabIndex = 1;
             this.curentTime.Text = "00:00";
+            this.curentTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panelButtons
             // 
-            this.panelButtons.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panelButtons.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.panelButtons.Controls.Add(this.buttonBody);
             this.panelButtons.Controls.Add(this.tableLayoutPanel1);
             this.panelButtons.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelButtons.ForeColor = System.Drawing.Color.Black;
             this.panelButtons.Location = new System.Drawing.Point(0, 0);
             this.panelButtons.Margin = new System.Windows.Forms.Padding(0);
             this.panelButtons.Name = "panelButtons";
             this.panelButtons.Size = new System.Drawing.Size(300, 500);
             this.panelButtons.TabIndex = 1;
+            this.themeProvider1.SetUseTheme(this.panelButtons, true);
             // 
             // buttonBody
             // 
             this.buttonBody.ColumnCount = 1;
             this.buttonBody.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.buttonBody.Controls.Add(this.materialButton1, 0, 0);
+            this.buttonBody.Controls.Add(this.curentTime, 0, 3);
             this.buttonBody.Controls.Add(this.materialButton2, 0, 1);
             this.buttonBody.Controls.Add(this.materialButton3, 0, 2);
             this.buttonBody.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -150,7 +154,8 @@ namespace BeautySalon
             // 
             this.materialButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(69)))), ((int)(((byte)(136)))));
             this.materialButton1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.materialButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(252)))));
+            this.materialButton1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.materialButton1.ForeColor = System.Drawing.Color.White;
             this.materialButton1.Location = new System.Drawing.Point(5, 6);
             this.materialButton1.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.materialButton1.Name = "materialButton1";
@@ -158,13 +163,15 @@ namespace BeautySalon
             this.materialButton1.Style = BeautySalon.Components.MaterialButton.ButtonStyle.Flat;
             this.materialButton1.TabIndex = 3;
             this.materialButton1.Text = "Добавить запись";
+            this.themeProvider1.SetUseTheme(this.materialButton1, true);
             this.materialButton1.Click += new System.EventHandler(this.ButtonInsert_Click);
             // 
             // materialButton2
             // 
             this.materialButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(69)))), ((int)(((byte)(136)))));
             this.materialButton2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.materialButton2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(252)))));
+            this.materialButton2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.materialButton2.ForeColor = System.Drawing.Color.White;
             this.materialButton2.Location = new System.Drawing.Point(5, 66);
             this.materialButton2.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.materialButton2.Name = "materialButton2";
@@ -172,13 +179,15 @@ namespace BeautySalon
             this.materialButton2.Style = BeautySalon.Components.MaterialButton.ButtonStyle.Flat;
             this.materialButton2.TabIndex = 4;
             this.materialButton2.Text = "Выполнено";
+            this.themeProvider1.SetUseTheme(this.materialButton2, true);
             this.materialButton2.Click += new System.EventHandler(this.ButtonComplete_Click);
             // 
             // materialButton3
             // 
             this.materialButton3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(69)))), ((int)(((byte)(136)))));
             this.materialButton3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.materialButton3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(252)))));
+            this.materialButton3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.materialButton3.ForeColor = System.Drawing.Color.White;
             this.materialButton3.Location = new System.Drawing.Point(5, 126);
             this.materialButton3.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
             this.materialButton3.Name = "materialButton3";
@@ -186,6 +195,7 @@ namespace BeautySalon
             this.materialButton3.Style = BeautySalon.Components.MaterialButton.ButtonStyle.Flat;
             this.materialButton3.TabIndex = 5;
             this.materialButton3.Text = "Отменить";
+            this.themeProvider1.SetUseTheme(this.materialButton3, true);
             this.materialButton3.Click += new System.EventHandler(this.ButtonDelete_Click);
             // 
             // tableLayoutPanel1
@@ -207,7 +217,6 @@ namespace BeautySalon
             // 
             // monthCalendar1
             // 
-            this.monthCalendar1.ForeColor = System.Drawing.SystemColors.WindowText;
             this.monthCalendar1.Location = new System.Drawing.Point(68, 4);
             this.monthCalendar1.Margin = new System.Windows.Forms.Padding(4);
             this.monthCalendar1.MaxDate = new System.DateTime(2100, 12, 31, 0, 0, 0, 0);
@@ -385,19 +394,21 @@ namespace BeautySalon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(27)))), ((int)(((byte)(28)))));
             this.Controls.Add(this.panelNotes);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panelButtons);
             this.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ForeColor = System.Drawing.Color.White;
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "PageMain";
             this.Size = new System.Drawing.Size(900, 500);
+            this.themeProvider1.SetUseTheme(this, true);
             this.panelNotes.ResumeLayout(false);
-            this.panelNotes.PerformLayout();
             this.panelButtons.ResumeLayout(false);
             this.panelButtons.PerformLayout();
             this.buttonBody.ResumeLayout(false);
+            this.buttonBody.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -431,5 +442,6 @@ namespace BeautySalon
         private Components.MaterialButton materialButton2;
         private Components.MaterialButton materialButton3;
         private Components.MaterialTable materialTable1;
+        private Components.Themes.ThemeProvider themeProvider1;
     }
 }

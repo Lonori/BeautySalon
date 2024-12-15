@@ -66,7 +66,7 @@ namespace BeautySalon.DB.DAO
             const string query = @"
                 SELECT
                     `id`, `full_name`, `birthday`, `date_join`, `date_leave`, `position`
-                FROM `staff
+                FROM `staff`
                 WHERE `id` = @id";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
