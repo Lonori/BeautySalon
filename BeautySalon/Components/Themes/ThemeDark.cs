@@ -21,6 +21,6 @@ namespace BeautySalon.Components.Themes
         public Color InfoColor => Color.FromArgb(33, 150, 243);
         public Font Font => new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
         public MaterialButton.ButtonStyle ButtonStyle => MaterialButton.ButtonStyle.Flat;
-        public MaterialTable.TableStyle TableStyle => MaterialTable.TableStyle.Flat;
+        public MaterialTable.TableStyle TableStyle => MaterialTable.TableStyle.Basic;
     }
 }

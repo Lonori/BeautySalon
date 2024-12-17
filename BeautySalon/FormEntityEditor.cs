@@ -109,6 +109,7 @@ namespace BeautySalon
             }
             else if (
                 property.PropertyType == typeof(int) ||
+                property.PropertyType == typeof(float) ||
                 property.PropertyType == typeof(double) ||
                 property.PropertyType == typeof(string) ||
                 property.PropertyType.IsEnum

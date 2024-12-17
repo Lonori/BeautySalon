@@ -12,6 +12,7 @@ namespace BeautySalon.DB.Entities
         public string Name { get; set; }
 
         [DisplayName("Юр. Адрес")]
+        [TextMultiline]
         public string Address { get; set; }
 
         [DisplayName("ИНН")]

@@ -124,6 +124,7 @@ namespace BeautySalon
             // 
             // panel2
             // 
+            this.panel2.AutoScroll = true;
             this.panel2.Controls.Add(this.viewTableData);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
@@ -145,7 +146,7 @@ namespace BeautySalon
             this.viewTableData.ColorTextHeader = System.Drawing.Color.White;
             this.viewTableData.ColumnWeights = new int[] {
         0};
-            this.viewTableData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.viewTableData.Dock = System.Windows.Forms.DockStyle.Top;
             this.viewTableData.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.viewTableData.ForeColor = System.Drawing.Color.Black;
             this.viewTableData.Location = new System.Drawing.Point(0, 0);

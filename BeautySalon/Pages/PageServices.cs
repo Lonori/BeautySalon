@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.OleDb;
 using System.Reflection;
 using System.Windows.Forms;
 using BeautySalon.DB;
@@ -8,13 +9,12 @@ using BeautySalon.DB.Entities;
 
 namespace BeautySalon
 {
-    public partial class PageSuppliers : UserControl
+    public partial class PageServices : UserControl
     {
         private readonly AppDatabase _DB;
-        private List<Supplier> suppliers;
+        private List<Service> services;
 
-
-        public PageSuppliers()
+        public PageServices()
         {
             _DB = AppDatabase.GetInstance();
             InitializeComponent();
@@ -27,28 +27,26 @@ namespace BeautySalon
         {
             List<string> headers = new List<string>();
 
-            foreach (PropertyInfo property in typeof(Supplier).GetProperties())
+            foreach (PropertyInfo property in typeof(Service).GetProperties())
             {
                 headers.Add(property.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? property.Name);
             }
 
             viewTableData.TableHeaders = headers;
-            viewTableData.ColumnWeights = new int[] { 0, 1, 2 };
+            viewTableData.ColumnWeights = new int[] { 0, 4, 1 };
         }
 
         private async void UpdateTable()
         {
-            suppliers = await _DB.SupplierDAO.GetAll();
+            services = await _DB.ServiceDAO.GetAll();
             List<List<string>> tableData = new List<List<string>>();
 
-            foreach (Supplier supplier in suppliers)
+            foreach (Service service in services)
             {
                 tableData.Add(new List<string>{
-                    supplier.Id.ToString(),
-                    supplier.Name,
-                    supplier.Address,
-                    supplier.INN,
-                    supplier.KPP.ToString()
+                    service.Id.ToString(),
+                    service.Name,
+                    service.Price.ToString()
                 });
             }
 
@@ -57,19 +55,19 @@ namespace BeautySalon
 
         private async void ButtonInsert_Click(object sender, EventArgs e)
         {
-            Supplier supplier = new Supplier()
+            Service service = new Service()
             {
-                Id = await _DB.SupplierDAO.GetNewId()
+                Id = await _DB.ServiceDAO.GetNewId()
             };
 
-            FormEntityEditor editor = new FormEntityEditor("Добавить", supplier);
+            FormEntityEditor editor = new FormEntityEditor("Добавить", service);
             editor.ShowDialog();
 
             if (editor.Confirmed)
             {
                 try
                 {
-                    await _DB.SupplierDAO.Insert(supplier);
+                    await _DB.ServiceDAO.Insert(service);
 
                     UpdateTable();
                 }
@@ -90,17 +88,17 @@ namespace BeautySalon
                 return;
             }
 
-            Supplier supplier = suppliers[viewTableData.SelectedRow];
-            int oldId = supplier.Id;
+            Service service = services[viewTableData.SelectedRow];
+            int oldId = service.Id;
 
-            FormEntityEditor editor = new FormEntityEditor("Изменить", supplier);
+            FormEntityEditor editor = new FormEntityEditor("Изменить", service);
             editor.ShowDialog();
 
             if (editor.Confirmed)
             {
                 try
                 {
-                    await _DB.SupplierDAO.Update(supplier, oldId);
+                    await _DB.ServiceDAO.Update(service, oldId);
 
                     UpdateTable();
                 }
@@ -121,12 +119,12 @@ namespace BeautySalon
                 return;
             }
 
-            Supplier supplier = suppliers[viewTableData.SelectedRow];
-            if (AlertBox.ConfirmWarn("Вы действительно хотите удалить поставщика " + supplier.Name + "?") == DialogResult.OK)
+            Service service = services[viewTableData.SelectedRow];
+            if (AlertBox.ConfirmWarn("Вы действительно хотите удалить услугу " + service.Name + "?") == DialogResult.OK)
             {
                 try
                 {
-                    await _DB.SupplierDAO.Delete(supplier.Id);
+                    await _DB.ServiceDAO.Delete(service.Id);
                     viewTableData.SelectedRow = -1;
 
                     UpdateTable();
@@ -136,7 +134,6 @@ namespace BeautySalon
                     AlertBox.Error("Ошибка при удалении записи:\n" + ex.Message);
                 }
             }
-
         }
     }
 }

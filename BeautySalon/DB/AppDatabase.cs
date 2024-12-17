@@ -10,7 +10,8 @@ namespace BeautySalon.DB
         private static AppDatabase _instance;
         private static string _connectionString;
         private readonly MySqlConnection _connection;
-        public readonly OrderDAO AppointmentDAO;
+        public readonly MaterialDAO MaterialDAO;
+        public readonly OrderDAO OrderDAO;
         public readonly ServiceDAO ServiceDAO;
         public readonly StaffDAO StaffDAO;
         public readonly SupplierDAO SupplierDAO;
@@ -31,7 +32,8 @@ namespace BeautySalon.DB
 
             InitializeDatabase();
             _connection.ChangeDatabase("salon");
-            AppointmentDAO = new OrderDAO(_connection);
+            MaterialDAO = new MaterialDAO(_connection);
+            OrderDAO = new OrderDAO(_connection);
             ServiceDAO = new ServiceDAO(_connection);
             StaffDAO = new StaffDAO(_connection);
             SupplierDAO = new SupplierDAO(_connection);

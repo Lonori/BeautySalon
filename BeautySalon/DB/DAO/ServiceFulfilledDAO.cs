@@ -12,7 +12,7 @@ namespace BeautySalon.DB.DAO
         protected override void InitializeTable()
         {
             const string query = @"
-                CREATE TABLE `services_fulfilled` (
+                CREATE TABLE IF NOT EXISTS `services_fulfilled` (
                     `order_id` int(11) NOT NULL,
                     `service_id` int(11) NOT NULL,
                     `price` float NOT NULL,

@@ -133,7 +133,7 @@ namespace BeautySalon
         private async void UpdateTable()
         {
             UpdateStatistic();
-            List<Order> appointments = await DB.AppointmentDAO.GetByPeriod(DateTime.Today, DateTime.Today.AddDays(1));
+            List<Order> appointments = await DB.OrderDAO.GetByPeriod(DateTime.Today, DateTime.Today.AddDays(1));
             List<List<string>> tableData = new List<List<string>>();
 
             foreach (Order appointment in appointments)

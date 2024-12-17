@@ -8,13 +8,12 @@ using BeautySalon.DB.Entities;
 
 namespace BeautySalon
 {
-    public partial class PageSuppliers : UserControl
+    public partial class PageMaterials : UserControl
     {
         private readonly AppDatabase _DB;
-        private List<Supplier> suppliers;
+        private List<Material> materials;
 
-
-        public PageSuppliers()
+        public PageMaterials()
         {
             _DB = AppDatabase.GetInstance();
             InitializeComponent();
@@ -27,28 +26,26 @@ namespace BeautySalon
         {
             List<string> headers = new List<string>();
 
-            foreach (PropertyInfo property in typeof(Supplier).GetProperties())
+            foreach (PropertyInfo property in typeof(Material).GetProperties())
             {
                 headers.Add(property.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? property.Name);
             }
 
             viewTableData.TableHeaders = headers;
-            viewTableData.ColumnWeights = new int[] { 0, 1, 2 };
+            viewTableData.ColumnWeights = new int[] { 0, 4, 1 };
         }
 
         private async void UpdateTable()
         {
-            suppliers = await _DB.SupplierDAO.GetAll();
+            materials = await _DB.MaterialDAO.GetAll();
             List<List<string>> tableData = new List<List<string>>();
 
-            foreach (Supplier supplier in suppliers)
+            foreach (Material material in materials)
             {
                 tableData.Add(new List<string>{
-                    supplier.Id.ToString(),
-                    supplier.Name,
-                    supplier.Address,
-                    supplier.INN,
-                    supplier.KPP.ToString()
+                    material.Id.ToString(),
+                    material.Name,
+                    material.Price.ToString()
                 });
             }
 
@@ -57,19 +54,19 @@ namespace BeautySalon
 
         private async void ButtonInsert_Click(object sender, EventArgs e)
         {
-            Supplier supplier = new Supplier()
+            Material material = new Material()
             {
-                Id = await _DB.SupplierDAO.GetNewId()
+                Id = await _DB.MaterialDAO.GetNewId()
             };
 
-            FormEntityEditor editor = new FormEntityEditor("Добавить", supplier);
+            FormEntityEditor editor = new FormEntityEditor("Добавить", material);
             editor.ShowDialog();
 
             if (editor.Confirmed)
             {
                 try
                 {
-                    await _DB.SupplierDAO.Insert(supplier);
+                    await _DB.MaterialDAO.Insert(material);
 
                     UpdateTable();
                 }
@@ -90,17 +87,17 @@ namespace BeautySalon
                 return;
             }
 
-            Supplier supplier = suppliers[viewTableData.SelectedRow];
-            int oldId = supplier.Id;
+            Material material = materials[viewTableData.SelectedRow];
+            int oldId = material.Id;
 
-            FormEntityEditor editor = new FormEntityEditor("Изменить", supplier);
+            FormEntityEditor editor = new FormEntityEditor("Изменить", material);
             editor.ShowDialog();
 
             if (editor.Confirmed)
             {
                 try
                 {
-                    await _DB.SupplierDAO.Update(supplier, oldId);
+                    await _DB.MaterialDAO.Update(material);
 
                     UpdateTable();
                 }
@@ -121,12 +118,12 @@ namespace BeautySalon
                 return;
             }
 
-            Supplier supplier = suppliers[viewTableData.SelectedRow];
-            if (AlertBox.ConfirmWarn("Вы действительно хотите удалить поставщика " + supplier.Name + "?") == DialogResult.OK)
+            Material material = materials[viewTableData.SelectedRow];
+            if (AlertBox.ConfirmWarn("Вы действительно хотите удалить материал " + material.Name + "?") == DialogResult.OK)
             {
                 try
                 {
-                    await _DB.SupplierDAO.Delete(supplier.Id);
+                    await _DB.MaterialDAO.Delete(material.Id);
                     viewTableData.SelectedRow = -1;
 
                     UpdateTable();
@@ -136,7 +133,6 @@ namespace BeautySalon
                     AlertBox.Error("Ошибка при удалении записи:\n" + ex.Message);
                 }
             }
-
         }
     }
 }

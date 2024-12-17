@@ -102,7 +102,7 @@ namespace BeautySalon
 
         private void toolStripMenuItem11_Click(object sender, EventArgs e)
         {
-            ChangePage(new PageMaterials(DbConnection));
+            ChangePage(new PageMaterials());
         }
 
         private void toolStripMenuItem12_Click(object sender, EventArgs e)
@@ -112,12 +112,12 @@ namespace BeautySalon
 
         private void toolStripMenuItem13_Click(object sender, EventArgs e)
         {
-            ChangePage(new PageServices(DbConnection));
+            ChangePage(new PageServices());
         }
 
         private void toolStripMenuItem14_Click(object sender, EventArgs e)
         {
-            ChangePage(new PageSuppliers(DbConnection));
+            ChangePage(new PageSuppliers());
         }
 
         private void toolStripMenuItem21_Click(object sender, EventArgs e)

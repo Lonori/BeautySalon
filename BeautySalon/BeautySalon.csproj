@@ -238,10 +238,10 @@
     <Compile Include="Pages\PageMain.designer.cs">
       <DependentUpon>PageMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="PageMaterials.cs">
+    <Compile Include="Pages\PageMaterials.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PageMaterials.designer.cs">
+    <Compile Include="Pages\PageMaterials.designer.cs">
       <DependentUpon>PageMaterials.cs</DependentUpon>
     </Compile>
     <Compile Include="PageNotes.cs">
@@ -250,10 +250,10 @@
     <Compile Include="PageNotes.designer.cs">
       <DependentUpon>PageNotes.cs</DependentUpon>
     </Compile>
-    <Compile Include="PageServices.cs">
+    <Compile Include="Pages\PageServices.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PageServices.designer.cs">
+    <Compile Include="Pages\PageServices.designer.cs">
       <DependentUpon>PageServices.cs</DependentUpon>
     </Compile>
     <Compile Include="Pages\PageStaff.cs">
@@ -319,13 +319,13 @@
     <EmbeddedResource Include="Pages\PageMain.resx">
       <DependentUpon>PageMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PageMaterials.resx">
+    <EmbeddedResource Include="Pages\PageMaterials.resx">
       <DependentUpon>PageMaterials.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PageNotes.resx">
       <DependentUpon>PageNotes.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PageServices.resx">
+    <EmbeddedResource Include="Pages\PageServices.resx">
       <DependentUpon>PageServices.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\PageStaff.resx">
