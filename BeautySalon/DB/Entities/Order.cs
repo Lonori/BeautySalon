@@ -2,7 +2,7 @@
 
 namespace BeautySalon.DB.Entities
 {
-    internal class Appointment
+    internal class Order
     {
         public int Id { get; set; }
         public DateTime Time { get; set; }
@@ -10,11 +10,11 @@ namespace BeautySalon.DB.Entities
         public string PhoneNumber { get; set; }
         public int StaffId { get; set; }
         public string Remark { get; set; }
-        public AppointmentStatus Status { get; set; }
+        public OrderStatus Status { get; set; }
 
-        public Appointment() { }
+        public Order() { }
 
-        public Appointment(int id, DateTime time, string fullName, string phoneNumber, int staffId, string remark, AppointmentStatus status)
+        public Order(int id, DateTime time, string fullName, string phoneNumber, int staffId, string remark, OrderStatus status)
         {
             Id = id;
             Time = time;
@@ -25,7 +25,7 @@ namespace BeautySalon.DB.Entities
             Status = status;
         }
 
-        public enum AppointmentStatus
+        public enum OrderStatus
         {
             Unknown,
             Created,

@@ -1,5 +1,4 @@
 ﻿using BeautySalon.DB.DAO;
-using BeautySalon.DB.Interfaces;
 using MySql.Data.MySqlClient;
 using System;
 using System.Data;
@@ -11,8 +10,10 @@ namespace BeautySalon.DB
         private static AppDatabase _instance;
         private static string _connectionString;
         private readonly MySqlConnection _connection;
-        public readonly IStaffDAO StaffDAO;
-        public readonly IAppointmentDAO AppointmentDAO;
+        public readonly OrderDAO AppointmentDAO;
+        public readonly ServiceDAO ServiceDAO;
+        public readonly StaffDAO StaffDAO;
+        public readonly SupplierDAO SupplierDAO;
 
         public static AppDatabase GetInstance()
         {
@@ -30,8 +31,15 @@ namespace BeautySalon.DB
 
             InitializeDatabase();
             _connection.ChangeDatabase("salon");
+            AppointmentDAO = new OrderDAO(_connection);
+            ServiceDAO = new ServiceDAO(_connection);
             StaffDAO = new StaffDAO(_connection);
-            AppointmentDAO = new AppointmentDAO(_connection);
+            SupplierDAO = new SupplierDAO(_connection);
+        }
+
+        public MySqlConnection Connection
+        {
+            get { return _connection; }
         }
 
         public ConnectionState ConnectionState

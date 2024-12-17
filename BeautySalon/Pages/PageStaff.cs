@@ -2,45 +2,51 @@
 using BeautySalon.DB.Entities;
 using System;
 using System.Collections.Generic;
-using System.Data.OleDb;
+using System.ComponentModel;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace BeautySalon
 {
     public partial class PageStaff : UserControl
     {
-        private OleDbConnection DbConnection;
-        private TableObject Table;
-
-        public PageStaff(OleDbConnection DbConnection)
+        private readonly AppDatabase _DB;
+        private List<Staff> staffs;
+        private readonly Dictionary<string, List<ComboBoxItem>> dictionary = new Dictionary<string, List<ComboBoxItem>>
         {
-            this.DbConnection = DbConnection;
+            {
+                "Gender", new List<ComboBoxItem> {
+                    new ComboBoxItem("Женский", "Ж"),
+                    new ComboBoxItem("Мужской", "М")
+                }
+            }
+        };
+
+        public PageStaff()
+        {
+            _DB = AppDatabase.GetInstance();
             InitializeComponent();
 
-            materialTable1.TableHeaders = new List<string> {
-                "ID",
-                "ФИО",
-                "Дата рождения",
-                "Дата найма",
-                "Дата увольнения",
-                "Должность"
-            };
-
-            TableColumn[] columns = new TableColumn[] {
-                    new TableColumnText("ID", 10, ""),
-                    new TableColumnText("ФИО", 30, "", true),
-                    new TableColumnDate("Дата найма", 20),
-                    new TableColumnDate("Дата рождения", 20),
-                    new TableColumnText("Должность", 20, "")
-            };
-            Table = new TableObject(columns, new TableData());
-
+            FillTableHeader();
             UpdateTable();
+        }
+
+        private void FillTableHeader()
+        {
+            List<string> headers = new List<string>();
+
+            foreach (PropertyInfo property in typeof(Staff).GetProperties())
+            {
+                headers.Add(property.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? property.Name);
+            }
+
+            viewTableData.TableHeaders = headers;
+            viewTableData.ColumnWeights = new int[] { 0, 2, 1, 1, 0 };
         }
 
         private async void UpdateTable()
         {
-            List<Staff> staffs = await AppDatabase.GetInstance().StaffDAO.GetAll();
+            staffs = await _DB.StaffDAO.GetAll();
             List<List<string>> tableData = new List<List<string>>();
 
             foreach (Staff staff in staffs)
@@ -48,90 +54,102 @@ namespace BeautySalon
                 tableData.Add(new List<string>{
                     staff.Id.ToString(),
                     staff.FullName,
+                    staff.PhoneNumber,
                     staff.Birthday.ToShortDateString(),
+                    staff.Gender,
                     staff.DateJoin == DateTime.MinValue ? "---" : staff.DateJoin.ToShortDateString(),
                     staff.DateLeave == DateTime.MinValue ? "---" : staff.DateLeave.ToShortDateString(),
                     staff.Position
                 });
             }
 
-            materialTable1.TableData = tableData;
+            viewTableData.TableData = tableData;
         }
 
-        private void ButtonInsert_Click(object sender, EventArgs e)
+        private async void ButtonInsert_Click(object sender, EventArgs e)
         {
-            object[] data = Table.GetDefault();
-            using (OleDbCommand command = new OleDbCommand("SELECT MAX(`id`)+1 FROM `staff` WHERE 1", DbConnection))
+            Staff staff = new Staff()
             {
-                OleDbDataReader reader = command.ExecuteReader();
-                reader.Read();
-                data[0] = reader[0].GetType() == typeof(DBNull) ? "1" : reader[0].ToString();
-                reader.Close();
+                Id = await _DB.StaffDAO.GetNewId(),
+                PhoneNumber = "+7",
+                Birthday = DateTime.Today,
+                Gender = "Ж"
+            };
+
+            FormEntityEditor editor = new FormEntityEditor("Добавить", staff, dictionary);
+            editor.ShowDialog();
+
+            if (editor.Confirmed)
+            {
+                try
+                {
+                    await _DB.StaffDAO.Insert(staff);
+
+                    UpdateTable();
+                }
+                catch (Exception ex)
+                {
+                    AlertBox.Error("Ошибка при создании записи:\n" + ex.Message);
+                }
             }
 
-            FormTableEditor tableEditor = new FormTableEditor("Добавить", Table.Columns, data);
-            tableEditor.ShowDialog();
-
-            if (tableEditor.Confirmed == true)
-            {
-                new OleDbCommand("INSERT INTO `staff`(`id`, `full_name`, `hiring_date`, `birthday`, `position`) VALUES (" + tableEditor.DataRow[0].ToString() + ",'" + tableEditor.DataRow[1].ToString() + "','" + tableEditor.DataRow[2].ToString() + "','" + tableEditor.DataRow[3].ToString() + "','" + tableEditor.DataRow[4].ToString() + "')", DbConnection).ExecuteNonQuery();
-                UpdateTable();
-            }
-
-            tableEditor.Dispose();
+            editor.Dispose();
         }
 
-        private void ButtonDelete_Click(object sender, EventArgs e)
+        private async void ButtonUpdate_Click(object sender, EventArgs e)
         {
-            /*if (table1.row_selected < 0)
+            if (viewTableData.SelectedRow < 0)
             {
-                MessageBox.Show(
-                   "Не выбрано ни одной записи",
-                   "Предупреждение",
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Warning,
-                   MessageBoxDefaultButton.Button1,
-                   MessageBoxOptions.DefaultDesktopOnly
-                );
+                AlertBox.Warning("Не выбрано ни одной записи");
                 return;
             }
-            new OleDbCommand("DELETE FROM `staff` WHERE `id`=" + Table.Data[table1.row_selected][0], DbConnection).ExecuteNonQuery();
-            table1.row_selected = -1;
-            UpdateTable();*/
+
+            Staff staff = staffs[viewTableData.SelectedRow];
+            int oldId = staff.Id;
+
+            FormEntityEditor editor = new FormEntityEditor("Изменить", staff, dictionary);
+            editor.ShowDialog();
+
+            if (editor.Confirmed)
+            {
+                try
+                {
+                    await _DB.StaffDAO.Update(staff, oldId);
+
+                    UpdateTable();
+                }
+                catch (Exception ex)
+                {
+                    AlertBox.Error("Ошибка при обновлении записи:\n" + ex.Message);
+                }
+            }
+
+            editor.Dispose();
         }
 
-        private void ButtonUpdate_Click(object sender, EventArgs e)
+        private async void ButtonDelete_Click(object sender, EventArgs e)
         {
-            /*if (table1.row_selected < 0)
+            if (viewTableData.SelectedRow < 0)
             {
-                MessageBox.Show(
-                   "Не выбрано ни одной записи",
-                   "Предупреждение",
-                   MessageBoxButtons.OK,
-                   MessageBoxIcon.Warning,
-                   MessageBoxDefaultButton.Button1,
-                   MessageBoxOptions.DefaultDesktopOnly
-                );
+                AlertBox.Warning("Не выбрано ни одной записи");
                 return;
             }
-            string id = (string)Table.Data[table1.row_selected][0];
-            FormTableEditor tableEditor = new FormTableEditor("Изменить", Table.Columns, Table.Data[table1.row_selected]);
-            tableEditor.ShowDialog();
 
-            if (tableEditor.Confirmed == true)
+            Staff staff = staffs[viewTableData.SelectedRow];
+            if (AlertBox.ConfirmWarn("Вы действительно хотите удалить сотрудника " + staff.FullName + "?") == DialogResult.OK)
             {
-                new OleDbCommand("UPDATE `staff` SET `full_name`='" + tableEditor.DataRow[1].ToString() + "',`hiring_date`='" + tableEditor.DataRow[2].ToString() + "',`birthday`='" + tableEditor.DataRow[3].ToString() + "',`position`='" + tableEditor.DataRow[4].ToString() + "' WHERE `id`=" + id, DbConnection).ExecuteNonQuery();
-                UpdateTable();
+                try
+                {
+                    await _DB.StaffDAO.Delete(staff.Id);
+                    viewTableData.SelectedRow = -1;
+
+                    UpdateTable();
+                }
+                catch (Exception ex)
+                {
+                    AlertBox.Error("Ошибка при удалении записи:\n" + ex.Message);
+                }
             }
-
-            tableEditor.Dispose();*/
-        }
-
-        private void ButtonReport_Click(object sender, EventArgs e)
-        {
-            Control tmp = Parent;
-            tmp.Controls.Clear();
-            tmp.Controls.Add(new ReportStaff(DbConnection) { Dock = DockStyle.Fill, Margin = new Padding(0) });
         }
     }
 }

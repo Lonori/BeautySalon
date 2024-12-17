@@ -1,5 +1,4 @@
 ﻿using MySql.Data.MySqlClient;
-using System.Threading.Tasks;
 
 namespace BeautySalon.DB.DAO
 {

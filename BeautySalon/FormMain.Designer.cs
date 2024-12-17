@@ -46,9 +46,7 @@ namespace BeautySalon
             this.toolStripMenuItem21 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem22 = new System.Windows.Forms.ToolStripMenuItem();
             this.themeProvider1 = new BeautySalon.Components.Themes.ThemeProvider();
-            this.materialTextBox1 = new BeautySalon.Components.MaterialTextBox();
             this.tableLayoutPanel1.SuspendLayout();
-            this.pageContainer.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -134,7 +132,6 @@ namespace BeautySalon
             // 
             // pageContainer
             // 
-            this.pageContainer.Controls.Add(this.materialTextBox1);
             this.pageContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pageContainer.Location = new System.Drawing.Point(0, 66);
             this.pageContainer.Name = "pageContainer";
@@ -220,24 +217,6 @@ namespace BeautySalon
             this.toolStripMenuItem22.Text = "О программе";
             this.toolStripMenuItem22.Click += new System.EventHandler(this.toolStripMenuItem22_Click);
             // 
-            // materialTextBox1
-            // 
-            this.materialTextBox1.BorderColor = System.Drawing.Color.Gray;
-            this.materialTextBox1.BorderRadius = 6;
-            this.materialTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.materialTextBox1.FocusedBorderColor = System.Drawing.Color.Blue;
-            this.materialTextBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.materialTextBox1.HintText = "Hint text";
-            this.materialTextBox1.HintTextColor = System.Drawing.Color.Gray;
-            this.materialTextBox1.Location = new System.Drawing.Point(520, 304);
-            this.materialTextBox1.Name = "materialTextBox1";
-            this.materialTextBox1.Size = new System.Drawing.Size(340, 56);
-            this.materialTextBox1.TabIndex = 0;
-            this.materialTextBox1.Text = "materialTextBox1";
-            this.materialTextBox1.TextColor = System.Drawing.Color.Black;
-            this.materialTextBox1.TextPadding = new System.Windows.Forms.Padding(12, 6, 12, 6);
-            this.materialTextBox1.Type = BeautySalon.Components.MaterialTextBox.TextBoxType.Text;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 21F);
@@ -259,7 +238,6 @@ namespace BeautySalon
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.pageContainer.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -285,7 +263,6 @@ namespace BeautySalon
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem21;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem22;
         private Components.Themes.ThemeProvider themeProvider1;
-        private Components.MaterialTextBox materialTextBox1;
     }
 }
 

@@ -1,63 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace BeautySalon
 {
-    public class ComboBoxItem
-    {
-        private string _Text = "";
-        private string _Value = "";
-
-        public string Text
-        {
-            get { return _Text; }
-            set { _Text = value; }
-        }
-        public string Value
-        {
-            get { return _Value; }
-            set { _Value = value; }
-        }
-
-        public ComboBoxItem(string text, string value)
-        {
-            _Text = text;
-            _Value = value;
-        }
-
-        public ComboBoxItem(ComboBoxItem item)
-        {
-            _Text = item.Text;
-            _Value = item.Value;
-        }
-
-        public bool Equals(ComboBoxItem obj)
-        {
-            MessageBox.Show(
-               obj.GetType().Name,
-               "Двойной клик",
-               MessageBoxButtons.OK,
-               MessageBoxIcon.Information,
-               MessageBoxDefaultButton.Button1,
-               MessageBoxOptions.DefaultDesktopOnly
-            );
-            if (obj.Text == _Text && obj.Value == _Value)
-                return true;
-            return false;
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return Text;
-        }
-    }
-
     public class ListComboBoxItem
     {
         private List<ComboBoxItem> _List;

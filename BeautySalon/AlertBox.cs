@@ -24,6 +24,27 @@ namespace BeautySalon
             return ConstructMesBox(text, "Ошибка", MessageBoxIcon.Error);
         }
 
+        public static DialogResult Confirm(string text)
+        {
+            return ConstructConfirmBox(text, "Подтверждение", MessageBoxIcon.Information);
+        }
+
+        public static DialogResult ConfirmWarn(string text)
+        {
+            return ConstructConfirmBox(text, "Подтверждение", MessageBoxIcon.Warning);
+        }
+
+        private static DialogResult ConstructConfirmBox(string text, string name, MessageBoxIcon typeicon)
+        {
+            return MessageBox.Show(
+                 text,
+                 name,
+                 MessageBoxButtons.OKCancel,
+                 typeicon,
+                 MessageBoxDefaultButton.Button1
+            );
+        }
+
         private static DialogResult ConstructMesBox(string text, string name, MessageBoxIcon typeicon)
         {
             return MessageBox.Show(
@@ -31,8 +52,7 @@ namespace BeautySalon
                  name,
                  MessageBoxButtons.OK,
                  typeicon,
-                 MessageBoxDefaultButton.Button1,
-                 MessageBoxOptions.DefaultDesktopOnly
+                 MessageBoxDefaultButton.Button1
             );
         }
     }

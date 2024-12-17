@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace BeautySalon
@@ -26,9 +19,39 @@ namespace BeautySalon
             set { fieldData.SelectedIndex = value; }
         }
 
+        public string Value
+        {
+            get
+            {
+                ComboBoxItem item = (ComboBoxItem)fieldData.SelectedItem;
+                return item == null ? null : item.Value;
+            }
+        }
+
         public ListComboBoxItem Data
         {
             get { return item.CopyOnNewValue(((ComboBoxItem)fieldData.SelectedItem).Value); }
+        }
+
+        public EditorFieldList(string fieldName, List<ComboBoxItem> sourceList)
+        {
+            InitializeComponent();
+
+            this.fieldName.Text = fieldName;
+            for (int i = 0; i < sourceList.Count; i++)
+            {
+                fieldData.Items.Add(sourceList[i]);
+            }
+        }
+
+        public EditorFieldList(string fieldName, List<ComboBoxItem> sourceList, ComboBoxItem selectedItem) : this(fieldName, sourceList)
+        {
+            fieldData.SelectedItem = selectedItem;
+        }
+
+        public EditorFieldList(string fieldName, List<ComboBoxItem> sourceList, int selectedIndex) : this(fieldName, sourceList)
+        {
+            fieldData.SelectedIndex = selectedIndex;
         }
 
         public EditorFieldList(string field_name, ListComboBoxItem field_list)

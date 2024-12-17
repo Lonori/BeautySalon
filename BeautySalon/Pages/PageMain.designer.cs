@@ -92,6 +92,7 @@ namespace BeautySalon
             this.materialTable1.Location = new System.Drawing.Point(0, 0);
             this.materialTable1.Margin = new System.Windows.Forms.Padding(0);
             this.materialTable1.Name = "materialTable1";
+            this.materialTable1.SelectedRow = -1;
             this.materialTable1.Size = new System.Drawing.Size(600, 111);
             this.materialTable1.Style = BeautySalon.Components.MaterialTable.TableStyle.Flat;
             this.materialTable1.TabIndex = 2;
@@ -153,6 +154,7 @@ namespace BeautySalon
             // materialButton1
             // 
             this.materialButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(69)))), ((int)(((byte)(136)))));
+            this.materialButton1.CornerRadius = 6;
             this.materialButton1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.materialButton1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.materialButton1.ForeColor = System.Drawing.Color.White;
@@ -169,6 +171,7 @@ namespace BeautySalon
             // materialButton2
             // 
             this.materialButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(69)))), ((int)(((byte)(136)))));
+            this.materialButton2.CornerRadius = 6;
             this.materialButton2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.materialButton2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.materialButton2.ForeColor = System.Drawing.Color.White;
@@ -185,6 +188,7 @@ namespace BeautySalon
             // materialButton3
             // 
             this.materialButton3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(69)))), ((int)(((byte)(136)))));
+            this.materialButton3.CornerRadius = 6;
             this.materialButton3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.materialButton3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.materialButton3.ForeColor = System.Drawing.Color.White;

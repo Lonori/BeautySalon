@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BeautySalon
@@ -63,7 +57,8 @@ namespace BeautySalon
         public void AddEditorFieldAll(TableColumn[] columns, object[] data)
         {
             DataInput = new Control[columns.Length];
-            for (int i = 0; i < columns.Length; i++) {
+            for (int i = 0; i < columns.Length; i++)
+            {
                 Type data_type = columns[i].GetType();
                 if (data_type == typeof(TableColumnTable))
                 {
@@ -119,7 +114,7 @@ namespace BeautySalon
         {
             for (int i = 0; i < DataInput.Length; i++)
             {
-                if(DataInput[i] == null)
+                if (DataInput[i] == null)
                 {
                     _DataRow[i] = "";
                     continue;
@@ -145,14 +140,14 @@ namespace BeautySalon
                 }
             }
 
-            this._Confirmed = true;
-            this.Close();
+            _Confirmed = true;
+            Close();
         }
 
         public string GetString(int index)
         {
             if (0 > index || index >= _DataRow.Length) throw new Exception("Индекс находится вне границ массива");
-            if(_DataRow[index].GetType() == typeof(string) || _DataRow[index].GetType() == typeof(DateTime))
+            if (_DataRow[index].GetType() == typeof(string) || _DataRow[index].GetType() == typeof(DateTime))
             {
                 return _DataRow[index].ToString();
             }

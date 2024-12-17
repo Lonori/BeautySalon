@@ -200,6 +200,28 @@
         public int SelectedRow
         {
             get { return _selectedRow; }
+            set
+            {
+                if (value == SelectedRow) return;
+
+                if (-1 > value || value > _tableData.Count)
+                {
+                    throw new ArgumentOutOfRangeException(value.ToString());
+                }
+
+                int previousSelectedRow = _selectedRow;
+                _selectedRow = value;
+
+                if (previousSelectedRow >= 0)
+                {
+                    Invalidate(_tableRows[previousSelectedRow]);
+                }
+
+                if (_selectedRow >= 0)
+                {
+                    Invalidate(_tableRows[_selectedRow]);
+                }
+            }
         }
 
         protected int GetColumnWeight(int index)
@@ -538,27 +560,13 @@
             base.OnMouseDown(e);
 
             if (_tableRows == null) return;
-            int previousSelectedRow = _selectedRow;
 
             for (int i = 0; i < _tableRows.Length; i++)
             {
                 if (_tableRows[i].Contains(e.Location))
                 {
-                    _selectedRow = i;
+                    SelectedRow = i;
                     break;
-                }
-            }
-
-            if (_selectedRow != previousSelectedRow)
-            {
-                if (previousSelectedRow >= 0)
-                {
-                    Invalidate(_tableRows[previousSelectedRow]);
-                }
-
-                if (_selectedRow >= 0)
-                {
-                    Invalidate(_tableRows[_selectedRow]);
                 }
             }
         }

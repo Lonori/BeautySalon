@@ -2,6 +2,7 @@
 using BeautySalon.DB;
 using System;
 using System.Data.OleDb;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace BeautySalon
@@ -106,7 +107,7 @@ namespace BeautySalon
 
         private void toolStripMenuItem12_Click(object sender, EventArgs e)
         {
-            ChangePage(new PageStaff(DbConnection));
+            ChangePage(new PageStaff());
         }
 
         private void toolStripMenuItem13_Click(object sender, EventArgs e)
@@ -121,7 +122,7 @@ namespace BeautySalon
 
         private void toolStripMenuItem21_Click(object sender, EventArgs e)
         {
-            var proc = new System.Diagnostics.Process();
+            Process proc = new System.Diagnostics.Process();
             proc.StartInfo.FileName = "help.chm";
             proc.StartInfo.UseShellExecute = true;
             proc.Start();

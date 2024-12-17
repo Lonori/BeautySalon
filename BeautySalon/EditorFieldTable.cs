@@ -1,22 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BeautySalon
 {
     public partial class EditorFieldTable : UserControl
     {
-        private TableObject _Table;
+        private TableObject _table;
 
         public TableObject DataTable
         {
-            get { return _Table; }
+            get { return _table; }
         }
 
         public PreAddRowEvent PreAddRow
@@ -28,8 +21,8 @@ namespace BeautySalon
         {
             InitializeComponent();
 
-            _Table = table;
-            table1.TableInit(_Table);
+            _table = table;
+            table1.TableInit(_table);
             UpdateTable();
         }
 
@@ -37,19 +30,19 @@ namespace BeautySalon
         {
             table1.Clear();
 
-            for(int i = 0; i < _Table.Data.Length; i++)
+            for (int i = 0; i < _table.Data.Length; i++)
             {
-                table1.AddRow(_Table.Data[i]);
+                table1.AddRow(_table.Data[i]);
             }
         }
 
         private void ButtonInsert_Click(object sender, EventArgs e)
         {
-            FormTableEditor tableEditor = new FormTableEditor("Добавить", _Table.Columns, _Table.GetDefault());
+            FormTableEditor tableEditor = new FormTableEditor("Добавить", _table.Columns, _table.GetDefault());
             tableEditor.ShowDialog();
             if (tableEditor.Confirmed == true)
             {
-                _Table.Data.Add(tableEditor.DataRow);
+                _table.Data.Add(tableEditor.DataRow);
                 UpdateTable();
             }
             tableEditor.Dispose();
@@ -62,7 +55,7 @@ namespace BeautySalon
                 AlertBox.Warning("Не выбрано ни одной записи");
                 return;
             }
-            FormTableEditor tableEditor = new FormTableEditor("Изменить", _Table.Columns, _Table.Data[table1.row_selected]);
+            FormTableEditor tableEditor = new FormTableEditor("Изменить", _table.Columns, _table.Data[table1.row_selected]);
             tableEditor.ShowDialog();
             if (tableEditor.Confirmed == true)
             {
@@ -78,7 +71,7 @@ namespace BeautySalon
                 AlertBox.Warning("Не выбрано ни одной записи");
                 return;
             }
-            _Table.Data.RemoveAt(table1.row_selected);
+            _table.Data.RemoveAt(table1.row_selected);
             table1.row_selected = -1;
             UpdateTable();
         }

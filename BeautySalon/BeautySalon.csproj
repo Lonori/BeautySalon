@@ -80,6 +80,7 @@
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.ConfigurationManager, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Configuration.ConfigurationManager.8.0.0\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
@@ -124,13 +125,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AlertBox.cs" />
+    <Compile Include="Attributes.cs" />
+    <Compile Include="ComboBoxItem.cs" />
     <Compile Include="Components\MaterialButton.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Components\MaterialTable.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Components\MaterialTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Components\MathExt.cs" />
@@ -144,13 +144,23 @@
     <Compile Include="Components\Themes\ThemeManager.cs" />
     <Compile Include="Crutches.cs" />
     <Compile Include="Components\DrawHelper.cs" />
-    <Compile Include="DB\DAO\AppointmentDAO.cs" />
-    <Compile Include="DB\DAO\DAO.cs" />
+    <Compile Include="DB\DAO\OrderDAO.cs" />
+    <Compile Include="DB\DAO\MaterialDAO.cs" />
+    <Compile Include="DB\DAO\MaterialConsumptionDAO.cs" />
+    <Compile Include="DB\DAO\ServiceFulfilledDAO.cs" />
+    <Compile Include="DB\Entities\Material.cs" />
+    <Compile Include="DB\Entities\MaterialConsumption.cs" />
+    <Compile Include="DB\Entities\MaterialArrival.cs" />
+    <Compile Include="DB\Entities\ServiceFulfilled.cs" />
+    <Compile Include="DB\IDAO.cs" />
+    <Compile Include="DB\DAO.cs" />
+    <Compile Include="DB\DAO\SupplierDAO.cs" />
+    <Compile Include="DB\DAO\ServiceDAO.cs" />
     <Compile Include="DB\DAO\StaffDAO.cs" />
     <Compile Include="DB\AppDatabase.cs" />
-    <Compile Include="DB\Entities\Appointment.cs" />
-    <Compile Include="DB\Interfaces\IAppointmentDAO.cs" />
-    <Compile Include="DB\Interfaces\IStaffDAO.cs" />
+    <Compile Include="DB\Entities\Order.cs" />
+    <Compile Include="DB\Entities\Supplier.cs" />
+    <Compile Include="DB\Entities\Service.cs" />
     <Compile Include="DB\Entities\Staff.cs" />
     <Compile Include="EditorFieldDate.cs">
       <SubType>UserControl</SubType>
@@ -163,6 +173,12 @@
     </Compile>
     <Compile Include="EditorFieldList.Designer.cs">
       <DependentUpon>EditorFieldList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditorLinkedTable.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditorLinkedTable.designer.cs">
+      <DependentUpon>EditorLinkedTable.cs</DependentUpon>
     </Compile>
     <Compile Include="EditorFieldTable.cs">
       <SubType>UserControl</SubType>
@@ -194,6 +210,12 @@
     </Compile>
     <Compile Include="FormProgrammInfo.Designer.cs">
       <DependentUpon>FormProgrammInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormEntityEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEntityEditor.designer.cs">
+      <DependentUpon>FormEntityEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="FormTableEditor.cs">
       <SubType>Form</SubType>
@@ -263,8 +285,12 @@
     <Compile Include="Table.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="TableModel.cs" />
     <EmbeddedResource Include="EditorFieldDate.resx">
       <DependentUpon>EditorFieldDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditorLinkedTable.resx">
+      <DependentUpon>EditorLinkedTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditorFieldTable.resx">
       <DependentUpon>EditorFieldTable.cs</DependentUpon>
@@ -280,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormProgrammInfo.resx">
       <DependentUpon>FormProgrammInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEntityEditor.resx">
+      <DependentUpon>FormEntityEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormTableEditor.resx">
       <DependentUpon>FormTableEditor.cs</DependentUpon>

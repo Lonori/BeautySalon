@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace BeautySalon
@@ -6,12 +7,15 @@ namespace BeautySalon
     public partial class EditorFieldDate : UserControl
     {
         private TableLayoutPanel dateTimeBody;
+        private CheckBox fieldCheckBox;
+        private Label fieldLabelEmpty;
         private DateTimePicker fieldDataDate;
         private ComboBox fieldDataHour;
         private ComboBox fieldDataMinute;
-        private DateTimePicker fieldData;
 
-        private bool TimeChecked = false;
+        private DateTime _getValue = DateTime.MinValue;
+        private DateTime _value = DateTime.MinValue;
+        private bool _timeChecked = false;
 
         public string FieldName
         {
@@ -19,98 +23,187 @@ namespace BeautySalon
             set { fieldName.Text = value; }
         }
 
-        public DateTime Data
+        public DateTime Value
         {
-            get
-            {
-                if (TimeChecked == true)
-                {
-                    DateTime tmp = fieldDataDate.Value;
-                    return new DateTime(tmp.Year, tmp.Month, tmp.Day, (int)fieldDataHour.SelectedItem, (int)fieldDataMinute.SelectedItem, 0);
-                }
-                else
-                {
-                    return fieldData.Value;
-                }
-            }
+            get { return _value; }
         }
 
-        public EditorFieldDate(string field_name, DateTime datatime) : this(field_name, datatime, false) { }
+        public DateTime Data
+        {
+            get { return _value; }
+        }
 
-        public EditorFieldDate(string field_name, DateTime datatime, bool time_checked)
+        public EditorFieldDate(string fieldName, DateTime value) : this(fieldName, value, false) { }
+
+        public EditorFieldDate(string fieldName, DateTime value, bool timeChecked)
         {
             InitializeComponent();
-            fieldName.Text = field_name;
-            TimeChecked = time_checked;
+            this.fieldName.Text = fieldName;
+            _getValue = value;
+            _value = value;
+            _timeChecked = timeChecked;
 
-            if (time_checked == true)
+            dateTimeBody = new TableLayoutPanel()
             {
-                InitializeDataTime();
-                fieldDataDate.Value = new DateTime(datatime.Year, datatime.Month, datatime.Day, 0, 0, 0);
-                fieldDataHour.SelectedItem = datatime.Hour;
-                fieldDataMinute.SelectedItem = datatime.Minute;
+                AutoSize = true,
+                AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0)
+            };
+            dateTimeBody.RowCount = 1;
+            dateTimeBody.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            fieldBody.Controls.Add(dateTimeBody, 1, 0);
+
+            fieldCheckBox = new CheckBox()
+            {
+                Dock = DockStyle.Top,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Text = "",
+                Margin = new Padding(0)
+            };
+            fieldCheckBox.Checked = !_value.Equals(DateTime.MinValue);
+            fieldCheckBox.CheckedChanged += new EventHandler(FieldCheckBox_CheckedChanged);
+
+            fieldLabelEmpty = new Label()
+            {
+                Dock = DockStyle.Top,
+                ForeColor = Color.FromArgb(122, 122, 122),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Text = "Нет даты"
+            };
+
+            fieldDataDate = new DateTimePicker()
+            {
+                Dock = DockStyle.Top,
+                Format = DateTimePickerFormat.Short
+            };
+            fieldDataDate.MaxDate = new DateTime(2100, 12, 31, 0, 0, 0, 0);
+            fieldDataDate.MinDate = new DateTime(1900, 1, 1, 0, 0, 0, 0);
+            if (_value.Equals(DateTime.MinValue))
+            {
+                fieldDataDate.Value = fieldDataDate.MinDate;
+            }
+            else if (_value <= fieldDataDate.MinDate)
+            {
+                fieldDataDate.Value = fieldDataDate.MinDate;
+            }
+            else if (_value >= fieldDataDate.MaxDate)
+            {
+                fieldDataDate.Value = fieldDataDate.MaxDate;
             }
             else
             {
-                InitializeData();
-                fieldData.Value = datatime;
+                fieldDataDate.Value = new DateTime(_value.Year, _value.Month, _value.Day, 0, 0, 0, 0);
             }
+            fieldDataDate.ValueChanged += new EventHandler(FieldsDateTime_Changed);
+
+            fieldDataHour = new ComboBox()
+            {
+                Dock = DockStyle.Top,
+                DropDownHeight = 200,
+                FormattingEnabled = true
+            };
+            for (int i = 0; i < 24; i++)
+            {
+                fieldDataHour.Items.Add(i.ToString().PadLeft(2, '0'));
+            }
+            fieldDataHour.SelectedIndex = _value.Hour;
+            fieldDataHour.SelectedIndexChanged += new EventHandler(FieldsDateTime_Changed);
+
+            fieldDataMinute = new ComboBox()
+            {
+                Dock = DockStyle.Top,
+                DropDownHeight = 200,
+                FormattingEnabled = true
+            };
+            for (int i = 0; i < 60; i++)
+            {
+                fieldDataMinute.Items.Add(i.ToString().PadLeft(2, '0'));
+            }
+            fieldDataMinute.SelectedIndex = _value.Minute;
+            fieldDataMinute.SelectedIndexChanged += new EventHandler(FieldsDateTime_Changed);
+
+            FillField();
         }
 
-        private void InitializeData()
+        private void FillField()
         {
-            fieldBody.Controls.Remove(dateTimeBody);
+            dateTimeBody.SuspendLayout();
+            dateTimeBody.Controls.Clear();
+            dateTimeBody.ColumnStyles.Clear();
 
-            fieldData = new DateTimePicker();
+            dateTimeBody.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
+            dateTimeBody.Controls.Add(fieldCheckBox, 0, 0);
 
-            fieldData.Dock = DockStyle.Fill;
-            fieldData.Format = DateTimePickerFormat.Short;
-            fieldData.MaxDate = new DateTime(2100, 12, 31, 0, 0, 0, 0);
-            fieldData.MinDate = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            fieldData.Value = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-
-            fieldBody.Controls.Add(fieldData, 1, 0);
+            if (_value.Equals(DateTime.MinValue))
+            {
+                dateTimeBody.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 90F));
+                dateTimeBody.Controls.Add(fieldLabelEmpty, 1, 0);
+                dateTimeBody.ColumnCount = 2;
+            }
+            else
+            {
+                if (_timeChecked)
+                {
+                    dateTimeBody.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+                    dateTimeBody.Controls.Add(fieldDataDate, 1, 0);
+                    dateTimeBody.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+                    dateTimeBody.Controls.Add(fieldDataHour, 2, 0);
+                    dateTimeBody.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+                    dateTimeBody.Controls.Add(fieldDataMinute, 3, 0);
+                    dateTimeBody.ColumnCount = 4;
+                }
+                else
+                {
+                    dateTimeBody.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 90F));
+                    dateTimeBody.Controls.Add(fieldDataDate, 1, 0);
+                    dateTimeBody.ColumnCount = 2;
+                }
+            }
+            dateTimeBody.ResumeLayout();
         }
 
-        private void InitializeDataTime()
+        private void FieldCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            fieldBody.Controls.Remove(fieldData);
+            if (fieldCheckBox.Checked)
+            {
+                if (_getValue.Equals(DateTime.MinValue))
+                {
+                    _value = DateTime.Now;
+                }
+                else
+                {
+                    _value = _getValue;
+                }
+                fieldDataDate.Value = new DateTime(_value.Year, _value.Month, _value.Day, 0, 0, 0, 0);
+                fieldDataHour.SelectedIndex = _value.Hour;
+                fieldDataMinute.SelectedIndex = _value.Minute;
+            }
+            else
+            {
+                _value = DateTime.MinValue;
+                fieldDataDate.Value = fieldDataDate.MinDate;
+                fieldDataHour.SelectedIndex = 0;
+                fieldDataMinute.SelectedIndex = 0;
+            }
 
-            dateTimeBody = new TableLayoutPanel();
-            fieldDataDate = new DateTimePicker();
-            fieldDataHour = new ComboBox();
-            fieldDataMinute = new ComboBox();
+            FillField();
+        }
 
-            dateTimeBody.AutoSize = true;
-            dateTimeBody.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            dateTimeBody.ColumnCount = 3;
-            dateTimeBody.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 60F));
-            dateTimeBody.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            dateTimeBody.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            dateTimeBody.Controls.Add(fieldDataDate, 0, 0);
-            dateTimeBody.Controls.Add(fieldDataHour, 1, 0);
-            dateTimeBody.Controls.Add(fieldDataMinute, 2, 0);
-            dateTimeBody.Dock = DockStyle.Fill;
-            dateTimeBody.Margin = new Padding(0);
-            dateTimeBody.RowCount = 1;
-            dateTimeBody.RowStyles.Add(new RowStyle());
+        private void FieldsDateTime_Changed(object sender, EventArgs e)
+        {
+            if (fieldCheckBox.Checked)
+            {
+                DateTime fieldDate = fieldDataDate.Value;
+                int fieldHour = fieldDataHour.SelectedIndex;
+                int fieldMinute = fieldDataMinute.SelectedIndex;
 
-            fieldDataDate.Dock = DockStyle.Fill;
-            fieldDataDate.Format = DateTimePickerFormat.Short;
-            fieldDataDate.MaxDate = new DateTime(2100, 12, 31, 0, 0, 0, 0);
-            fieldDataDate.MinDate = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-
-            fieldDataHour.Dock = DockStyle.Top;
-            fieldDataHour.DropDownHeight = 200;
-            fieldDataHour.FormattingEnabled = true;
-            for (int i = 0; i < 24; i++) fieldDataHour.Items.Add(i);
-
-            fieldDataMinute.Dock = DockStyle.Top;
-            fieldDataMinute.DropDownHeight = 200;
-            fieldDataMinute.FormattingEnabled = true;
-            for (int i = 0; i < 60; i++) fieldDataMinute.Items.Add(i);
-
-            fieldBody.Controls.Add(dateTimeBody, 1, 0);
+                _value = new DateTime(fieldDate.Year, fieldDate.Month, fieldDate.Day, fieldHour, fieldMinute, 0);
+            }
+            else
+            {
+                _value = DateTime.MinValue;
+            }
         }
     }
 }

@@ -59,12 +59,12 @@ namespace BeautySalon
 
             Table = new TableObject(
                 new TableColumn[] {
-                        new TableColumnDate("Время", 10, true),
-                        new TableColumnText("ФИО", 20, "", true),
-                        new TableColumnText("Номер телефона", 10, "+7"),
-                        new TableColumnTable("Услуги", 15, services),
-                        new TableColumnList("Сотрудник", 20, list_staff),
-                        new TableColumnText("Примечание", 25, "", true)
+                    new TableColumnDate("Время", 10, true),
+                    new TableColumnText("ФИО", 20, "", true),
+                    new TableColumnText("Номер телефона", 10, "+7"),
+                    new TableColumnTable("Услуги", 15, services),
+                    new TableColumnList("Сотрудник", 20, list_staff),
+                    new TableColumnText("Примечание", 25, "", true)
                 },
                 new TableData()
             );
@@ -133,10 +133,10 @@ namespace BeautySalon
         private async void UpdateTable()
         {
             UpdateStatistic();
-            List<Appointment> appointments = await DB.AppointmentDAO.GetByPeriod(DateTime.Today, DateTime.Today.AddDays(1));
+            List<Order> appointments = await DB.AppointmentDAO.GetByPeriod(DateTime.Today, DateTime.Today.AddDays(1));
             List<List<string>> tableData = new List<List<string>>();
 
-            foreach (Appointment appointment in appointments)
+            foreach (Order appointment in appointments)
             {
                 tableData.Add(new List<string>{
                     appointment.Time.ToShortTimeString(),

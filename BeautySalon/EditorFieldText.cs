@@ -27,6 +27,11 @@ namespace BeautySalon
                 fieldData.Multiline = value;
             }
         }
+        public string Value
+        {
+            get { return fieldData.Text; }
+        }
+
         public string Data
         {
             get { return fieldData.Text; }
