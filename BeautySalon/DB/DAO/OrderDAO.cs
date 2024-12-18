@@ -75,7 +75,7 @@ namespace BeautySalon.DB.DAO
 
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
                 {
-                    while (await reader.ReadAsync())
+                    if (await reader.ReadAsync())
                     {
                         return new Order(
                             reader.GetInt32(0),

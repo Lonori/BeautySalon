@@ -53,9 +53,8 @@ namespace BeautySalon.DB.DAO
             }
         }
 
-        public async Task<List<SupplierContract>> GetById(int id)
+        public async Task<SupplierContract> GetById(int id)
         {
-            List<SupplierContract> list = new List<SupplierContract>();
             const string query = @"
                 SELECT
                     `id`, `time`, `supplier_id`
@@ -68,16 +67,16 @@ namespace BeautySalon.DB.DAO
 
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
                 {
-                    while (await reader.ReadAsync())
+                    if (await reader.ReadAsync())
                     {
-                        list.Add(new SupplierContract(
+                        return new SupplierContract(
                             reader.GetInt32(0),
                             reader.GetDateTime(1),
                             reader.GetInt32(2)
-                        ));
+                        );
                     }
 
-                    return list;
+                    return null;
                 }
             }
         }
@@ -96,6 +95,37 @@ namespace BeautySalon.DB.DAO
                     }
 
                     return 1;
+                }
+            }
+        }
+
+        public async Task<List<SupplierContract>> GetByPeriod(DateTime timeStart, DateTime timeEnd)
+        {
+            List<SupplierContract> list = new List<SupplierContract>();
+            const string query = @"
+                SELECT
+                    `id`, `time`, `supplier_id`
+                FROM `supplier_contracts`
+                WHERE `time` >= @timeStart AND `time` < @timeEnd
+                ORDER BY `time`";
+
+            using (MySqlCommand command = new MySqlCommand(query, _connection))
+            {
+                command.Parameters.AddWithValue("@timeStart", timeStart);
+                command.Parameters.AddWithValue("@timeEnd", timeEnd);
+
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        list.Add(new SupplierContract(
+                            reader.GetInt32(0),
+                            reader.GetDateTime(1),
+                            reader.GetInt32(2)
+                        ));
+                    }
+
+                    return list;
                 }
             }
         }
@@ -141,9 +171,9 @@ namespace BeautySalon.DB.DAO
         {
             const string query = @"
                 UPDATE `supplier_contracts` SET
-                    `id` = @order_id,
-                    `time` = @material_id,
-                    `supplier_id` = @price
+                    `id` = @id,
+                    `time` = @time,
+                    `supplier_id` = @supplier_id
                 WHERE `id` = @old_id";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
@@ -163,7 +193,7 @@ namespace BeautySalon.DB.DAO
             int supplierId
         )
         {
-            await Update(id, time, supplierId);
+            await Update(id, time, supplierId, id);
         }
 
         public async Task Update(SupplierContract m, int oldId)

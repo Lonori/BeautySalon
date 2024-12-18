@@ -154,6 +154,7 @@
     <Compile Include="DB\Entities\MaterialConsumption.cs" />
     <Compile Include="DB\Entities\MaterialArrival.cs" />
     <Compile Include="DB\Entities\ServiceFulfilled.cs" />
+    <Compile Include="DB\Entities\SupplierContract.cs" />
     <Compile Include="DB\IDAO.cs" />
     <Compile Include="DB\DAO.cs" />
     <Compile Include="DB\DAO\SupplierDAO.cs" />

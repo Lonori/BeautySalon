@@ -1,7 +1,7 @@
 ﻿
 namespace BeautySalon
 {
-    partial class PageContractMat
+    partial class PageSupplierContracts
     {
         /// <summary> 
         /// Обязательная переменная конструктора.
@@ -29,7 +29,7 @@ namespace BeautySalon
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PageContractMat));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PageSupplierContracts));
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -287,7 +287,7 @@ namespace BeautySalon
             this.themeProvider1.SetUseTheme(this.buttonDelete, true);
             this.buttonDelete.Click += new System.EventHandler(this.ButtonDelete_Click);
             // 
-            // PageContractMat
+            // PageSupplierContracts
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

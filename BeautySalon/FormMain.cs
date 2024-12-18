@@ -92,7 +92,7 @@ namespace BeautySalon
 
         private void OpenMaterials_Click(object sender, EventArgs e)
         {
-            ChangePage(new PageContractMat(DbConnection));
+            ChangePage(new PageSupplierContracts());
         }
 
         private void OpenStorage_Click(object sender, EventArgs e)

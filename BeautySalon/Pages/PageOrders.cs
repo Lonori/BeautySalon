@@ -62,7 +62,7 @@ namespace BeautySalon
             List<ComboBoxItem> itemMaterials = new List<ComboBoxItem>();
             foreach (Material material in materials)
             {
-                itemMaterials.Add(new ComboBoxItem(material.Name, material.Id.ToString()));
+                itemMaterials.Add(new ComboBoxItem(material.Name + " - " + material.Price + " руб.", material.Id.ToString()));
             }
             dictionary.Add("MaterialId", itemMaterials);
 

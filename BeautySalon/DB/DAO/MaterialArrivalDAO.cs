@@ -26,24 +26,24 @@ namespace BeautySalon.DB.DAO
             }
         }
 
-        public async Task<List<MaterialConsumption>> GetByOrderId(int orderId)
+        public async Task<List<MaterialArrival>> GetByContractId(int contractId)
         {
-            List<MaterialConsumption> list = new List<MaterialConsumption>();
+            List<MaterialArrival> list = new List<MaterialArrival>();
             const string query = @"
                 SELECT
-                    `order_id`, `material_id`, `price`, `amount`
-                FROM `materials_consumption`
-                WHERE `order_id` = @order_id";
+                    `contract_id`, `material_id`, `price`, `amount`
+                FROM `materials_arrival`
+                WHERE `contract_id` = @contract_id";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
             {
-                command.Parameters.AddWithValue("@order_id", orderId);
+                command.Parameters.AddWithValue("@contract_id", contractId);
 
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
                 {
                     while (await reader.ReadAsync())
                     {
-                        list.Add(new MaterialConsumption(
+                        list.Add(new MaterialArrival(
                             reader.GetInt32(0),
                             reader.GetInt32(1),
                             reader.GetFloat(2),
@@ -57,22 +57,22 @@ namespace BeautySalon.DB.DAO
         }
 
         public async Task Insert(
-            int orderId,
+            int contractId,
             int materialId,
             float price,
             int amount
         )
         {
             const string query = @"
-                INSERT INTO `materials_consumption` (
-                    `order_id`, `material_id`, `price`, `amount`
+                INSERT INTO `materials_arrival` (
+                    `contract_id`, `material_id`, `price`, `amount`
                 ) VALUES (
-                    @order_id, @material_id, @price, @amount
+                    @contract_id, @material_id, @price, @amount
                 )";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
             {
-                command.Parameters.AddWithValue("@order_id", orderId);
+                command.Parameters.AddWithValue("@contract_id", contractId);
                 command.Parameters.AddWithValue("@material_id", materialId);
                 command.Parameters.AddWithValue("@price", price);
                 command.Parameters.AddWithValue("@amount", amount);
@@ -81,10 +81,10 @@ namespace BeautySalon.DB.DAO
             }
         }
 
-        public async Task Insert(MaterialConsumption m)
+        public async Task Insert(MaterialArrival m)
         {
             await Insert(
-                m.OrderId,
+                m.ContractId,
                 m.MaterialId,
                 m.Price,
                 m.Amount
@@ -92,29 +92,29 @@ namespace BeautySalon.DB.DAO
         }
 
         public async Task Update(
-            int orderId,
+            int contractId,
             int materialId,
             float price,
             int amount,
-            int oldOrderId,
+            int oldContractId,
             int oldMaterialId
         )
         {
             const string query = @"
-                UPDATE `materials_consumption` SET
-                    `order_id` = @order_id,
+                UPDATE `materials_arrival` SET
+                    `contract_id` = @contract_id,
                     `material_id` = @material_id,
                     `price` = @price,
                     `amount` = @amount
-                WHERE `order_id` = @old_order_id AND `material_id` = @old_material_id";
+                WHERE `contract_id` = @old_contract_id AND `material_id` = @old_material_id";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
             {
-                command.Parameters.AddWithValue("@order_id", orderId);
+                command.Parameters.AddWithValue("@contract_id", contractId);
                 command.Parameters.AddWithValue("@material_id", materialId);
                 command.Parameters.AddWithValue("@price", price);
                 command.Parameters.AddWithValue("@amount", amount);
-                command.Parameters.AddWithValue("@old_order_id", oldOrderId);
+                command.Parameters.AddWithValue("@old_contract_id", oldContractId);
                 command.Parameters.AddWithValue("@old_material_id", oldMaterialId);
 
                 await command.ExecuteNonQueryAsync();
@@ -122,45 +122,45 @@ namespace BeautySalon.DB.DAO
         }
 
         public async Task Update(
-            int orderId,
+            int contractId,
             int materialId,
             float price,
             int amount
         )
         {
-            await Update(orderId, materialId, price, amount, orderId, materialId);
+            await Update(contractId, materialId, price, amount, contractId, materialId);
         }
 
-        public async Task Update(MaterialConsumption m, int oldOrderId, int oldServiceId)
+        public async Task Update(MaterialArrival m, int oldContractId, int oldServiceId)
         {
-            await Update(m.OrderId, m.MaterialId, m.Price, m.Amount, oldOrderId, oldServiceId);
+            await Update(m.ContractId, m.MaterialId, m.Price, m.Amount, oldContractId, oldServiceId);
         }
 
-        public async Task Update(MaterialConsumption m)
+        public async Task Update(MaterialArrival m)
         {
-            await Update(m, m.OrderId, m.MaterialId);
+            await Update(m, m.ContractId, m.MaterialId);
         }
 
-        public async Task Delete(int orderId, int materialId)
+        public async Task Delete(int contractId, int materialId)
         {
-            const string query = "DELETE FROM `materials_consumption` WHERE `order_id` = @order_id AND `material_id` = @material_id";
+            const string query = "DELETE FROM `materials_arrival` WHERE `contract_id` = @contract_id AND `material_id` = @material_id";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
             {
-                command.Parameters.AddWithValue("@order_id", orderId);
+                command.Parameters.AddWithValue("@contract_id", contractId);
                 command.Parameters.AddWithValue("@material_id", materialId);
 
                 await command.ExecuteNonQueryAsync();
             }
         }
 
-        public async Task DeleteByOrderId(int orderId)
+        public async Task DeleteByContractId(int contractId)
         {
-            const string query = "DELETE FROM `materials_consumption` WHERE `order_id` = @order_id";
+            const string query = "DELETE FROM `materials_arrival` WHERE `contract_id` = @contract_id";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
             {
-                command.Parameters.AddWithValue("@order_id", orderId);
+                command.Parameters.AddWithValue("@contract_id", contractId);
 
                 await command.ExecuteNonQueryAsync();
             }
