@@ -92,6 +92,7 @@ namespace BeautySalon
             this.materialTable1.Location = new System.Drawing.Point(0, 0);
             this.materialTable1.Margin = new System.Windows.Forms.Padding(0);
             this.materialTable1.Name = "materialTable1";
+            this.materialTable1.SelectedRow = -1;
             this.materialTable1.Size = new System.Drawing.Size(600, 111);
             this.materialTable1.Style = BeautySalon.Components.MaterialTable.TableStyle.Flat;
             this.materialTable1.TabIndex = 2;

@@ -2,7 +2,6 @@
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Windows.Media.Media3D;
 
 namespace BeautySalon.DB.DAO
 {
@@ -32,7 +31,7 @@ namespace BeautySalon.DB.DAO
             List<MaterialConsumption> list = new List<MaterialConsumption>();
             const string query = @"
                 SELECT
-                    `material_id`, `price`, `amount`
+                    `order_id`, `material_id`, `price`, `amount`
                 FROM `materials_consumption`
                 WHERE `order_id` = @order_id";
 
@@ -46,8 +45,9 @@ namespace BeautySalon.DB.DAO
                     {
                         list.Add(new MaterialConsumption(
                             reader.GetInt32(0),
-                            reader.GetFloat(1),
-                            reader.GetInt32(2)
+                            reader.GetInt32(1),
+                            reader.GetFloat(2),
+                            reader.GetInt32(3)
                         ));
                     }
 
@@ -81,10 +81,10 @@ namespace BeautySalon.DB.DAO
             }
         }
 
-        public async Task Insert(int orderId, MaterialConsumption m)
+        public async Task Insert(MaterialConsumption m)
         {
             await Insert(
-                orderId,
+                m.OrderId,
                 m.MaterialId,
                 m.Price,
                 m.Amount
@@ -131,14 +131,14 @@ namespace BeautySalon.DB.DAO
             await Update(orderId, materialId, price, amount, orderId, materialId);
         }
 
-        public async Task Update(int orderId, MaterialConsumption m, int oldOrderId, int oldServiceId)
+        public async Task Update(MaterialConsumption m, int oldOrderId, int oldServiceId)
         {
-            await Update(orderId, m.MaterialId, m.Price, m.Amount, oldOrderId, oldServiceId);
+            await Update(m.OrderId, m.MaterialId, m.Price, m.Amount, oldOrderId, oldServiceId);
         }
 
-        public async Task Update(int orderId, MaterialConsumption m)
+        public async Task Update(MaterialConsumption m)
         {
-            await Update(orderId, m, orderId, m.MaterialId);
+            await Update(m, m.OrderId, m.MaterialId);
         }
 
         public async Task Delete(int orderId, int materialId)

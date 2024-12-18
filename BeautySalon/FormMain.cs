@@ -20,7 +20,7 @@ namespace BeautySalon
             DbConnection = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=main.mdb;");
             DbConnection.Open();
 
-            ChangePage(new PageMain(DbConnection));
+            ChangePage(new PageMain());
         }
 
         private bool Authorisation()
@@ -82,7 +82,7 @@ namespace BeautySalon
 
         private void OpenMain_Click(object sender, EventArgs e)
         {
-            ChangePage(new PageMain(DbConnection));
+            ChangePage(new PageMain());
         }
 
         private void OpenNotes_Click(object sender, EventArgs e)

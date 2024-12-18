@@ -30,7 +30,7 @@ namespace BeautySalon.DB.DAO
             List<ServiceFulfilled> list = new List<ServiceFulfilled>();
             const string query = @"
                 SELECT
-                    `service_id`, `price`
+                    `order_id`, `service_id`, `price`
                 FROM `services_fulfilled`
                 WHERE `order_id` = @order_id";
 
@@ -44,7 +44,8 @@ namespace BeautySalon.DB.DAO
                     {
                         list.Add(new ServiceFulfilled(
                             reader.GetInt32(0),
-                            reader.GetFloat(1)
+                            reader.GetInt32(1),
+                            reader.GetFloat(2)
                         ));
                     }
 
@@ -76,10 +77,10 @@ namespace BeautySalon.DB.DAO
             }
         }
 
-        public async Task Insert(int orderId, ServiceFulfilled m)
+        public async Task Insert(ServiceFulfilled m)
         {
             await Insert(
-                orderId,
+                m.OrderId,
                 m.ServiceId,
                 m.Price
             );
@@ -121,14 +122,14 @@ namespace BeautySalon.DB.DAO
             await Update(orderId, serviceId, price, orderId, serviceId);
         }
 
-        public async Task Update(int orderId, ServiceFulfilled m, int oldOrderId, int oldServiceId)
+        public async Task Update(ServiceFulfilled m, int oldOrderId, int oldServiceId)
         {
-            await Update(orderId, m.ServiceId, m.Price, oldOrderId, oldServiceId);
+            await Update(m.OrderId, m.ServiceId, m.Price, oldOrderId, oldServiceId);
         }
 
-        public async Task Update(int orderId, ServiceFulfilled m)
+        public async Task Update(ServiceFulfilled m)
         {
-            await Update(orderId, m, orderId, m.ServiceId);
+            await Update(m, m.OrderId, m.ServiceId);
         }
 
         public async Task Delete(int orderId, int serviceId)
