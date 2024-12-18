@@ -70,7 +70,6 @@ namespace BeautySalon
                 new TableData()
             );
 
-            table1.TableInit(Table);
             UpdateTable();
         }
 
@@ -88,7 +87,7 @@ namespace BeautySalon
 
         private void UpdateTable()
         {
-            table1.Clear();
+            /*table1.Clear();
             Table.Data.Clear();
 
             using (OleDbCommand command = new OleDbCommand("SELECT `id`, `time`, `suppliers_id` FROM `purchase_contracts` WHERE `time`>=CDate('" + dateTimePicker1.Value.ToString()+ "') AND `time`<=CDate('" + dateTimePicker2.Value.ToString() + "')", DbConnection))
@@ -125,13 +124,12 @@ namespace BeautySalon
                 }
 
                 Table.Data[i][3] = services;
-                table1.AddRow(Table.Data[i]);
-            }
+            }*/
         }
 
         private void ButtonInsert_Click(object sender, EventArgs e)
         {
-            object[] data = Table.GetDefault();
+            /*object[] data = Table.GetDefault();
             using (OleDbCommand command = new OleDbCommand("SELECT MAX(`id`)+1 FROM `purchase_contracts` WHERE 1", DbConnection))
             {
                 OleDbDataReader reader = command.ExecuteReader();
@@ -155,26 +153,12 @@ namespace BeautySalon
                 UpdateTable();
             }
 
-            tableEditor.Dispose();
-        }
-
-        private void ButtonDelete_Click(object sender, EventArgs e)
-        {
-            if(table1.row_selected < 0)
-            {
-                AlertBox.Warning("Не выбрано ни одной записи");
-                return;
-            }
-            new OleDbCommand("DELETE FROM `materials_arrival` WHERE `contract_id`=" + Table.Data[table1.row_selected][0].ToString(), DbConnection).ExecuteNonQuery();
-            new OleDbCommand("DELETE FROM `purchase_contracts` WHERE `id`=" + Table.Data[table1.row_selected][0].ToString(), DbConnection).ExecuteNonQuery();
-            Crutches.UpdateMaterialRegister(DbConnection);
-            table1.row_selected = -1;
-            UpdateTable();
+            tableEditor.Dispose();*/
         }
 
         private void ButtonUpdate_Click(object sender, EventArgs e)
         {
-            if (table1.row_selected < 0)
+            /*if (table1.row_selected < 0)
             {
                 AlertBox.Warning("Не выбрано ни одной записи");
                 return;
@@ -196,7 +180,21 @@ namespace BeautySalon
                 UpdateTable();
             }
 
-            tableEditor.Dispose();
+            tableEditor.Dispose();*/
+        }
+
+        private void ButtonDelete_Click(object sender, EventArgs e)
+        {
+            /*if(table1.row_selected < 0)
+            {
+                AlertBox.Warning("Не выбрано ни одной записи");
+                return;
+            }
+            new OleDbCommand("DELETE FROM `materials_arrival` WHERE `contract_id`=" + Table.Data[table1.row_selected][0].ToString(), DbConnection).ExecuteNonQuery();
+            new OleDbCommand("DELETE FROM `purchase_contracts` WHERE `id`=" + Table.Data[table1.row_selected][0].ToString(), DbConnection).ExecuteNonQuery();
+            Crutches.UpdateMaterialRegister(DbConnection);
+            table1.row_selected = -1;
+            UpdateTable();*/
         }
 
         private void period_ValueChanged(object sender, EventArgs e)

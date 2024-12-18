@@ -62,10 +62,11 @@ namespace BeautySalon
 
             if (_lookupData.ContainsKey(property.Name))
             {
+                string value = property.GetValue(model)?.ToString();
                 int selectedIndex = -1;
                 for (int i = 0; i < _lookupData[property.Name].Count; i++)
                 {
-                    if (Equals(_lookupData[property.Name][i].Value, property.GetValue(model)))
+                    if (Equals(_lookupData[property.Name][i].Value, value))
                     {
                         selectedIndex = i;
                         break;
@@ -156,6 +157,11 @@ namespace BeautySalon
                 {
                     if (control is EditorFieldList controlList)
                     {
+                        if (controlList.SelectedIndex == -1)
+                        {
+                            throw new Exception("Значение в поле " + controlList.Name + " не выбрано");
+                        }
+
                         PropertyInfo property = _modelType.GetProperty(controlList.Name);
                         if (property.GetType() == typeof(bool))
                         {

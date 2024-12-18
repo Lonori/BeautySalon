@@ -87,7 +87,7 @@ namespace BeautySalon
 
         private void OpenNotes_Click(object sender, EventArgs e)
         {
-            ChangePage(new PageNotes(DbConnection));
+            ChangePage(new PageOrders());
         }
 
         private void OpenMaterials_Click(object sender, EventArgs e)
@@ -122,7 +122,7 @@ namespace BeautySalon
 
         private void toolStripMenuItem21_Click(object sender, EventArgs e)
         {
-            Process proc = new System.Diagnostics.Process();
+            Process proc = new Process();
             proc.StartInfo.FileName = "help.chm";
             proc.StartInfo.UseShellExecute = true;
             proc.Start();

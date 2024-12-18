@@ -142,8 +142,8 @@ namespace BeautySalon
             this.table.Location = new System.Drawing.Point(0, 61);
             this.table.Margin = new System.Windows.Forms.Padding(0);
             this.table.Name = "table";
+            this.table.SelectedRow = -1;
             this.table.Size = new System.Drawing.Size(400, 111);
-            this.table.Style = BeautySalon.Components.MaterialTable.TableStyle.Flat;
             this.table.TabIndex = 2;
             this.table.TableData = ((System.Collections.Generic.List<System.Collections.Generic.List<string>>)(resources.GetObject("table.TableData")));
             this.table.TableHeaders = ((System.Collections.Generic.List<string>)(resources.GetObject("table.TableHeaders")));
@@ -160,7 +160,7 @@ namespace BeautySalon
             this.Controls.Add(this.TableName);
             this.ForeColor = System.Drawing.Color.Black;
             this.Margin = new System.Windows.Forms.Padding(0);
-            this.MinimumSize = new System.Drawing.Size(0, 136);
+            this.MinimumSize = new System.Drawing.Size(0, 172);
             this.Name = "EditorLinkedTable";
             this.Size = new System.Drawing.Size(400, 172);
             this.themeProvider1.SetUseTheme(this, true);

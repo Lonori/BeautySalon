@@ -118,12 +118,49 @@ namespace BeautySalon.DB.DAO
                 SELECT
                     `id`, `time`, `full_name`, `phone_number`, `staff_id`, `remark`, `status`
                 FROM `order`
-                WHERE `time` >= @timeStart AND `time` < @timeEnd";
+                WHERE `time` >= @timeStart AND `time` < @timeEnd
+                ORDER BY `time`";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
             {
                 command.Parameters.AddWithValue("@timeStart", timeStart);
                 command.Parameters.AddWithValue("@timeEnd", timeEnd);
+
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        appointments.Add(new Order(
+                            reader.GetInt32(0),
+                            reader.GetDateTime(1),
+                            reader.GetString(2),
+                            reader.GetString(3),
+                            reader.GetInt32(4),
+                            reader.IsDBNull(5) ? "" : reader.GetString(5),
+                            Enum.IsDefined(typeof(Order.OrderStatus), reader.GetInt32(6)) ? (Order.OrderStatus)reader.GetInt32(6) : Order.OrderStatus.Unknown
+                        ));
+                    }
+
+                    return appointments;
+                }
+            }
+        }
+
+        public async Task<List<Order>> GetByPeriodAndStatus(DateTime timeStart, DateTime timeEnd, Order.OrderStatus status)
+        {
+            List<Order> appointments = new List<Order>();
+            const string query = @"
+                SELECT
+                    `id`, `time`, `full_name`, `phone_number`, `staff_id`, `remark`, `status`
+                FROM `order`
+                WHERE `time` >= @timeStart AND `time` < @timeEnd AND `status` = @status
+                ORDER BY `time`";
+
+            using (MySqlCommand command = new MySqlCommand(query, _connection))
+            {
+                command.Parameters.AddWithValue("@timeStart", timeStart);
+                command.Parameters.AddWithValue("@timeEnd", timeEnd);
+                command.Parameters.AddWithValue("@status", (int)status);
 
                 using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
                 {

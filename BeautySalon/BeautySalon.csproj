@@ -144,6 +144,8 @@
     <Compile Include="Components\Themes\ThemeManager.cs" />
     <Compile Include="Crutches.cs" />
     <Compile Include="Components\DrawHelper.cs" />
+    <Compile Include="DB\DAO\SupplierContractDAO.cs" />
+    <Compile Include="DB\DAO\MaterialArrivalDAO.cs" />
     <Compile Include="DB\DAO\OrderDAO.cs" />
     <Compile Include="DB\DAO\MaterialDAO.cs" />
     <Compile Include="DB\DAO\MaterialConsumptionDAO.cs" />
@@ -244,11 +246,11 @@
     <Compile Include="Pages\PageMaterials.designer.cs">
       <DependentUpon>PageMaterials.cs</DependentUpon>
     </Compile>
-    <Compile Include="PageNotes.cs">
+    <Compile Include="Pages\PageOrders.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PageNotes.designer.cs">
-      <DependentUpon>PageNotes.cs</DependentUpon>
+    <Compile Include="Pages\PageOrders.designer.cs">
+      <DependentUpon>PageOrders.cs</DependentUpon>
     </Compile>
     <Compile Include="Pages\PageServices.cs">
       <SubType>UserControl</SubType>
@@ -268,10 +270,10 @@
     <Compile Include="PageStorage.designer.cs">
       <DependentUpon>PageStorage.cs</DependentUpon>
     </Compile>
-    <Compile Include="PageSuppliers.cs">
+    <Compile Include="Pages\PageSuppliers.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PageSuppliers.designer.cs">
+    <Compile Include="Pages\PageSuppliers.designer.cs">
       <DependentUpon>PageSuppliers.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -322,8 +324,8 @@
     <EmbeddedResource Include="Pages\PageMaterials.resx">
       <DependentUpon>PageMaterials.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PageNotes.resx">
-      <DependentUpon>PageNotes.cs</DependentUpon>
+    <EmbeddedResource Include="Pages\PageOrders.resx">
+      <DependentUpon>PageOrders.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\PageServices.resx">
       <DependentUpon>PageServices.cs</DependentUpon>
@@ -334,7 +336,7 @@
     <EmbeddedResource Include="PageStorage.resx">
       <DependentUpon>PageStorage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PageSuppliers.resx">
+    <EmbeddedResource Include="Pages\PageSuppliers.resx">
       <DependentUpon>PageSuppliers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -32,7 +32,7 @@ namespace BeautySalon
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PageMain));
             this.panelNotes = new System.Windows.Forms.Panel();
-            this.materialTable1 = new BeautySalon.Components.MaterialTable();
+            this.viewTableData = new BeautySalon.Components.MaterialTable();
             this.curentTime = new System.Windows.Forms.Label();
             this.panelButtons = new System.Windows.Forms.Panel();
             this.buttonBody = new System.Windows.Forms.TableLayoutPanel();
@@ -65,7 +65,7 @@ namespace BeautySalon
             // 
             // panelNotes
             // 
-            this.panelNotes.Controls.Add(this.materialTable1);
+            this.panelNotes.Controls.Add(this.viewTableData);
             this.panelNotes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelNotes.Location = new System.Drawing.Point(300, 0);
             this.panelNotes.Margin = new System.Windows.Forms.Padding(9, 10, 9, 10);
@@ -73,33 +73,32 @@ namespace BeautySalon
             this.panelNotes.Size = new System.Drawing.Size(600, 330);
             this.panelNotes.TabIndex = 0;
             // 
-            // materialTable1
+            // viewTableData
             // 
-            this.materialTable1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.materialTable1.CellMaximumSize = new System.Drawing.Size(0, 0);
-            this.materialTable1.CellMinimumSize = new System.Drawing.Size(0, 0);
-            this.materialTable1.CellPadding = new System.Windows.Forms.Padding(8);
-            this.materialTable1.ColorBorder = System.Drawing.Color.Gray;
-            this.materialTable1.ColorHeader = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(69)))), ((int)(((byte)(136)))));
-            this.materialTable1.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(217)))), ((int)(((byte)(231)))));
-            this.materialTable1.ColorSelect = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(162)))), ((int)(((byte)(195)))));
-            this.materialTable1.ColorTextHeader = System.Drawing.Color.White;
-            this.materialTable1.ColumnWeights = new int[] {
+            this.viewTableData.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.viewTableData.CellMaximumSize = new System.Drawing.Size(0, 0);
+            this.viewTableData.CellMinimumSize = new System.Drawing.Size(0, 0);
+            this.viewTableData.CellPadding = new System.Windows.Forms.Padding(8);
+            this.viewTableData.ColorBorder = System.Drawing.Color.Gray;
+            this.viewTableData.ColorHeader = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(69)))), ((int)(((byte)(136)))));
+            this.viewTableData.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(217)))), ((int)(((byte)(231)))));
+            this.viewTableData.ColorSelect = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(162)))), ((int)(((byte)(195)))));
+            this.viewTableData.ColorTextHeader = System.Drawing.Color.White;
+            this.viewTableData.ColumnWeights = new int[] {
         0};
-            this.materialTable1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.materialTable1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.materialTable1.ForeColor = System.Drawing.Color.Black;
-            this.materialTable1.Location = new System.Drawing.Point(0, 0);
-            this.materialTable1.Margin = new System.Windows.Forms.Padding(0);
-            this.materialTable1.Name = "materialTable1";
-            this.materialTable1.SelectedRow = -1;
-            this.materialTable1.Size = new System.Drawing.Size(600, 111);
-            this.materialTable1.Style = BeautySalon.Components.MaterialTable.TableStyle.Flat;
-            this.materialTable1.TabIndex = 2;
-            this.materialTable1.TableData = ((System.Collections.Generic.List<System.Collections.Generic.List<string>>)(resources.GetObject("materialTable1.TableData")));
-            this.materialTable1.TableHeaders = ((System.Collections.Generic.List<string>)(resources.GetObject("materialTable1.TableHeaders")));
-            this.materialTable1.Text = "materialTable1";
-            this.themeProvider1.SetUseTheme(this.materialTable1, true);
+            this.viewTableData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.viewTableData.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.viewTableData.ForeColor = System.Drawing.Color.Black;
+            this.viewTableData.Location = new System.Drawing.Point(0, 0);
+            this.viewTableData.Margin = new System.Windows.Forms.Padding(0);
+            this.viewTableData.Name = "viewTableData";
+            this.viewTableData.SelectedRow = -1;
+            this.viewTableData.Size = new System.Drawing.Size(600, 112);
+            this.viewTableData.TabIndex = 2;
+            this.viewTableData.TableData = ((System.Collections.Generic.List<System.Collections.Generic.List<string>>)(resources.GetObject("viewTableData.TableData")));
+            this.viewTableData.TableHeaders = ((System.Collections.Generic.List<string>)(resources.GetObject("viewTableData.TableHeaders")));
+            this.viewTableData.Text = "materialTable1";
+            this.themeProvider1.SetUseTheme(this.viewTableData, true);
             // 
             // curentTime
             // 
@@ -445,7 +444,7 @@ namespace BeautySalon
         private Components.MaterialButton materialButton1;
         private Components.MaterialButton materialButton2;
         private Components.MaterialButton materialButton3;
-        private Components.MaterialTable materialTable1;
+        private Components.MaterialTable viewTableData;
         private Components.Themes.ThemeProvider themeProvider1;
     }
 }

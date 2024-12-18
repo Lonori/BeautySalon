@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace BeautySalon.DB.DAO
 {
-    internal class MaterialConsumptionDAO : DAO
+    internal class MaterialArrivalDAO : DAO
     {
-        public MaterialConsumptionDAO(MySqlConnection connection) : base(connection) { }
+        public MaterialArrivalDAO(MySqlConnection connection) : base(connection) { }
 
         protected override void InitializeTable()
         {
             const string query = @"
-                CREATE TABLE IF NOT EXISTS `materials_consumption` (
-                    `order_id` int(11) NOT NULL,
+                CREATE TABLE IF NOT EXISTS `materials_arrival` (
+                    `contract_id` int(11) NOT NULL,
                     `material_id` int(11) NOT NULL,
                     `price` float NOT NULL,
                     `amount` int(11) NOT NULL,
-                    PRIMARY KEY (`order_id`, `material_id`)
+                    PRIMARY KEY (`contract_id`, `material_id`)
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))

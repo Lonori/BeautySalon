@@ -11,12 +11,14 @@ namespace BeautySalon.DB
         private static string _connectionString;
         private readonly MySqlConnection _connection;
         public readonly MaterialDAO MaterialDAO;
+        public readonly MaterialArrivalDAO MaterialArrivalDAO;
         public readonly MaterialConsumptionDAO MaterialConsumptionDAO;
         public readonly OrderDAO OrderDAO;
         public readonly ServiceDAO ServiceDAO;
         public readonly ServiceFulfilledDAO ServiceFulfilledDAO;
         public readonly StaffDAO StaffDAO;
         public readonly SupplierDAO SupplierDAO;
+        public readonly SupplierContractDAO SupplierContractDAO;
 
         public static AppDatabase GetInstance()
         {
@@ -35,12 +37,14 @@ namespace BeautySalon.DB
             InitializeDatabase();
             _connection.ChangeDatabase("salon");
             MaterialDAO = new MaterialDAO(_connection);
+            MaterialArrivalDAO = new MaterialArrivalDAO(_connection);
             MaterialConsumptionDAO = new MaterialConsumptionDAO(_connection);
             OrderDAO = new OrderDAO(_connection);
             ServiceDAO = new ServiceDAO(_connection);
             ServiceFulfilledDAO = new ServiceFulfilledDAO(_connection);
             StaffDAO = new StaffDAO(_connection);
             SupplierDAO = new SupplierDAO(_connection);
+            SupplierContractDAO = new SupplierContractDAO(_connection);
         }
 
         public MySqlConnection Connection

@@ -1,5 +1,4 @@
-﻿using BeautySalon.Components.Themes;
-using BeautySalon.DB;
+﻿using BeautySalon.DB;
 using BeautySalon.DB.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,50 +7,37 @@ using System.Windows.Forms;
 
 namespace BeautySalon
 {
-    public partial class PageMain : UserControl, IThemable
+    public partial class PageOrders : UserControl
     {
         private readonly AppDatabase _DB;
         private List<Order> orders;
         private List<Staff> staffs;
         private List<Service> services;
         private List<Material> materials;
-        private readonly Dictionary<string, List<ComboBoxItem>> dictionary = new Dictionary<string, List<ComboBoxItem>>();
+        private readonly Dictionary<string, List<ComboBoxItem>> dictionary = new Dictionary<string, List<ComboBoxItem>>
+        {
+            {
+                "OrderStatus", new List<ComboBoxItem> {
+                    new ComboBoxItem("Создан", "1"),
+                    new ComboBoxItem("Завершен", "3"),
+                    new ComboBoxItem("Отменен", "4")
+                }
+            }
+        };
 
-        public PageMain()
+        public PageOrders()
         {
             _DB = AppDatabase.GetInstance();
             InitializeComponent();
 
-            viewTableData.TableHeaders = new List<string> { "Время", "ФИО", "Номер телефона", "Услуги", "Сотрудник", "Примечание" };
-            viewTableData.ColumnWeights = new int[] { 0, 1, 0 };
-            curentTime.Text = FormatTodayDate();
+            viewTableData.TableHeaders = new List<string> { "Дата", "ФИО", "Номер телефона", "Услуги", "Материалы", "Сотрудник", "Примечание", "Статус" };
+            viewTableData.ColumnWeights = new int[] { 0, 1, 0, 1, 1, 1, 1, 0 };
+            dateTimePicker1.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0);
+            dateTimePicker2.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).AddMonths(1).AddMinutes(-1);
+            dateTimePicker1.ValueChanged += period_ValueChanged;
+            dateTimePicker2.ValueChanged += period_ValueChanged;
 
             InitTables();
-        }
-
-        public void ApplyTheme(ITheme theme)
-        {
-            BackColor = theme.ColorBackground;
-            ForeColor = theme.ColorForeground;
-            Font = theme.Font;
-            panelButtons.BackColor = theme.ColorBackgroungDark;
-        }
-
-        private string FormatTodayDate()
-        {
-            DateTime now = DateTime.Now;
-            string dayweek = "";
-            switch (now.DayOfWeek)
-            {
-                case DayOfWeek.Monday: dayweek = "Пн"; break;
-                case DayOfWeek.Tuesday: dayweek = "Вт"; break;
-                case DayOfWeek.Wednesday: dayweek = "Ср"; break;
-                case DayOfWeek.Thursday: dayweek = "Чт"; break;
-                case DayOfWeek.Friday: dayweek = "Пт"; break;
-                case DayOfWeek.Saturday: dayweek = "Сб"; break;
-                case DayOfWeek.Sunday: dayweek = "Вс"; break;
-            }
-            return dayweek + " " + now.Day + "/" + now.Month + "/" + now.Year + " " + now.Hour.ToString().PadLeft(2, '0') + ':' + now.Minute.ToString().PadLeft(2, '0') + ':' + now.Second.ToString().PadLeft(2, '0');
         }
 
         private async void InitTables()
@@ -83,44 +69,9 @@ namespace BeautySalon
             UpdateTable();
         }
 
-        private void UpdateStatistic()
-        {
-            /*double services_sum = 0;
-            double material_sum = 0;
-            using (OleDbCommand command = new OleDbCommand("SELECT COUNT(`time`) FROM `notes` WHERE `time`>=CDate('" + DateTime.Today.ToString() + "') AND `time`<CDate('" + DateTime.Today.AddDays(1).ToString() + "') AND `completed`=false", DbConnection))
-            {
-                OleDbDataReader reader = command.ExecuteReader();
-                reader.Read();
-                label2.Text = reader[0].ToString();
-            }
-            using (OleDbCommand command = new OleDbCommand("SELECT COUNT(`time`) FROM `notes` WHERE `time`>=CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).ToString() + "') AND `time`<CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).AddMonths(1).ToString() + "') AND `completed`=true", DbConnection))
-            {
-                OleDbDataReader reader = command.ExecuteReader();
-                reader.Read();
-                label4.Text = reader[0].ToString();
-            }
-            using (OleDbCommand command = new OleDbCommand("SELECT SUM(`prise`*`materials_consumption`.`amount`) FROM `materials_consumption` LEFT JOIN `materials` ON `materials`.`id`=`materials_consumption`.`material_id` WHERE `time`>=CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).ToString() + "') AND `time`<CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).AddMonths(1).ToString() + "')", DbConnection))
-            {
-                OleDbDataReader reader = command.ExecuteReader();
-                reader.Read();
-                material_sum = (reader[0].GetType() == typeof(DBNull) ? 0 : double.Parse(reader[0].ToString()));
-                label8.Text = material_sum + " руб.";
-            }
-            using (OleDbCommand command = new OleDbCommand("SELECT SUM(`prise`) FROM `services_rendered` LEFT JOIN `services` ON `services`.`id`=`services_rendered`.`services_id` WHERE `time`>=CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).ToString() + "') AND `time`<CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).AddMonths(1).ToString() + "')", DbConnection))
-            {
-                OleDbDataReader reader = command.ExecuteReader();
-                reader.Read();
-                services_sum = (reader[0].GetType() == typeof(DBNull) ? 0 : double.Parse(reader[0].ToString())) + material_sum;
-                label6.Text = services_sum + " руб.";
-            }
-            label10.Text = (services_sum - material_sum) + " руб.";*/
-        }
-
         private async void UpdateTable()
         {
-            UpdateStatistic();
-
-            orders = await _DB.OrderDAO.GetByPeriodAndStatus(DateTime.Today, DateTime.Today.AddDays(1), Order.OrderStatus.Created);
+            orders = await _DB.OrderDAO.GetByPeriod(dateTimePicker1.Value, dateTimePicker2.Value);
             List<List<string>> tableData = new List<List<string>>();
 
             foreach (Order order in orders)
@@ -138,13 +89,38 @@ namespace BeautySalon
                     }
                 }
 
+                string materialsText = "";
+                List<MaterialConsumption> materialsOrder = await _DB.MaterialConsumptionDAO.GetByOrderId(order.Id);
+                for (int i = 0; i < materialsOrder.Count; i++)
+                {
+                    MaterialConsumption mc = materialsOrder[i];
+                    materialsText += (i + 1) + ". " + GetMaterialById(mc.MaterialId)?.Name + " - " + mc.Price + " руб.";
+
+                    if (i < (materialsOrder.Count - 1))
+                    {
+                        materialsText += "\n";
+                    }
+                }
+
+                string orderStatusText = "Неизвестен";
+                foreach (ComboBoxItem item in dictionary["OrderStatus"])
+                {
+                    if (Equals(item.Value, ((int)order.Status).ToString()))
+                    {
+                        orderStatusText = item.Text;
+                        break;
+                    }
+                }
+
                 tableData.Add(new List<string>{
-                    order.Time.ToShortTimeString(),
+                    order.Time.ToShortDateString() + " " + order.Time.ToShortTimeString(),
                     order.FullName,
                     order.PhoneNumber,
                     servicesText,
+                    materialsText,
                     GetStaffById(order.StaffId)?.FullName,
-                    order.Remark
+                    order.Remark,
+                    orderStatusText
                 });
             }
 
@@ -190,17 +166,13 @@ namespace BeautySalon
             return null;
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            curentTime.Text = FormatTodayDate();
-        }
-
         private async void ButtonInsert_Click(object sender, EventArgs e)
         {
-            OrderCreateModel model = new OrderCreateModel()
+            OrderModel model = new OrderModel()
             {
                 Time = DateTime.Now,
-                PhoneNumber = "+7"
+                PhoneNumber = "+7",
+                OrderStatus = 1
             };
 
             FormEntityEditor editor = new FormEntityEditor("Добавить", model, dictionary);
@@ -232,6 +204,18 @@ namespace BeautySalon
                             service.Price
                         );
                     }
+
+                    foreach (MaterialModel mc in model.Materials)
+                    {
+                        Material material = GetMaterialById(mc.MaterialId);
+
+                        await _DB.MaterialConsumptionDAO.Insert(
+                            orderId,
+                            material.Id,
+                            material.Price,
+                            mc.Amount
+                        );
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -244,7 +228,7 @@ namespace BeautySalon
             editor.Dispose();
         }
 
-        private async void ButtonComplete_Click(object sender, EventArgs e)
+        private async void ButtonUpdate_Click(object sender, EventArgs e)
         {
             if (viewTableData.SelectedRow < 0)
             {
@@ -253,7 +237,7 @@ namespace BeautySalon
             }
 
             Order order = orders[viewTableData.SelectedRow];
-            OrderCompleteModel model = new OrderCompleteModel()
+            OrderModel model = new OrderModel()
             {
                 Time = order.Time,
                 FullName = order.FullName,
@@ -261,7 +245,8 @@ namespace BeautySalon
                 Services = new List<ServiceModel>(),
                 Materials = new List<MaterialModel>(),
                 StaffId = order.StaffId,
-                Remark = order.Remark
+                Remark = order.Remark,
+                OrderStatus = (int)order.Status
             };
 
             List<ServiceFulfilled> servicesOrder = await _DB.ServiceFulfilledDAO.GetByOrderId(order.Id);
@@ -275,7 +260,7 @@ namespace BeautySalon
                 model.Materials.Add(new MaterialModel { MaterialId = mc.MaterialId, Amount = mc.Amount });
             }
 
-            FormEntityEditor editor = new FormEntityEditor("Выполнить", model, dictionary);
+            FormEntityEditor editor = new FormEntityEditor("Изменить", model, dictionary);
             editor.ShowDialog();
 
             if (editor.Confirmed)
@@ -314,12 +299,12 @@ namespace BeautySalon
                         model.PhoneNumber,
                         model.StaffId,
                         model.Remark,
-                        Order.OrderStatus.Complete
+                        (Order.OrderStatus)model.OrderStatus
                     );
                 }
                 catch (Exception ex)
                 {
-                    AlertBox.Error("Ошибка при изменении записи:\n" + ex.Message);
+                    AlertBox.Error("Ошибка при создании записи:\n" + ex.Message);
                 }
 
                 UpdateTable();
@@ -337,67 +322,31 @@ namespace BeautySalon
             }
 
             Order order = orders[viewTableData.SelectedRow];
-            order.Status = Order.OrderStatus.Cancel;
-
-            try
+            if (AlertBox.ConfirmWarn("Вы действительно хотите удалить запись " + order.Time.ToString() + " " + order.FullName + "?") == DialogResult.OK)
             {
-                await _DB.OrderDAO.Update(order);
-
-                UpdateTable();
-            }
-            catch (Exception ex)
-            {
-                AlertBox.Error("Ошибка при обновлении записи:\n" + ex.Message);
-            }
-        }
-
-        private void DoubleClickOnTable(int row, string[] data)
-        {
-            /*string time = Table.Data[row][0].ToString();
-            FormTableEditor tableEditor = new FormTableEditor("Изменить", Table.Columns, Table.Data[row]);
-            tableEditor.ShowDialog();
-
-            if (tableEditor.Confirmed == true)
-            {
-                new OleDbCommand("DELETE FROM `services_rendered` WHERE `time`=CDate('" + time + "')", DbConnection).ExecuteNonQuery();
-                new OleDbCommand("DELETE FROM `materials_consumption` WHERE `time`=CDate('" + time + "')", DbConnection).ExecuteNonQuery();
-                new OleDbCommand("UPDATE `notes` SET `time`='" + tableEditor.GetString(0) + "',`full_name`='" + tableEditor.GetString(1) + "',`phone_number`='" + tableEditor.GetString(2) + "',`staff`=" + tableEditor.GetString(4) + ",`remark`='" + tableEditor.GetString(5) + "',`completed`=false WHERE `time`=CDate('" + time + "')", DbConnection).ExecuteNonQuery();
-
-                TableObject services = (TableObject)tableEditor.DataRow[3];
-                for (int i = 0; i < services.Data.Length; i++)
+                try
                 {
-                    new OleDbCommand("INSERT INTO `services_rendered`(`time`, `services_id`) VALUES (CDate('" + tableEditor.GetString(0) + "')," + ((ListComboBoxItem)services.Data[i][0]).Value + ")", DbConnection).ExecuteNonQuery();
-                }
-                UpdateTable();
-            }
+                    await _DB.ServiceFulfilledDAO.DeleteByOrderId(order.Id);
+                    await _DB.MaterialConsumptionDAO.DeleteByOrderId(order.Id);
+                    await _DB.OrderDAO.Delete(order.Id);
+                    viewTableData.SelectedRow = -1;
 
-            tableEditor.Dispose();*/
+                    UpdateTable();
+                }
+                catch (Exception ex)
+                {
+                    AlertBox.Error("Ошибка при удалении записи:\n" + ex.Message);
+                }
+            }
+        }
+
+        private void period_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateTable();
         }
     }
 
-    public class OrderCreateModel
-    {
-        [DisplayName("Время")]
-        public DateTime Time { get; set; }
-
-        [DisplayName("ФИО")]
-        public string FullName { get; set; }
-
-        [DisplayName("Номер")]
-        public string PhoneNumber { get; set; }
-
-        [DisplayName("Услуги")]
-        public List<ServiceModel> Services { get; set; } = new List<ServiceModel>();
-
-        [DisplayName("Сотрудник")]
-        public int StaffId { get; set; }
-
-        [DisplayName("Примечание")]
-        [TextMultiline]
-        public string Remark { get; set; }
-    }
-
-    public class OrderCompleteModel
+    public class OrderModel
     {
         [DisplayName("Время")]
         public DateTime Time { get; set; }
@@ -420,5 +369,23 @@ namespace BeautySalon
         [DisplayName("Примечание")]
         [TextMultiline]
         public string Remark { get; set; }
+
+        [DisplayName("Статус")]
+        public int OrderStatus { get; set; }
+    }
+
+    public class ServiceModel
+    {
+        [DisplayName("Услуга")]
+        public int ServiceId { get; set; }
+    }
+
+    public class MaterialModel
+    {
+        [DisplayName("Материал")]
+        public int MaterialId { get; set; }
+
+        [DisplayName("Кол-во")]
+        public int Amount { get; set; }
     }
 }
