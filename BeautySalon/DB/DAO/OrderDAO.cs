@@ -13,7 +13,7 @@ namespace BeautySalon.DB.DAO
         protected override void InitializeTable()
         {
             const string query = @"
-                CREATE TABLE IF NOT EXISTS `order` (
+                CREATE TABLE IF NOT EXISTS `orders` (
                     id INT NOT NULL,
                     time DATETIME NOT NULL,
                     full_name VARCHAR(255) NOT NULL,
@@ -36,7 +36,7 @@ namespace BeautySalon.DB.DAO
             const string query = @"
                 SELECT
                     `id`, `time`, `full_name`, `phone_number`, `staff_id`, `remark`, `status`
-                FROM `order`
+                FROM `orders`
                 WHERE 1";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
@@ -66,7 +66,7 @@ namespace BeautySalon.DB.DAO
             const string query = @"
                 SELECT
                     `id`, `time`, `full_name`, `phone_number`, `staff_id`, `remark`, `status`
-                FROM `order`
+                FROM `orders`
                 WHERE `id` = @id";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
@@ -95,7 +95,7 @@ namespace BeautySalon.DB.DAO
 
         public async Task<int> GetNewId()
         {
-            const string query = "SELECT MAX(`id`) FROM `order` WHERE 1";
+            const string query = "SELECT MAX(`id`) FROM `orders` WHERE 1";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
             {
@@ -117,7 +117,7 @@ namespace BeautySalon.DB.DAO
             const string query = @"
                 SELECT
                     `id`, `time`, `full_name`, `phone_number`, `staff_id`, `remark`, `status`
-                FROM `order`
+                FROM `orders`
                 WHERE `time` >= @timeStart AND `time` < @timeEnd
                 ORDER BY `time`";
 
@@ -152,7 +152,7 @@ namespace BeautySalon.DB.DAO
             const string query = @"
                 SELECT
                     `id`, `time`, `full_name`, `phone_number`, `staff_id`, `remark`, `status`
-                FROM `order`
+                FROM `orders`
                 WHERE `time` >= @timeStart AND `time` < @timeEnd AND `status` = @status
                 ORDER BY `time`";
 
@@ -185,7 +185,7 @@ namespace BeautySalon.DB.DAO
         public async Task Insert(int id, DateTime time, string fullName, string phoneNumber, int staffId, string remark, Order.OrderStatus status)
         {
             const string query = @"
-                INSERT INTO `order` (
+                INSERT INTO `orders` (
                     `id`, `time`, `full_name`, `phone_number`, `staff_id`, `remark`, `status`
                 ) VALUES (
                     @id, @time, @full_name, @phone_number, @staff_id, @remark, @status
@@ -221,7 +221,7 @@ namespace BeautySalon.DB.DAO
         public async Task Update(int id, DateTime time, string fullName, string phoneNumber, int staffId, string remark, Order.OrderStatus status)
         {
             const string query = @"
-                UPDATE `order` SET
+                UPDATE `orders` SET
                     `time` = @time,
                     `full_name` = @full_name,
                     `phone_number` = @phone_number,
@@ -264,7 +264,7 @@ namespace BeautySalon.DB.DAO
 
         public async Task Delete(int id)
         {
-            const string query = "DELETE FROM `order` WHERE `id` = @id";
+            const string query = "DELETE FROM `orders` WHERE `id` = @id";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
             {

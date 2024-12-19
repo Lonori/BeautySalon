@@ -1,6 +1,5 @@
 ﻿using BeautySalon.DB;
 using BeautySalon.DB.Entities;
-using Mysqlx.Crud;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,7 +21,8 @@ namespace BeautySalon
             InitializeComponent();
 
             viewTableData.TableHeaders = new List<string> { "ID", "Дата", "Поставщик", "Материалы" };
-            viewTableData.ColumnWeights = new int[] { 0, 1, 1, 2 };
+            viewTableData.TableWeights = new int[] { 0, 1, 1, 2 };
+            viewTableData.Clear();
             dateTimePicker1.Value = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1, 0, 0, 0);
             dateTimePicker2.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).AddMonths(1).AddMinutes(-1);
             dateTimePicker1.ValueChanged += period_ValueChanged;
@@ -54,6 +54,7 @@ namespace BeautySalon
 
         private async void UpdateTable()
         {
+            viewTableData.Clear();
             contracts = await _DB.SupplierContractDAO.GetByPeriod(dateTimePicker1.Value, dateTimePicker2.Value);
             List<List<string>> tableData = new List<List<string>>();
 

@@ -5,8 +5,6 @@ namespace BeautySalon
 {
     public partial class EditorFieldList : UserControl
     {
-        ListComboBoxItem item;
-
         public string FieldName
         {
             get { return fieldName.Text; }
@@ -28,11 +26,6 @@ namespace BeautySalon
             }
         }
 
-        public ListComboBoxItem Data
-        {
-            get { return item.CopyOnNewValue(((ComboBoxItem)fieldData.SelectedItem).Value); }
-        }
-
         public EditorFieldList(string fieldName, List<ComboBoxItem> sourceList)
         {
             InitializeComponent();
@@ -52,16 +45,6 @@ namespace BeautySalon
         public EditorFieldList(string fieldName, List<ComboBoxItem> sourceList, int selectedIndex) : this(fieldName, sourceList)
         {
             fieldData.SelectedIndex = selectedIndex;
-        }
-
-        public EditorFieldList(string field_name, ListComboBoxItem field_list)
-        {
-            InitializeComponent();
-
-            fieldName.Text = field_name;
-            item = field_list;
-            for (int i = 0; i < field_list.Length; i++) fieldData.Items.Add(field_list[i]);
-            fieldData.SelectedItem = field_list.SelectedItem;
         }
     }
 }

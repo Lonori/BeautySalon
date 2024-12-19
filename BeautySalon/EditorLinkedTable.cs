@@ -33,7 +33,7 @@ namespace BeautySalon
                 headers.Add(fieldName);
             }
             table.TableHeaders = headers;
-            table.ColumnWeights = new int[] { };
+            table.TableWeights = new int[] { };
 
             UpdateTable();
         }

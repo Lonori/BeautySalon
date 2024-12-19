@@ -13,7 +13,7 @@ namespace BeautySalon.DB.DAO
         protected override void InitializeTable()
         {
             const string query = @"
-                CREATE TABLE IF NOT EXISTS `staff` (
+                CREATE TABLE IF NOT EXISTS `staffs` (
                     `id` int(11) NOT NULL,
                     `full_name` varchar(255) NOT NULL,
                     `phone_number` varchar(12) NOT NULL,
@@ -37,7 +37,7 @@ namespace BeautySalon.DB.DAO
             const string query = @"
                 SELECT
                     `id`, `full_name`, `phone_number`, `birthday`, `gender`, `date_join`, `date_leave`, `position`
-                FROM `staff`
+                FROM `staffs`
                 WHERE 1";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
@@ -68,7 +68,7 @@ namespace BeautySalon.DB.DAO
             const string query = @"
                 SELECT
                     `id`, `full_name`, `phone_number`, `birthday`, `gender`, `date_join`, `date_leave`, `position`
-                FROM `staff`
+                FROM `staffs`
                 WHERE `id` = @id";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
@@ -98,7 +98,7 @@ namespace BeautySalon.DB.DAO
 
         public async Task<int> GetNewId()
         {
-            const string query = "SELECT MAX(`id`) FROM `staff` WHERE 1";
+            const string query = "SELECT MAX(`id`) FROM `staffs` WHERE 1";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
             {
@@ -126,7 +126,7 @@ namespace BeautySalon.DB.DAO
         )
         {
             const string query = @"
-                INSERT INTO `staff` (
+                INSERT INTO `staffs` (
                     `id`, `full_name`, `phone_number`, `birthday`, `gender`, `date_join`, `date_leave`, `position`
                 ) VALUES (
                     @id, @full_name, @phone_number, @birthday, @gender, @date_join, @date_leave, @position
@@ -195,7 +195,7 @@ namespace BeautySalon.DB.DAO
         )
         {
             const string query = @"
-                UPDATE `staff` SET
+                UPDATE `staffs` SET
                     `id` = @id,
                     `full_name` = @full_name,
                     `phone_number` = @phone_number,
@@ -269,7 +269,7 @@ namespace BeautySalon.DB.DAO
 
         public async Task Delete(int id)
         {
-            const string query = "DELETE FROM `staff` WHERE `id` = @id";
+            const string query = "DELETE FROM `staffs` WHERE `id` = @id";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
             {

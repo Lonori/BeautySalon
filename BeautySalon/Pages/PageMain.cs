@@ -23,7 +23,8 @@ namespace BeautySalon
             InitializeComponent();
 
             viewTableData.TableHeaders = new List<string> { "Время", "ФИО", "Номер телефона", "Услуги", "Сотрудник", "Примечание" };
-            viewTableData.ColumnWeights = new int[] { 0, 1, 0 };
+            viewTableData.TableWeights = new int[] { 0, 1, 0 };
+            viewTableData.Clear();
             curentTime.Text = FormatTodayDate();
 
             InitTables();
@@ -120,6 +121,7 @@ namespace BeautySalon
         {
             UpdateStatistic();
 
+            viewTableData.Clear();
             orders = await _DB.OrderDAO.GetByPeriodAndStatus(DateTime.Today, DateTime.Today.AddDays(1), Order.OrderStatus.Created);
             List<List<string>> tableData = new List<List<string>>();
 

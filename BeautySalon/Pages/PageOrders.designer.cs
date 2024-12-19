@@ -116,7 +116,7 @@ namespace BeautySalon
             this.viewTableData.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(217)))), ((int)(((byte)(231)))));
             this.viewTableData.ColorSelect = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(162)))), ((int)(((byte)(195)))));
             this.viewTableData.ColorTextHeader = System.Drawing.Color.White;
-            this.viewTableData.ColumnWeights = new int[] {
+            this.viewTableData.TableWeights = new int[] {
         0};
             this.viewTableData.Dock = System.Windows.Forms.DockStyle.Top;
             this.viewTableData.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));

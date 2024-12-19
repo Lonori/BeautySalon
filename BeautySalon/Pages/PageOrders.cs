@@ -31,7 +31,8 @@ namespace BeautySalon
             InitializeComponent();
 
             viewTableData.TableHeaders = new List<string> { "Дата", "ФИО", "Номер телефона", "Услуги", "Материалы", "Сотрудник", "Примечание", "Статус" };
-            viewTableData.ColumnWeights = new int[] { 0, 1, 0, 1, 1, 1, 1, 0 };
+            viewTableData.TableWeights = new int[] { 0, 1, 0, 1, 1, 1, 1, 0 };
+            viewTableData.Clear();
             dateTimePicker1.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0);
             dateTimePicker2.Value = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).AddMonths(1).AddMinutes(-1);
             dateTimePicker1.ValueChanged += period_ValueChanged;
@@ -71,6 +72,7 @@ namespace BeautySalon
 
         private async void UpdateTable()
         {
+            viewTableData.Clear();
             orders = await _DB.OrderDAO.GetByPeriod(dateTimePicker1.Value, dateTimePicker2.Value);
             List<List<string>> tableData = new List<List<string>>();
 

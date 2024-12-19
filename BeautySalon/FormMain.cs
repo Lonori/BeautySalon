@@ -1,7 +1,6 @@
 ﻿using BeautySalon.Components.Themes;
 using BeautySalon.DB;
 using System;
-using System.Data.OleDb;
 using System.Diagnostics;
 using System.Windows.Forms;
 
@@ -9,17 +8,11 @@ namespace BeautySalon
 {
     public partial class FormMain : Form, IThemable
     {
-        private OleDbConnection DbConnection;
-
         public FormMain()
         {
             if (!Authorisation()) return;
 
             InitializeComponent();
-
-            DbConnection = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=main.mdb;");
-            DbConnection.Open();
-
             ChangePage(new PageMain());
         }
 
@@ -76,7 +69,6 @@ namespace BeautySalon
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DbConnection.Close();
             AppDatabase.Disconect();
         }
 
@@ -97,7 +89,7 @@ namespace BeautySalon
 
         private void OpenStorage_Click(object sender, EventArgs e)
         {
-            ChangePage(new PageStorage(DbConnection));
+            ChangePage(new PageStorage());
         }
 
         private void toolStripMenuItem11_Click(object sender, EventArgs e)
@@ -122,13 +114,18 @@ namespace BeautySalon
 
         private void toolStripMenuItem21_Click(object sender, EventArgs e)
         {
+            ChangePage(new PageReportStaff());
+        }
+
+        private void toolStripMenuItem31_Click(object sender, EventArgs e)
+        {
             Process proc = new Process();
             proc.StartInfo.FileName = "help.chm";
             proc.StartInfo.UseShellExecute = true;
             proc.Start();
         }
 
-        private void toolStripMenuItem22_Click(object sender, EventArgs e)
+        private void toolStripMenuItem32_Click(object sender, EventArgs e)
         {
             new FormProgrammInfo().ShowDialog();
         }

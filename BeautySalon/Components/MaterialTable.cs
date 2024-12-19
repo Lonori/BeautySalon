@@ -11,7 +11,7 @@
     {
         protected List<string> _tableDataHeaders = null;
         protected List<List<string>> _tableData = null;
-        protected int[] _columnWeights = new int[] { 0 };
+        protected int[] _tableWeights = new int[] { 0 };
         protected Size _cellMinSize = new Size(0, 0);
         protected Size _cellMaxSize = new Size(0, 0);
         protected Padding _cellPadding = new Padding(8);
@@ -101,12 +101,12 @@
 
         [Browsable(true)]
         [DefaultValue(new int[] { 0 })]
-        public int[] ColumnWeights
+        public int[] TableWeights
         {
-            get { return _columnWeights; }
+            get { return _tableWeights; }
             set
             {
-                _columnWeights = value;
+                _tableWeights = value;
                 RecalculateLayout();
             }
         }
@@ -224,11 +224,17 @@
             }
         }
 
+        public void Clear()
+        {
+            _tableData.Clear();
+            RecalculateLayout();
+        }
+
         protected int GetColumnWeight(int index)
         {
-            if (ColumnWeights != null && index < _columnWeights.Length)
+            if (TableWeights != null && index < _tableWeights.Length)
             {
-                return ColumnWeights[index];
+                return TableWeights[index];
             }
             return 1;
         }

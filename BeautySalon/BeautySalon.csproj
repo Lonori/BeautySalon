@@ -142,7 +142,6 @@
     <Compile Include="Components\Themes\ThemeDark.cs" />
     <Compile Include="Components\Themes\ThemeLight.cs" />
     <Compile Include="Components\Themes\ThemeManager.cs" />
-    <Compile Include="Crutches.cs" />
     <Compile Include="Components\DrawHelper.cs" />
     <Compile Include="DB\DAO\SupplierContractDAO.cs" />
     <Compile Include="DB\DAO\MaterialArrivalDAO.cs" />
@@ -183,19 +182,12 @@
     <Compile Include="EditorLinkedTable.designer.cs">
       <DependentUpon>EditorLinkedTable.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditorFieldTable.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="EditorFieldTable.designer.cs">
-      <DependentUpon>EditorFieldTable.cs</DependentUpon>
-    </Compile>
     <Compile Include="EditorFieldText.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="EditorFieldText.designer.cs">
       <DependentUpon>EditorFieldText.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditorType.cs" />
     <Compile Include="FormConnect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -220,20 +212,14 @@
     <Compile Include="FormEntityEditor.designer.cs">
       <DependentUpon>FormEntityEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormTableEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormTableEditor.designer.cs">
-      <DependentUpon>FormTableEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NoEventLabel.cs">
+    <Compile Include="Components\NoEventLabel.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="PageContractMat.cs">
+    <Compile Include="Pages\PageSupplierContracts.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PageContractMat.designer.cs">
-      <DependentUpon>PageContractMat.cs</DependentUpon>
+    <Compile Include="Pages\PageSupplierContracts.designer.cs">
+      <DependentUpon>PageSupplierContracts.cs</DependentUpon>
     </Compile>
     <Compile Include="Pages\PageMain.cs">
       <SubType>UserControl</SubType>
@@ -265,10 +251,10 @@
     <Compile Include="Pages\PageStaff.designer.cs">
       <DependentUpon>PageStaff.cs</DependentUpon>
     </Compile>
-    <Compile Include="PageStorage.cs">
+    <Compile Include="Pages\PageStorage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PageStorage.designer.cs">
+    <Compile Include="Pages\PageStorage.designer.cs">
       <DependentUpon>PageStorage.cs</DependentUpon>
     </Compile>
     <Compile Include="Pages\PageSuppliers.cs">
@@ -279,24 +265,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReportStaff.cs">
+    <Compile Include="Pages\PageReportStaff.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ReportStaff.Designer.cs">
-      <DependentUpon>ReportStaff.cs</DependentUpon>
+    <Compile Include="Pages\PageReportStaff.Designer.cs">
+      <DependentUpon>PageReportStaff.cs</DependentUpon>
     </Compile>
-    <Compile Include="Table.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="TableModel.cs" />
     <EmbeddedResource Include="EditorFieldDate.resx">
       <DependentUpon>EditorFieldDate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditorLinkedTable.resx">
       <DependentUpon>EditorLinkedTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditorFieldTable.resx">
-      <DependentUpon>EditorFieldTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditorFieldText.resx">
       <DependentUpon>EditorFieldText.cs</DependentUpon>
@@ -313,11 +292,8 @@
     <EmbeddedResource Include="FormEntityEditor.resx">
       <DependentUpon>FormEntityEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormTableEditor.resx">
-      <DependentUpon>FormTableEditor.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PageContractMat.resx">
-      <DependentUpon>PageContractMat.cs</DependentUpon>
+    <EmbeddedResource Include="Pages\PageSupplierContracts.resx">
+      <DependentUpon>PageSupplierContracts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\PageMain.resx">
       <DependentUpon>PageMain.cs</DependentUpon>
@@ -334,7 +310,7 @@
     <EmbeddedResource Include="Pages\PageStaff.resx">
       <DependentUpon>PageStaff.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PageStorage.resx">
+    <EmbeddedResource Include="Pages\PageStorage.resx">
       <DependentUpon>PageStorage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\PageSuppliers.resx">
@@ -350,8 +326,8 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ReportStaff.resx">
-      <DependentUpon>ReportStaff.cs</DependentUpon>
+    <EmbeddedResource Include="Pages\PageReportStaff.resx">
+      <DependentUpon>PageReportStaff.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="help.chm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -373,9 +349,6 @@
   <ItemGroup>
     <Content Include="icon.ico" />
     <Content Include="Resources\show.png" />
-    <None Include="main.mdb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Resources\icon.png" />
   </ItemGroup>
   <ItemGroup>

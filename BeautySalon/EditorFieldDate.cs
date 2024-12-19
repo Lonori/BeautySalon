@@ -28,11 +28,6 @@ namespace BeautySalon
             get { return _value; }
         }
 
-        public DateTime Data
-        {
-            get { return _value; }
-        }
-
         public EditorFieldDate(string fieldName, DateTime value) : this(fieldName, value, false) { }
 
         public EditorFieldDate(string fieldName, DateTime value, bool timeChecked)

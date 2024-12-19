@@ -32,11 +32,6 @@ namespace BeautySalon
             get { return fieldData.Text; }
         }
 
-        public string Data
-        {
-            get { return fieldData.Text; }
-        }
-
         private EditorFieldText()
         {
             InitializeComponent();

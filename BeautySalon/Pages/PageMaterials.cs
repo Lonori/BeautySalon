@@ -32,7 +32,7 @@ namespace BeautySalon
             }
 
             viewTableData.TableHeaders = headers;
-            viewTableData.ColumnWeights = new int[] { 0, 4, 1 };
+            viewTableData.TableWeights = new int[] { 0, 4, 1 };
         }
 
         private async void UpdateTable()
