@@ -94,6 +94,7 @@
             get { return _tableData; }
             set
             {
+                Clear();
                 _tableData = value;
                 RecalculateLayout();
             }
@@ -226,7 +227,11 @@
 
         public void Clear()
         {
-            _tableData.Clear();
+            _tableData?.Clear();
+            _tableRows = null;
+            _tableColumns = null;
+            _hoveredRow = -1;
+            _selectedRow = -1;
             RecalculateLayout();
         }
 

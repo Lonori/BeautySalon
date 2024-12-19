@@ -84,8 +84,6 @@ namespace BeautySalon
             this.viewTableData.ColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(217)))), ((int)(((byte)(231)))));
             this.viewTableData.ColorSelect = System.Drawing.Color.FromArgb(((int)(((byte)(183)))), ((int)(((byte)(162)))), ((int)(((byte)(195)))));
             this.viewTableData.ColorTextHeader = System.Drawing.Color.White;
-            this.viewTableData.TableWeights = new int[] {
-        0};
             this.viewTableData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.viewTableData.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.viewTableData.ForeColor = System.Drawing.Color.Black;
@@ -97,6 +95,8 @@ namespace BeautySalon
             this.viewTableData.TabIndex = 2;
             this.viewTableData.TableData = ((System.Collections.Generic.List<System.Collections.Generic.List<string>>)(resources.GetObject("viewTableData.TableData")));
             this.viewTableData.TableHeaders = ((System.Collections.Generic.List<string>)(resources.GetObject("viewTableData.TableHeaders")));
+            this.viewTableData.TableWeights = new int[] {
+        0};
             this.viewTableData.Text = "materialTable1";
             this.themeProvider1.SetUseTheme(this.viewTableData, true);
             // 

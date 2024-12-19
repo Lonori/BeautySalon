@@ -1,9 +1,11 @@
 ﻿using BeautySalon.Components.Themes;
 using BeautySalon.DB;
 using BeautySalon.DB.Entities;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BeautySalon
@@ -84,42 +86,86 @@ namespace BeautySalon
             UpdateTable();
         }
 
-        private void UpdateStatistic()
+        private async Task UpdateStatistic()
         {
-            /*double services_sum = 0;
-            double material_sum = 0;
-            using (OleDbCommand command = new OleDbCommand("SELECT COUNT(`time`) FROM `notes` WHERE `time`>=CDate('" + DateTime.Today.ToString() + "') AND `time`<CDate('" + DateTime.Today.AddDays(1).ToString() + "') AND `completed`=false", DbConnection))
+            try
             {
-                OleDbDataReader reader = command.ExecuteReader();
-                reader.Read();
-                label2.Text = reader[0].ToString();
+                float servicesSum = 0;
+                float materialSum = 0;
+
+                using (MySqlCommand command = new MySqlCommand("SELECT COUNT(`id`) FROM `orders` WHERE `time` >= @time_start AND `time` <= @time_end AND `status` = @status", _DB.Connection))
+                {
+                    command.Parameters.AddWithValue("@time_start", DateTime.Today);
+                    command.Parameters.AddWithValue("@time_end", DateTime.Today.AddDays(1));
+                    command.Parameters.AddWithValue("@status", Order.OrderStatus.Created);
+
+                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            label2.Text = reader.IsDBNull(0) ? "0" : reader.GetInt32(0).ToString();
+                        }
+                    }
+                }
+
+                using (MySqlCommand command = new MySqlCommand("SELECT COUNT(`id`) FROM `orders` WHERE `time` >= @time_start AND `time` < @time_end", _DB.Connection))
+                {
+                    DateTime today = DateTime.Today;
+                    command.Parameters.AddWithValue("@time_start", new DateTime(today.Year, today.Month, 1));
+                    command.Parameters.AddWithValue("@time_end", new DateTime(today.Year, today.Month, 1).AddMonths(1));
+
+                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            label4.Text = reader.IsDBNull(0) ? "0" : reader.GetInt32(0).ToString();
+                        }
+                    }
+                }
+
+                using (MySqlCommand command = new MySqlCommand("SELECT SUM(`services_fulfilled`.`price`) FROM `orders` INNER JOIN `services_fulfilled` ON `orders`.`id`=`services_fulfilled`.`order_id` WHERE `orders`.`time` >= @time_start AND `orders`.`time` <= @time_end", _DB.Connection))
+                {
+                    DateTime today = DateTime.Today;
+                    command.Parameters.AddWithValue("@time_start", new DateTime(today.Year, today.Month, 1));
+                    command.Parameters.AddWithValue("@time_end", new DateTime(today.Year, today.Month, 1).AddMonths(1));
+
+                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            servicesSum = reader.GetFloat(0);
+                            label6.Text = reader.IsDBNull(0) ? "0 руб." : servicesSum.ToString() + " руб.";
+                        }
+                    }
+                }
+
+                using (MySqlCommand command = new MySqlCommand("SELECT SUM(`materials_consumption`.`price`) FROM `orders` INNER JOIN `materials_consumption` ON `orders`.`id`=`materials_consumption`.`order_id` WHERE `orders`.`time` >= @time_start AND `orders`.`time` <= @time_end", _DB.Connection))
+                {
+                    DateTime today = DateTime.Today;
+                    command.Parameters.AddWithValue("@time_start", new DateTime(today.Year, today.Month, 1));
+                    command.Parameters.AddWithValue("@time_end", new DateTime(today.Year, today.Month, 1).AddMonths(1));
+
+                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+                    {
+                        if (await reader.ReadAsync())
+                        {
+                            materialSum = reader.GetFloat(0);
+                            label8.Text = reader.IsDBNull(0) ? "0 руб." : materialSum.ToString() + " руб.";
+                        }
+                    }
+                }
+
+                label10.Text = (servicesSum - materialSum) + " руб.";
             }
-            using (OleDbCommand command = new OleDbCommand("SELECT COUNT(`time`) FROM `notes` WHERE `time`>=CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).ToString() + "') AND `time`<CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).AddMonths(1).ToString() + "') AND `completed`=true", DbConnection))
+            catch (Exception ex)
             {
-                OleDbDataReader reader = command.ExecuteReader();
-                reader.Read();
-                label4.Text = reader[0].ToString();
+                Console.WriteLine("Ошибка вывода статистики:" + ex.Message);
             }
-            using (OleDbCommand command = new OleDbCommand("SELECT SUM(`prise`*`materials_consumption`.`amount`) FROM `materials_consumption` LEFT JOIN `materials` ON `materials`.`id`=`materials_consumption`.`material_id` WHERE `time`>=CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).ToString() + "') AND `time`<CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).AddMonths(1).ToString() + "')", DbConnection))
-            {
-                OleDbDataReader reader = command.ExecuteReader();
-                reader.Read();
-                material_sum = (reader[0].GetType() == typeof(DBNull) ? 0 : double.Parse(reader[0].ToString()));
-                label8.Text = material_sum + " руб.";
-            }
-            using (OleDbCommand command = new OleDbCommand("SELECT SUM(`prise`) FROM `services_rendered` LEFT JOIN `services` ON `services`.`id`=`services_rendered`.`services_id` WHERE `time`>=CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).ToString() + "') AND `time`<CDate('" + new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1, 0, 0, 0).AddMonths(1).ToString() + "')", DbConnection))
-            {
-                OleDbDataReader reader = command.ExecuteReader();
-                reader.Read();
-                services_sum = (reader[0].GetType() == typeof(DBNull) ? 0 : double.Parse(reader[0].ToString())) + material_sum;
-                label6.Text = services_sum + " руб.";
-            }
-            label10.Text = (services_sum - material_sum) + " руб.";*/
         }
 
         private async void UpdateTable()
         {
-            UpdateStatistic();
+            await UpdateStatistic();
 
             viewTableData.Clear();
             orders = await _DB.OrderDAO.GetByPeriodAndStatus(DateTime.Today, DateTime.Today.AddDays(1), Order.OrderStatus.Created);

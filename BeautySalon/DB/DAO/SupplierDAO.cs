@@ -34,7 +34,7 @@ namespace BeautySalon.DB.DAO
                 SELECT
                     `id`, `name`, `address`, `inn`, `kpp`
                 FROM `suppliers`
-                WHERE 1";
+                ORDER BY `name`";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
             {

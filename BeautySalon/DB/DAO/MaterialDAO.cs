@@ -32,7 +32,7 @@ namespace BeautySalon.DB.DAO
                 SELECT
                     `id`, `name`, `price`
                 FROM `materials`
-                WHERE 1";
+                ORDER BY `name`";
 
             using (MySqlCommand command = new MySqlCommand(query, _connection))
             {
