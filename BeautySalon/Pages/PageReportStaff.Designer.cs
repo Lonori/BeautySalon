@@ -110,6 +110,7 @@ namespace BeautySalon
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(583, 29);
             this.comboBox1.TabIndex = 1;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // tableLayoutPanel3
             // 
@@ -154,6 +155,7 @@ namespace BeautySalon
             this.dateTimePicker1.Size = new System.Drawing.Size(192, 29);
             this.dateTimePicker1.TabIndex = 1;
             this.dateTimePicker1.Value = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // tableLayoutPanel4
             // 
@@ -198,6 +200,7 @@ namespace BeautySalon
             this.dateTimePicker2.Size = new System.Drawing.Size(201, 29);
             this.dateTimePicker2.TabIndex = 1;
             this.dateTimePicker2.Value = new System.DateTime(1970, 1, 1, 0, 0, 0, 0);
+            this.dateTimePicker2.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
             // 
             // ButtonReport
             // 

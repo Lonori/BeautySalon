@@ -14,6 +14,7 @@ namespace BeautySalon
 
             InitializeComponent();
             ChangePage(new PageMain());
+            ReportPDFFactory.Init();
         }
 
         private bool Authorisation()

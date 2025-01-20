@@ -182,6 +182,42 @@ namespace BeautySalon.DB.DAO
             }
         }
 
+        public async Task<List<Order>> GetByPeriodAndStaffId(DateTime timeStart, DateTime timeEnd, int staffId)
+        {
+            List<Order> appointments = new List<Order>();
+            const string query = @"
+                SELECT
+                    `id`, `time`, `full_name`, `phone_number`, `staff_id`, `remark`, `status`
+                FROM `orders`
+                WHERE `time` >= @timeStart AND `time` < @timeEnd AND `staff_id` = @staffId
+                ORDER BY `time`";
+
+            using (MySqlCommand command = new MySqlCommand(query, _connection))
+            {
+                command.Parameters.AddWithValue("@timeStart", timeStart);
+                command.Parameters.AddWithValue("@timeEnd", timeEnd);
+                command.Parameters.AddWithValue("@staffId", staffId);
+
+                using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        appointments.Add(new Order(
+                            reader.GetInt32(0),
+                            reader.GetDateTime(1),
+                            reader.GetString(2),
+                            reader.GetString(3),
+                            reader.GetInt32(4),
+                            reader.IsDBNull(5) ? "" : reader.GetString(5),
+                            Enum.IsDefined(typeof(Order.OrderStatus), reader.GetInt32(6)) ? (Order.OrderStatus)reader.GetInt32(6) : Order.OrderStatus.Unknown
+                        ));
+                    }
+
+                    return appointments;
+                }
+            }
+        }
+
         public async Task Insert(int id, DateTime time, string fullName, string phoneNumber, int staffId, string remark, Order.OrderStatus status)
         {
             const string query = @"

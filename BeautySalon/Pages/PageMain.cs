@@ -133,13 +133,13 @@ namespace BeautySalon
                     {
                         if (await reader.ReadAsync())
                         {
-                            servicesSum = reader.GetFloat(0);
-                            label6.Text = reader.IsDBNull(0) ? "0 руб." : servicesSum.ToString() + " руб.";
+                            servicesSum = reader.IsDBNull(0) ? 0 : reader.GetFloat(0);
+                            label6.Text = servicesSum + " руб.";
                         }
                     }
                 }
 
-                using (MySqlCommand command = new MySqlCommand("SELECT SUM(`materials_consumption`.`price`) FROM `orders` INNER JOIN `materials_consumption` ON `orders`.`id`=`materials_consumption`.`order_id` WHERE `orders`.`time` >= @time_start AND `orders`.`time` <= @time_end", _DB.Connection))
+                using (MySqlCommand command = new MySqlCommand("SELECT SUM(`materials_consumption`.`price` * `materials_consumption`.`amount`) FROM `orders` INNER JOIN `materials_consumption` ON `orders`.`id`=`materials_consumption`.`order_id` WHERE `orders`.`time` >= @time_start AND `orders`.`time` <= @time_end", _DB.Connection))
                 {
                     DateTime today = DateTime.Today;
                     command.Parameters.AddWithValue("@time_start", new DateTime(today.Year, today.Month, 1));
@@ -149,8 +149,8 @@ namespace BeautySalon
                     {
                         if (await reader.ReadAsync())
                         {
-                            materialSum = reader.GetFloat(0);
-                            label8.Text = reader.IsDBNull(0) ? "0 руб." : materialSum.ToString() + " руб.";
+                            materialSum = reader.IsDBNull(0) ? 0 : reader.GetFloat(0);
+                            label8.Text = materialSum + " руб.";
                         }
                     }
                 }
